@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MangaTrade — Đánh Giá Truyện</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+<link rel="stylesheet" href="../page4/page4.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="announcement"><div class="container announcement-inner">
+    <div>🎉 <strong>MangaTrade</strong> — Cộng đồng trao đổi & mua bán manga đáng tin cậy</div>
+    <div>☎ Hotline: 1900 8899 &nbsp; • &nbsp; Trợ giúp</div>
+  </div></div>
+  <div class="main-header container">
+    <a class="brand" href="#home">
+      <div class="logo-mark">MT</div>
+      <div><div class="brand-name">MangaTrade</div><div class="brand-sub">SÀN TRUYỆN TRANH VIỆT</div></div>
+    </a>
+    <div class="search"><select><option>Tất cả</option><option>Manga</option><option>Comic</option><option>Light Novel</option></select><span class="material-symbols-outlined">search</span><input id="searchInput" placeholder="Tìm manga, tác giả, nhà xuất bản..."><kbd>⌘K</kbd></div>
+    <nav class="main-nav">
+      <a href="#discover">Khám Phá</a><a href="#wanted">Đăng Tin Tìm Mua</a><a href="#orders">Đơn Hàng Của Tôi</a><a class="active" href="#reviews">Đánh Giá</a>
+    </nav>
+    <div class="actions">
+      <button class="icon-btn" data-toast="Bạn có 3 thông báo mới."><span class="material-symbols-outlined">notifications</span><b>3</b></button>
+      <button class="icon-btn" data-toast="Đã mở danh sách yêu thích."><span class="material-symbols-outlined">favorite</span></button>
+      <button class="icon-btn" data-toast="Giỏ hàng đang có 2 sản phẩm."><span class="material-symbols-outlined">shopping_bag</span><b>2</b></button>
+      <div class="avatar">MT</div>
+    </div>
+  </div>
+  <div class="quick"><div class="container quick-inner">
+    <span class="quick-label">Chuyển nhanh:</span>
+    <a href="#wanted">1. Đăng tin tìm mua</a><i>•</i><a href="#orders">2. Quản lý đơn hàng</a><i>•</i><a href="#tracking">3. Theo dõi trạng thái</a><i>•</i><a href="#returns">4. Hủy & Đổi trả</a><i>•</i><a class="active" href="#reviews">5. Đánh giá truyện</a><i>•</i><a href="#favorites">6. Truyện yêu thích</a>
+  </div></div>
+</header>
+
+<main>
+<div class="container page">
+  <div class="breadcrumb"><a href="#home">Trang chủ</a><span>›</span><a href="#orders">Đơn hàng của tôi</a><span>›</span><strong>Đánh giá truyện</strong></div>
+
+  <section class="hero panel">
+    <div>
+      <span class="eyebrow">ĐÁNH GIÁ GIAO DỊCH</span>
+      <h1>Đánh Giá Truyện</h1>
+      <p>Chia sẻ trải nghiệm của bạn để giúp cộng đồng MangaTrade mua bán manga minh bạch và an toàn hơn.</p>
+    </div>
+    <div class="review-score"><strong>4.9</strong><span>★ ★ ★ ★ ★</span><small>Điểm uy tín của bạn</small></div>
+  </section>
+
+  <div class="layout">
+    <section class="panel review-panel">
+      <div class="panel-title"><div><h2>Đánh giá đơn hàng #ORD-8831</h2><p>Fullmetal Alchemist Kanzenban trọn bộ 1-18 Boxset</p></div><span class="completed">✓ Đã hoàn thành</span></div>
+
+      <div class="product-row">
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCJZJ6k_V5R2hMAVbpWhv29djFhlWGXRjfhzZElI-tGuft3Oqr53Y9Rf5VbQjjCW1BRZyODlP4QvMBfuQ9WyinRywLTL7qh6szaWWqIgNwT2k1Xz4QKxaqXMpJJ3RgZxxV_oiI7hWOMphoxNNf-dOtpEdNZdf9Y7h1oq8reXmgcc3Cdq6EpRPup01dSxV9kO6dEXC2k8CIdrloj2C3WOoItZwbMbSkOc1WSLtPhPpehg3gJnJPXX2D8A" alt="Fullmetal Alchemist">
+        <div><h3>Fullmetal Alchemist Kanzenban</h3><p>18 tập • Collector Grade 98%</p><strong>1.850.000₫</strong></div>
+      </div>
+
+      <div class="rating-block">
+        <label>1. Chất lượng truyện</label>
+        <div class="stars" data-rating="quality">
+          <button data-value="1">★</button><button data-value="2">★</button><button data-value="3">★</button><button data-value="4">★</button><button data-value="5">★</button>
+        </div>
+        <span class="rating-text" id="qualityText">Chọn mức đánh giá</span>
+      </div>
+
+      <div class="rating-block">
+        <label>2. Đóng gói & bảo quản</label>
+        <div class="stars" data-rating="packing">
+          <button data-value="1">★</button><button data-value="2">★</button><button data-value="3">★</button><button data-value="4">★</button><button data-value="5">★</button>
+        </div>
+        <span class="rating-text" id="packingText">Chọn mức đánh giá</span>
+      </div>
+
+      <div class="rating-block">
+        <label>3. Trải nghiệm người bán</label>
+        <div class="stars" data-rating="seller">
+          <button data-value="1">★</button><button data-value="2">★</button><button data-value="3">★</button><button data-value="4">★</button><button data-value="5">★</button>
+        </div>
+        <span class="rating-text" id="sellerText">Chọn mức đánh giá</span>
+      </div>
+
+      <div class="form-group">
+        <label for="reviewText">4. Chia sẻ cảm nhận</label>
+        <textarea id="reviewText" maxlength="500" placeholder="Ví dụ: Sách đúng mô tả, đóng gói rất kỹ, góc sách đẹp..."></textarea>
+        <div class="counter"><span id="counter">0</span>/500</div>
+      </div>
+
+      <div class="form-group">
+        <label>5. Điểm nổi bật</label>
+        <div class="tags" id="tags">
+          <button data-tag="Đúng mô tả">✓ Đúng mô tả</button>
+          <button data-tag="Đóng gói kỹ">✓ Đóng gói kỹ</button>
+          <button data-tag="Giao nhanh">✓ Giao nhanh</button>
+          <button data-tag="Sách đẹp">✓ Sách đẹp</button>
+          <button data-tag="Người bán nhiệt tình">✓ Người bán nhiệt tình</button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>6. Hình ảnh (không bắt buộc)</label>
+        <div class="upload" id="uploadBox"><span class="material-symbols-outlined">add_photo_alternate</span><strong>Thêm ảnh thực tế</strong><small>JPG/PNG • tối đa 5MB/ảnh</small><input id="photoInput" type="file" accept="image/png,image/jpeg" multiple hidden></div>
+        <div class="previews" id="previews"></div>
+      </div>
+
+      <div class="actions-row">
+        <button class="btn secondary" id="saveDraft">Lưu nháp</button>
+        <button class="btn primary" id="submitReview">Gửi đánh giá</button>
+      </div>
+    </section>
+
+    <aside class="side">
+      <section class="panel trust">
+        <span class="material-symbols-outlined">verified_user</span>
+        <h3>Đánh giá giúp cộng đồng</h3>
+        <p>Đánh giá thật giúp người mua nhận biết shop uy tín và giúp người bán cải thiện chất lượng phục vụ.</p>
+        <ul><li>Không đánh giá sai sự thật</li><li>Không đăng thông tin cá nhân</li><li>Tôn trọng cộng đồng Otaku</li></ul>
+      </section>
+
+      <section class="panel seller">
+        <div class="seller-head"><div class="avatar large">OS</div><div><h3>OtakuStoreVN</h3><span>Hà Nội • Thành viên 3 năm</span></div></div>
+        <div class="seller-score"><strong>4.98</strong><span>★★★★★</span><small>1.248 đánh giá</small></div>
+        <div class="seller-stats"><div><b>99%</b><small>Đúng mô tả</small></div><div><b>98%</b><small>Đóng gói tốt</small></div><div><b>97%</b><small>Giao đúng hẹn</small></div></div>
+      </section>
+
+      <section class="panel tip"><span class="material-symbols-outlined">lightbulb</span><div><h3>Mẹo đánh giá hữu ích</h3><p>Hãy mô tả cụ thể tình trạng sách, chất lượng đóng gói và cách người bán xử lý giao dịch.</p></div></section>
+    </aside>
+  </div>
+</div>
+</main>
+
+<footer><div class="container footer-inner">
+  <div><div class="footer-brand">MangaTrade</div><p>Sàn kết nối độc giả manga, truyện tranh bản quyền, sưu tầm hiếm và trao đổi tankōbon chất lượng cao tại Việt Nam.</p></div>
+  <div><h3>Dịch Vụ & Hỗ Trợ</h3><a href="#escrow">Mua bán an toàn (Escrow)</a><a href="#returns">Đổi trả & Hoàn tiền</a><a href="#tracking">Tra cứu đơn hàng</a></div>
+  <div><h3>Cộng Đồng Otaku</h3><a href="#rare">Truyện tranh hiếm</a><a href="#review">Góc Review</a><a href="#events">Sự kiện</a></div>
+  <div><h3>Bản tin MangaTrade</h3><p>Nhận thông báo khi có manga hiếm hoặc ưu đãi freeship.</p><form id="newsletter"><input id="email" type="email" placeholder="Email của bạn..." required><button>Gửi</button></form></div>
+</div><div class="container copyright">© 2024 MangaTrade Việt Nam. Bản quyền nội dung thuộc các nhà xuất bản được cấp phép.</div></footer>
+<div id="toast" class="toast"></div>
+<script src="../page4/page4.js"></script>
+</body>
+</html>

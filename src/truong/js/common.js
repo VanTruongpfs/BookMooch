@@ -22,8 +22,22 @@ async function loadSidebarComponent() {
   let htmlContent = '';
 
   try {
-    const response = await fetch('sidebar.html');
-    if (response.ok) {
+    let response;
+    const candidates = [
+      '/truong/html/sidebar.html',
+      '../../truong/html/sidebar.html',
+      'sidebar.html'
+    ];
+    for (const url of candidates) {
+      try {
+        const res = await fetch(url);
+        if (res.ok) {
+          response = res;
+          break;
+        }
+      } catch (_) {}
+    }
+    if (response && response.ok) {
       htmlContent = await response.text();
     } else {
       throw new Error('Fallback inline sidebar');
@@ -45,42 +59,83 @@ async function loadSidebarComponent() {
       </div>
       <nav class="sidebar-nav">
         <div class="nav-section-title">Kênh Bán Hàng</div>
-        <a href="orders.html" class="nav-item" data-page="orders" data-view="view-orders">
+        <a href="/truong/html/orders.html" class="nav-item" data-page="orders" data-view="view-orders">
           <div class="nav-item-content">
             <span class="material-symbols-outlined">package_2</span>
             <span>Quản lý đơn hàng</span>
           </div>
           <span class="nav-badge">12</span>
         </a>
-        <a href="reviews.html" class="nav-item" data-page="reviews" data-view="view-reviews">
+        <a href="/truong/html/reviews.html" class="nav-item" data-page="reviews" data-view="view-reviews">
           <div class="nav-item-content">
             <span class="material-symbols-outlined">star_rate</span>
             <span>Quản lý đánh giá</span>
           </div>
         </a>
-        <a href="wallet.html" class="nav-item" data-page="wallet" data-view="view-wallet">
+        <a href="/truong/html/wallet.html" class="nav-item" data-page="wallet" data-view="view-wallet">
           <div class="nav-item-content">
             <span class="material-symbols-outlined">account_balance_wallet</span>
             <span>Quản lý ví</span>
           </div>
         </a>
-        <a href="transactions.html" class="nav-item" data-page="transactions" data-view="view-transactions">
+        <a href="/truong/html/transactions.html" class="nav-item" data-page="transactions" data-view="view-transactions">
           <div class="nav-item-content">
             <span class="material-symbols-outlined">receipt_long</span>
             <span>Lịch sử giao dịch</span>
           </div>
         </a>
-        <a href="withdraw.html" class="nav-item" data-page="withdraw" data-view="view-withdraw">
+        <a href="/truong/html/withdraw.html" class="nav-item" data-page="withdraw" data-view="view-withdraw">
           <div class="nav-item-content">
             <span class="material-symbols-outlined">payments</span>
             <span>Yêu cầu rút tiền</span>
           </div>
         </a>
-        <a href="revenue.html" class="nav-item" data-page="revenue" data-view="view-revenue">
+        <a href="/truong/html/revenue.html" class="nav-item" data-page="revenue" data-view="view-revenue">
           <div class="nav-item-content">
             <span class="material-symbols-outlined">monitoring</span>
             <span>Thống kê doanh thu</span>
           </div>
+        </a>
+
+        <div class="nav-section-title">Bài Đăng & Sản Phẩm (Trường T)</div>
+        <a href="/ttruongmap/dang-ban-truyen/index.html" class="nav-item" data-page="dang-ban-truyen">
+          <div class="nav-item-content">
+            <span class="material-symbols-outlined">add_circle</span>
+            <span>Đăng bán truyện</span>
+          </div>
+          <span class="nav-badge" style="background: rgba(234, 88, 12, 0.25); color: #ea580c;">+Mới</span>
+        </a>
+        <a href="/ttruongmap/quan-ly-bai-dang/index.html" class="nav-item" data-page="quan-ly-bai-dang">
+          <div class="nav-item-content">
+            <span class="material-symbols-outlined">format_list_bulleted</span>
+            <span>Quản lý bài đăng</span>
+          </div>
+          <span class="nav-badge">6</span>
+        </a>
+        <a href="/ttruongmap/chinh-sua-bai-dang/index.html" class="nav-item" data-page="chinh-sua-bai-dang">
+          <div class="nav-item-content">
+            <span class="material-symbols-outlined">edit_note</span>
+            <span>Chỉnh sửa bài đăng</span>
+          </div>
+        </a>
+        <a href="/ttruongmap/an-xoa-bai-dang/index.html" class="nav-item" data-page="an-xoa-bai-dang">
+          <div class="nav-item-content">
+            <span class="material-symbols-outlined">visibility_off</span>
+            <span>Ẩn / Xóa bài đăng</span>
+          </div>
+        </a>
+        <a href="/ttruongmap/quan-ly-san-pham/index.html" class="nav-item" data-page="quan-ly-san-pham">
+          <div class="nav-item-content">
+            <span class="material-symbols-outlined">inventory_2</span>
+            <span>Quản lý sản phẩm</span>
+          </div>
+        </a>
+        <a href="/ttruongmap/quan-ly-voucher/index.html" class="nav-item" data-page="quan-ly-voucher">
+          <div class="nav-item-content">
+            <span class="material-symbols-outlined">confirmation_number</span>
+            <span>Quản lý voucher</span>
+          </div>
+          <span class="nav-badge">4</span>
         </a>
       </nav>
       <div class="sidebar-footer">
@@ -117,12 +172,12 @@ async function loadSidebarComponent() {
       item.classList.remove('active');
     }
 
-    // Nếu ở chế độ SPA Master Hub (index.html), chặn chuyển trang và kích hoạt view
+    // Nếu ở chế độ SPA Master Hub (index.html), chặn chuyển trang và kích hoạt view nếu có data-view
     if (isSpaMode) {
       item.addEventListener('click', (e) => {
-        e.preventDefault();
         const viewId = item.getAttribute('data-view');
         if (viewId && typeof activateView === 'function') {
+          e.preventDefault();
           activateView(viewId);
         }
       });
