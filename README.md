@@ -10,10 +10,13 @@ npm run dev
 
 Sau đó mở:
 
-- Login: http://localhost:5500/auth/login/login.html
-- Register: http://localhost:5500/auth/register/register.html
-- Forgot password: http://localhost:5500/auth/forgot-password/forgot-password.html
-- Reset password: http://localhost:5500/auth/reset-password/reset-password.html?token=TOKEN
+- Login: http://localhost:5500/vu/auth/login/login.html
+- Register: http://localhost:5500/vu/auth/register/register.html
+- Forgot password: http://localhost:5500/vu/auth/forgot-password/forgot-password.html
+- Reset password: http://localhost:5500/vu/auth/reset-password/reset-password.html?token=TOKEN
+- Profile: http://localhost:5500/vu/profile/profile.html
+- Complaint: http://localhost:5500/vu/complain/complain.html
+- Support: http://localhost:5500/vu/request_support/request_support.html
 
 Server dừng bằng `Ctrl+C`.
 
