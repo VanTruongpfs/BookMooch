@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Phòng trao đổi giá - Comic Exchange</title>
+
+    <link rel="stylesheet" href="../css/dealing-chat.css">
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="nav-inner">
+        <div class="nav-brand">
+            Trao đổi & Đàm phán
+        </div>
+
+        <div class="nav-links">
+
+            <a href="dealing-chat.html" class="active">
+                Phòng trao đổi
+            </a>
+
+            <a href="negotiation-order.html">
+                Tạo đơn hàng
+            </a>
+
+            <a href="shipping-fee.html">
+                Phí vận chuyển
+            </a>
+
+            <a href="exchange-orders.html">
+                Đơn hàng trao đổi
+            </a>
+
+            <a href="dealing-room.html">
+                Quản lý phòng
+            </a>
+
+        </div>
+    </div>
+</nav>
+
+<main class="page">
+
+    <div class="breadcrumb">
+        Truyện đang theo dõi
+        <span>/</span>
+        Phòng trao đổi giá
+        <span>/</span>
+        #PT2049
+    </div>
+
+    <div class="page-title">
+
+        <div>
+            <h1>Phòng trao đổi giá</h1>
+
+            <p>
+                Trao đổi trực tiếp với người bán và thống nhất mức giá cho sản phẩm.
+            </p>
+        </div>
+
+        <div class="room-status">
+            <span class="status-dot"></span>
+            Đang thương lượng
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         PRODUCT
+    ========================== -->
+
+    <section class="product-card">
+
+        <div class="product-image">
+            <img
+                src="https://placehold.co/120x160/1e293b/FFF7E6?text=OP"
+                alt="One Piece"
+            >
+        </div>
+
+        <div class="product-info">
+
+            <h2>
+                One Piece — Trọn bộ tập 1–10
+            </h2>
+
+            <p class="product-meta">
+                Tình trạng: Đã đọc, còn khoảng 90% · Bìa mềm
+            </p>
+
+            <div class="product-price">
+
+                <span class="price-old">
+                    320.000₫
+                </span>
+
+                <span class="price-current">
+                    Đang thương lượng
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="seller-info">
+
+            <div class="seller-avatar">
+                MT
+            </div>
+
+            <div>
+                <div class="seller-name">
+                    Minh Thư Comics
+                </div>
+
+                <div class="seller-response">
+                    Phản hồi trong ~10 phút
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         CHAT + SIDE
+    ========================== -->
+
+    <div class="room-layout">
+
+
+        <!-- =====================
+             CHAT
+        ====================== -->
+
+        <section class="card chat-panel">
+
+            <div class="chat-header">
+
+                <div>
+
+                    <h3>
+                        Phòng đàm phán #PT2049
+                    </h3>
+
+                    <div class="room-code">
+                        Phòng trao đổi giá · Tạo lúc 14:02
+                    </div>
+
+                </div>
+
+                <div class="timer">
+                    Còn 05:41
+                </div>
+
+            </div>
+
+
+            <div class="chat-scroll" id="chat">
+
+
+                <span class="system-note">
+                    Phòng được tạo lúc 14:02 · Giá niêm yết 320.000₫
+                </span>
+
+
+                <!-- MESSAGE -->
+
+                <div class="message them">
+
+                    <div class="message-content">
+
+                        <div class="message-name">
+                            Minh Thư Comics
+                        </div>
+
+                        <div class="bubble">
+                            Chào bạn, bộ này còn giữ được không ạ?
+                        </div>
+
+                        <span class="message-time">
+                            14:02
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- MESSAGE -->
+
+                <div class="message me">
+
+                    <div class="message-content">
+
+                        <div class="message-name">
+                            Bạn
+                        </div>
+
+                        <div class="bubble">
+                            Dạ còn nha bạn, sách đẹp khoảng 90% nhé.
+                        </div>
+
+                        <span class="message-time">
+                            14:03
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- OFFER -->
+
+                <div class="message them">
+
+                    <div class="message-content">
+
+                        <div class="message-name">
+                            Minh Thư Comics
+                        </div>
+
+                        <div class="offer-message">
+
+                            <div class="offer-label">
+                                Đề xuất giá
+                            </div>
+
+                            <div class="offer-price">
+                                260.000₫
+                            </div>
+
+                            <p>
+                                Mức giá người bán đề xuất.
+                            </p>
+
+                            <div class="offer-actions">
+
+                                <button
+                                    class="btn btn-outline"
+                                    onclick="rejectOffer(260000)"
+                                >
+                                    Từ chối
+                                </button>
+
+                                <button
+                                    class="btn btn-primary"
+                                    onclick="acceptOffer(260000)"
+                                >
+                                    Đồng ý
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                        <span class="message-time">
+                            14:04
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- MESSAGE -->
+
+                <div class="message me">
+
+                    <div class="message-content">
+
+                        <div class="message-name">
+                            Bạn
+                        </div>
+
+                        <div class="bubble">
+                            Bạn xem giúp mình 285.000₫ được không, mình lấy cả bộ nhé.
+                        </div>
+
+                        <span class="message-time">
+                            14:06
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- OFFER -->
+
+                <div class="message them">
+
+                    <div class="message-content">
+
+                        <div class="message-name">
+                            Minh Thư Comics
+                        </div>
+
+                        <div class="offer-message">
+
+                            <div class="offer-label">
+                                Trả giá lại
+                            </div>
+
+                            <div class="offer-price">
+                                275.000₫
+                            </div>
+
+                            <p>
+                                Người bán đã trả giá lại cho bạn.
+                            </p>
+
+                            <div class="offer-actions">
+
+                                <button
+                                    class="btn btn-outline"
+                                    onclick="rejectOffer(275000)"
+                                >
+                                    Từ chối
+                                </button>
+
+                                <button
+                                    class="btn btn-primary"
+                                    onclick="acceptOffer(275000)"
+                                >
+                                    Đồng ý
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                        <span class="message-time">
+                            14:08
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- =====================
+                 COMPOSER
+            ====================== -->
+
+            <div class="composer">
+
+                <button
+                    class="price-button"
+                    onclick="focusPrice()"
+                >
+                    ＋ Giá
+                </button>
+
+                <input
+                    id="messageInput"
+                    type="text"
+                    placeholder="Nhập tin nhắn…"
+                    onkeydown="handleEnter(event)"
+                >
+
+                <button
+                    class="btn btn-dark"
+                    onclick="sendMessage()"
+                >
+                    Gửi
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================
+             SIDE PANEL
+        ====================== -->
+
+        <aside class="side-panel">
+
+
+            <!-- CURRENT DEAL -->
+
+            <div class="card side-card">
+
+                <h3>
+                    Mức giá hiện tại
+                </h3>
+
+                <div
+                    class="deal-price"
+                    id="currentPrice"
+                >
+                    275.000₫
+                </div>
+
+                <span class="deal-status">
+                    Đang chờ bạn phản hồi
+                </span>
+
+
+                <div class="deal-info">
+
+                    <div class="deal-row">
+                        <span>Giá niêm yết</span>
+                        <strong>320.000₫</strong>
+                    </div>
+
+                    <div class="deal-row">
+                        <span>Người bán</span>
+                        <strong>Minh Thư Comics</strong>
+                    </div>
+
+                    <div class="deal-row">
+                        <span>Mã phòng</span>
+                        <strong>#PT2049</strong>
+                    </div>
+
+                </div>
+
+
+                <div class="quick-title">
+                    Đề xuất nhanh
+                </div>
+
+                <div class="quick-prices">
+
+                    <button onclick="quickOffer(270000)">
+                        270k
+                    </button>
+
+                    <button onclick="quickOffer(275000)">
+                        275k
+                    </button>
+
+                    <button onclick="quickOffer(280000)">
+                        280k
+                    </button>
+
+                </div>
+
+
+                <div class="deal-action">
+
+                    <button
+                        class="btn btn-primary btn-block"
+                        onclick="acceptCurrentDeal()"
+                    >
+                        Đồng ý mức giá này
+                    </button>
+
+                    <button
+                        class="btn btn-outline btn-block"
+                        onclick="showOfferInput()"
+                    >
+                        Trả giá khác
+                    </button>
+
+                </div>
+
+
+                <div class="timer-line">
+
+                    <span>
+                        Phòng tự đóng sau
+                    </span>
+
+                    <strong>
+                        05:41
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- AFTER DEAL -->
+
+            <div class="card side-card">
+
+                <h3>
+                    Khi đã thống nhất giá
+                </h3>
+
+                <p class="side-description">
+                    Sau khi hai bên đồng ý cùng một mức giá,
+                    Deal sẽ được chốt và bạn có thể tạo đơn hàng
+                    đàm phán.
+                </p>
+
+                <button
+                    class="btn btn-outline btn-block"
+                    style="margin-top:12px;"
+                    onclick="createOrder()"
+                >
+                    Tạo đơn hàng →
+                </button>
+
+            </div>
+
+
+            <!-- RULES -->
+
+            <div class="card side-card">
+
+                <h3>
+                    Lưu ý khi trao đổi
+                </h3>
+
+                <ul class="rules">
+
+                    <li>
+                        Không chia sẻ thông tin cá nhân trong phòng.
+                    </li>
+
+                    <li>
+                        Chỉ chốt Deal khi đã thống nhất giá.
+                    </li>
+
+                    <li>
+                        Giá Deal không bao gồm phí vận chuyển.
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </aside>
+
+    </div>
+
+</main>
+
+
+<script>
+
+    /* =========================
+       FORMAT MONEY
+    ========================= */
+
+    function formatMoney(value) {
+
+        return value.toLocaleString("vi-VN") + "₫";
+
+    }
+
+
+    /* =========================
+       ACCEPT OFFER
+    ========================= */
+
+    function acceptOffer(price) {
+
+        document.getElementById("currentPrice").textContent =
+            formatMoney(price);
+
+        alert(
+            "Bạn đã đồng ý mức giá "
+            + formatMoney(price)
+            + ".\n\n"
+            + "Nếu người bán cũng xác nhận, Deal sẽ được chốt."
+        );
+
+    }
+
+
+    /* =========================
+       REJECT OFFER
+    ========================= */
+
+    function rejectOffer(price) {
+
+        alert(
+            "Bạn đã từ chối mức giá "
+            + formatMoney(price)
+            + "."
+        );
+
+    }
+
+
+    /* =========================
+       QUICK OFFER
+    ========================= */
+
+    function quickOffer(price) {
+
+        const message =
+            "Mình đề nghị mức giá "
+            + formatMoney(price)
+            + " được không ạ?";
+
+        addMessage(message);
+
+    }
+
+
+    /* =========================
+       ADD MESSAGE
+    ========================= */
+
+    function addMessage(text) {
+
+        const chat =
+            document.getElementById("chat");
+
+        const message =
+            document.createElement("div");
+
+        message.className =
+            "message me";
+
+        message.innerHTML = `
+            <div class="message-content">
+
+                <div class="message-name">
+                    Bạn
+                </div>
+
+                <div class="bubble">
+                    ${text}
+                </div>
+
+                <span class="message-time">
+                    Vừa xong
+                </span>
+
+            </div>
+        `;
+
+        chat.appendChild(message);
+
+        chat.scrollTop =
+            chat.scrollHeight;
+
+    }
+
+
+    /* =========================
+       SEND MESSAGE
+    ========================= */
+
+    function sendMessage() {
+
+        const input =
+            document.getElementById("messageInput");
+
+        const text =
+            input.value.trim();
+
+        if (!text) {
+            return;
+        }
+
+        addMessage(text);
+
+        input.value = "";
+
+    }
+
+
+    /* =========================
+       ENTER TO SEND
+    ========================= */
+
+    function handleEnter(event) {
+
+        if (event.key === "Enter") {
+
+            event.preventDefault();
+
+            sendMessage();
+
+        }
+
+    }
+
+
+    /* =========================
+       PRICE BUTTON
+    ========================= */
+
+    function focusPrice() {
+
+        const price =
+            prompt("Nhập mức giá bạn muốn đề nghị:");
+
+        if (!price) {
+            return;
+        }
+
+        const numericPrice =
+            Number(price);
+
+        if (
+            isNaN(numericPrice) ||
+            numericPrice <= 0
+        ) {
+
+            alert("Vui lòng nhập mức giá hợp lệ.");
+
+            return;
+
+        }
+
+        addMessage(
+            "Mình đề nghị mức giá "
+            + formatMoney(numericPrice)
+            + " được không ạ?"
+        );
+
+    }
+
+
+    /* =========================
+       OTHER OFFER
+    ========================= */
+
+    function showOfferInput() {
+
+        focusPrice();
+
+    }
+
+
+    /* =========================
+       CURRENT DEAL
+    ========================= */
+
+    function acceptCurrentDeal() {
+
+        const price =
+            document
+                .getElementById("currentPrice")
+                .textContent;
+
+        const confirmed =
+            confirm(
+                "Bạn có muốn chốt Deal ở mức "
+                + price
+                + " không?"
+            );
+
+        if (!confirmed) {
+            return;
+        }
+
+        alert(
+            "Hai bên đã thống nhất giá.\n\n"
+            + "Deal được chuyển sang bước tạo đơn hàng đàm phán."
+        );
+
+    }
+
+
+    /* =========================
+       CREATE ORDER
+    ========================= */
+
+    function createOrder() {
+
+        alert(
+            "Chuyển sang trang Tạo đơn hàng đàm phán.\n\n"
+            + "Deal #PT2049 sẽ được sử dụng để tạo đơn."
+        );
+
+    }
+
+
+</script>
+
+</body>
+</html>
+
