@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Tính phí vận chuyển</title>
+
+    <link rel="stylesheet" href="../css/shipping-fee.css">
+
+
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="nav-inner">
+        <div class="nav-brand">
+            Trao đổi & Đàm phán
+        </div>
+
+        <div class="nav-links">
+
+            <a href="dealing-chat.html">
+                Phòng trao đổi
+            </a>
+
+            <a href="negotiation-order.html">
+                Tạo đơn hàng
+            </a>
+
+            <a href="shipping-fee.html" class="active">
+                Phí vận chuyển
+            </a>
+
+            <a href="exchange-orders.html">
+                Đơn hàng trao đổi
+            </a>
+
+            <a href="dealing-room.html">
+                Quản lý phòng
+            </a>
+
+        </div>
+    </div>
+</nav>
+
+<main class="page">
+    <div class="page-heading">
+
+        <div>
+            <div class="breadcrumb">
+                <span>Đơn hàng đàm phán</span>
+                <span>/</span>
+                Tính phí vận chuyển
+            </div>
+
+            <h1>Tính phí vận chuyển</h1>
+
+            <p class="page-description">
+                Kiểm tra thông tin giao nhận và chọn hình thức vận chuyển cho Deal #NG-2298
+            </p>
+        </div>
+
+        <div class="deal-status">
+            <span class="status-dot"></span>
+            Deal đã chốt
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================= -->
+
+    <div class="shipping-layout">
+
+        <!-- =====================
+             LEFT
+        ====================== -->
+
+        <section class="card shipping-form">
+
+            <div class="section-heading">
+                <h2>Thông tin giao nhận</h2>
+                <p>
+                    Thông tin này được sử dụng để tính phí vận chuyển.
+                </p>
+            </div>
+
+
+            <!-- Pickup -->
+
+            <div class="form-section">
+
+                <div class="form-section-title">
+                    Địa chỉ lấy hàng
+                </div>
+
+                <div class="location-box">
+
+                    <div class="location-icon">
+                        ⌖
+                    </div>
+
+                    <div class="location-content">
+
+                        <div class="location-name">
+                            Comic Store
+                        </div>
+
+                        <div class="location-address">
+                            25 Nguyễn Trãi, Quận 5, TP. Hồ Chí Minh
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Delivery -->
+
+            <div class="form-section">
+
+                <div class="field-label-row">
+                    <div class="form-section-title">
+                        Địa chỉ nhận hàng
+                    </div>
+
+                    <a href="#" class="change-address">
+                        Thay đổi
+                    </a>
+                </div>
+
+                <div class="location-box selected">
+
+                    <div class="location-icon">
+                        ⌖
+                    </div>
+
+                    <div class="location-content">
+
+                        <div class="location-name">
+                            Nguyễn Văn A · 0909 123 456
+                        </div>
+
+                        <div class="location-address">
+                            123 Nguyễn Văn A, Phường Bến Nghé,
+                            Quận 1, TP. Hồ Chí Minh
+                        </div>
+
+                        <span class="default-address">
+                            Địa chỉ mặc định
+                        </span>
+
+                    </div>
+
+                    <div class="check-icon">
+                        ✓
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="divider"></div>
+
+
+            <!-- Package -->
+
+            <div class="form-section">
+
+                <div class="form-section-title">
+                    Thông tin kiện hàng
+                </div>
+
+                <div class="form-grid">
+
+                    <div class="field">
+
+                        <label for="weight">
+                            Khối lượng ước tính
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <input
+                                    id="weight"
+                                    type="number"
+                                    value="2.4"
+                                    min="0"
+                                    step="0.1"
+                            >
+
+                            <span class="input-unit">
+                                kg
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label for="size">
+                            Kích thước gói
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <input
+                                    id="size"
+                                    type="text"
+                                    value="30 × 20 × 15"
+                            >
+
+                            <span class="input-unit">
+                                cm
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <button
+                    type="button"
+                    class="btn btn-primary btn-full"
+                    onclick="calculateShipping()"
+            >
+                Tính lại phí vận chuyển
+            </button>
+
+        </section>
+
+
+        <!-- =====================
+             RIGHT
+        ====================== -->
+
+        <section class="shipping-results">
+
+
+            <!-- Deal summary -->
+
+            <div class="card deal-summary">
+
+                <div class="summary-product">
+
+                    <div class="product-image">
+                        📚
+                    </div>
+
+                    <div class="product-info">
+
+                        <strong>
+                            One Piece trọn bộ
+                        </strong>
+
+                        <span>
+                            Deal #NG-2298 · Số lượng: 1
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="deal-price-row">
+
+                    <span>
+                        Giá niêm yết
+                    </span>
+
+                    <strong>
+                        1.800.000đ
+                    </strong>
+
+                </div>
+
+
+                <div class="deal-price-row deal-price">
+
+                    <span>
+                        Giá đã chốt
+                    </span>
+
+                    <strong>
+                        1.650.000đ
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- Shipping methods -->
+
+            <div class="result-heading">
+
+                <h2>
+                    Hình thức vận chuyển
+                </h2>
+
+                <p>
+                    Chọn phương thức phù hợp với nhu cầu nhận hàng.
+                </p>
+
+            </div>
+
+
+            <div id="shippingOptions">
+
+
+                <!-- Fast -->
+
+                <label class="shipping-option selected">
+
+                    <input
+                            type="radio"
+                            name="shipping"
+                            value="32000"
+                            checked
+                    >
+
+                    <span class="radio"></span>
+
+                    <div class="shipping-info">
+
+                        <div class="shipping-name">
+
+                            <h3>
+                                Giao nhanh
+                            </h3>
+
+                            <span class="tag-recommended">
+                                Đề xuất
+                            </span>
+
+                        </div>
+
+                        <p>
+                            Dự kiến giao trong 2–3 ngày
+                        </p>
+
+                        <span class="shipping-date">
+                            Nhận hàng khoảng 19–20/09
+                        </span>
+
+                    </div>
+
+                    <div class="shipping-price">
+                        32.000đ
+                    </div>
+
+                </label>
+
+
+                <!-- Economy -->
+
+                <label class="shipping-option">
+
+                    <input
+                            type="radio"
+                            name="shipping"
+                            value="19000"
+                    >
+
+                    <span class="radio"></span>
+
+                    <div class="shipping-info">
+
+                        <div class="shipping-name">
+
+                            <h3>
+                                Tiết kiệm
+                            </h3>
+
+                        </div>
+
+                        <p>
+                            Dự kiến giao trong 4–6 ngày
+                        </p>
+
+                        <span class="shipping-date">
+                            Nhận hàng khoảng 21–23/09
+                        </span>
+
+                    </div>
+
+                    <div class="shipping-price">
+                        19.000đ
+                    </div>
+
+                </label>
+
+
+                <!-- Express -->
+
+                <label class="shipping-option">
+
+                    <input
+                            type="radio"
+                            name="shipping"
+                            value="58000"
+                    >
+
+                    <span class="radio"></span>
+
+                    <div class="shipping-info">
+
+                        <div class="shipping-name">
+
+                            <h3>
+                                Hoả tốc
+                            </h3>
+
+                        </div>
+
+                        <p>
+                            Giao trong ngày nếu đủ điều kiện
+                        </p>
+
+                        <span class="shipping-date">
+                            Dự kiến nhận trong ngày
+                        </span>
+
+                    </div>
+
+                    <div class="shipping-price">
+                        58.000đ
+                    </div>
+
+                </label>
+
+            </div>
+
+
+            <!-- Total -->
+
+            <div class="card total-card">
+
+                <div class="total-row">
+
+                    <span>
+                        Giá Deal
+                    </span>
+
+                    <strong>
+                        1.650.000đ
+                    </strong>
+
+                </div>
+
+
+                <div class="total-row">
+
+                    <span>
+                        Phí vận chuyển
+                    </span>
+
+                    <strong id="shippingFee">
+                        32.000đ
+                    </strong>
+
+                </div>
+
+
+                <div class="total-divider"></div>
+
+
+                <div class="total-final">
+
+                    <span>
+                        Tổng đơn hàng
+                    </span>
+
+                    <strong id="totalPrice">
+                        1.682.000đ
+                    </strong>
+
+                </div>
+
+                <p class="total-note">
+                    Tổng tiền sẽ được cập nhật vào đơn hàng đàm phán.
+                </p>
+
+            </div>
+
+
+            <!-- Action -->
+
+            <div class="shipping-action">
+
+                <div class="action-info">
+
+                    <span>
+                        Phí vận chuyển đã chọn
+                    </span>
+
+                    <strong id="selectedFee">
+                        32.000đ
+                    </strong>
+
+                    <small>
+                        Giao nhanh · 2–3 ngày
+                    </small>
+
+                </div>
+
+                <button
+                        type="button"
+                        class="btn btn-primary"
+                        onclick="confirmShipping()"
+                >
+                    Xác nhận phí vận chuyển
+                </button>
+
+            </div>
+
+        </section>
+
+    </div>
+
+</main>
+
+
+<script>
+
+    const dealPrice = 1650000;
+
+    /*
+     * Mock dữ liệu phí vận chuyển.
+     * Sau này có thể thay bằng API/backend.
+     */
+    const shippingMethods = {
+        19000: {
+            name: "Tiết kiệm",
+            days: "4–6 ngày"
+        },
+
+        32000: {
+            name: "Giao nhanh",
+            days: "2–3 ngày"
+        },
+
+        58000: {
+            name: "Hoả tốc",
+            days: "Trong ngày"
+        }
+    };
+
+
+    /*
+     * Format tiền Việt Nam
+     */
+    function formatMoney(value) {
+
+        return value.toLocaleString("vi-VN") + "đ";
+
+    }
+
+
+    /*
+     * Chọn phương thức vận chuyển
+     */
+    document
+        .querySelectorAll('input[name="shipping"]')
+        .forEach(function (radio) {
+
+            radio.addEventListener("change", function () {
+
+                document
+                    .querySelectorAll(".shipping-option")
+                    .forEach(function (option) {
+
+                        option.classList.remove("selected");
+
+                    });
+
+
+                const currentOption =
+                    radio.closest(".shipping-option");
+
+                currentOption.classList.add("selected");
+
+
+                updateShippingPrice(
+                    Number(radio.value)
+                );
+
+            });
+
+        });
+
+
+    /*
+     * Cập nhật phí ship + tổng tiền
+     */
+    function updateShippingPrice(fee) {
+
+        const method = shippingMethods[fee];
+
+        document.getElementById("shippingFee").textContent =
+            formatMoney(fee);
+
+
+        document.getElementById("selectedFee").textContent =
+            formatMoney(fee);
+
+
+        document.getElementById("totalPrice").textContent =
+            formatMoney(dealPrice + fee);
+
+
+        const selectedDescription =
+            document.querySelector(
+                ".shipping-option.selected .shipping-date"
+            );
+
+
+        if (selectedDescription) {
+
+            document.querySelector(
+                ".action-info small"
+            ).textContent =
+                method.name + " · " + method.days;
+
+        }
+
+    }
+
+
+    /*
+     * Mock tính lại phí vận chuyển
+     */
+    function calculateShipping() {
+
+        const weight =
+            Number(document.getElementById("weight").value);
+
+
+        if (!weight || weight <= 0) {
+
+            alert("Vui lòng nhập khối lượng hợp lệ.");
+
+            return;
+
+        }
+
+
+        /*
+         * Mock:
+         * <= 1kg  : 19.000đ
+         * <= 3kg  : 32.000đ
+         * > 3kg   : 58.000đ
+         */
+
+        let fee;
+
+        if (weight <= 1) {
+
+            fee = 19000;
+
+        } else if (weight <= 3) {
+
+            fee = 32000;
+
+        } else {
+
+            fee = 58000;
+
+        }
+
+
+        const radio =
+            document.querySelector(
+                'input[name="shipping"][value="' + fee + '"]'
+            );
+
+
+        if (radio) {
+
+            radio.checked = true;
+
+            document
+                .querySelectorAll(".shipping-option")
+                .forEach(function (option) {
+
+                    option.classList.remove("selected");
+
+                });
+
+            radio
+                .closest(".shipping-option")
+                .classList.add("selected");
+
+        }
+
+
+        updateShippingPrice(fee);
+
+        alert(
+            "Đã tính lại phí vận chuyển: "
+            + formatMoney(fee)
+        );
+
+    }
+
+
+    /*
+     * Xác nhận phí vận chuyển
+     */
+    function confirmShipping() {
+
+        const selected =
+            document.querySelector(
+                'input[name="shipping"]:checked'
+            );
+
+        if (!selected) {
+
+            alert("Vui lòng chọn phương thức vận chuyển.");
+
+            return;
+
+        }
+
+
+        const fee =
+            Number(selected.value);
+
+        const method =
+            shippingMethods[fee];
+
+
+        /*
+         * Sau này có thể chuyển sang:
+         * /negotiation-order/create
+         * và truyền shippingFee + shippingMethod
+         */
+
+        alert(
+            "Đã xác nhận phí vận chuyển "
+            + formatMoney(fee)
+            + " (" + method.name + ").\n\n"
+            + "Hệ thống sẽ chuyển sang bước tạo đơn hàng đàm phán."
+        );
+
+    }
+
+</script>
+
+</body>
+</html>

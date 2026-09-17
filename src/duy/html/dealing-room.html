@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Quản lý phòng trao đổi giá</title>
+
+    <link rel="stylesheet" href="../css/dealing-room.css">
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="nav-inner">
+        <div class="nav-brand">
+            Trao đổi & Đàm phán
+        </div>
+
+        <div class="nav-links">
+
+            <a href="dealing-chat.html">
+                Phòng trao đổi
+            </a>
+
+            <a href="negotiation-order.html">
+                Tạo đơn hàng
+            </a>
+
+            <a href="shipping-fee.html">
+                Phí vận chuyển
+            </a>
+
+            <a href="exchange-orders.html">
+                Đơn hàng trao đổi
+            </a>
+
+            <a href="dealing-room.html" class="active">
+                Quản lý phòng
+            </a>
+
+        </div>
+    </div>
+</nav>
+
+<div class="page-container">
+    <div class="breadcrumb">
+        <span>Trang chủ</span>
+        <span>/</span>
+        <span>Người bán</span>
+        <span>/</span>
+        <strong>Phòng trao đổi giá</strong>
+    </div>
+
+    <div class="page-header">
+
+        <div>
+            <h1>Quản lý phòng trao đổi giá</h1>
+
+            <p>
+                Theo dõi và xử lý các phòng đàm phán giá với người mua.
+            </p>
+        </div>
+
+        <button
+                class="btn-secondary"
+                onclick="refreshRooms()"
+        >
+            ↻ Làm mới
+        </button>
+
+    </div>
+
+    <div class="stats-grid">
+
+        <div class="stat-card">
+
+            <div class="stat-icon orange">
+                💬
+            </div>
+
+            <div>
+                <p>Phòng đang mở</p>
+                <h3>05</h3>
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon yellow">
+                💰
+            </div>
+
+            <div>
+                <p>Deal chờ xử lý</p>
+                <h3>08</h3>
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon blue">
+                🤝
+            </div>
+
+            <div>
+                <p>Đã chốt hôm nay</p>
+                <h3>03</h3>
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon green">
+                ✓
+            </div>
+
+            <div>
+                <p>Phòng đã hoàn tất</p>
+                <h3>17</h3>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         FILTER
+    ========================== -->
+
+    <div class="filter-card">
+
+        <div class="filter-row">
+
+            <div class="search-box">
+
+                <span>⌕</span>
+
+                <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Tìm sản phẩm, mã phòng, người mua..."
+                        oninput="filterRooms()"
+                >
+
+            </div>
+
+
+            <select
+                    id="statusFilter"
+                    onchange="filterRooms()"
+            >
+                <option value="all">
+                    Tất cả trạng thái
+                </option>
+
+                <option value="active">
+                    Đang trao đổi
+                </option>
+
+                <option value="waiting">
+                    Chờ xử lý
+                </option>
+
+                <option value="accepted">
+                    Đã chốt
+                </option>
+
+                <option value="closed">
+                    Đã đóng
+                </option>
+
+                <option value="cancelled">
+                    Đã hủy
+                </option>
+            </select>
+
+
+            <select
+                    id="sortFilter"
+                    onchange="sortRooms()"
+            >
+                <option value="newest">
+                    Mới nhất
+                </option>
+
+                <option value="oldest">
+                    Cũ nhất
+                </option>
+
+                <option value="price-high">
+                    Giá đề xuất cao
+                </option>
+
+                <option value="price-low">
+                    Giá đề xuất thấp
+                </option>
+            </select>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         ROOM SECTION
+    ========================== -->
+
+    <div class="room-section">
+
+        <div class="section-header">
+
+            <div>
+                <h2>Danh sách phòng trao đổi</h2>
+
+                <p id="resultCount">
+                    Hiển thị 6 phòng
+                </p>
+            </div>
+
+        </div>
+
+
+        <div
+                class="room-list"
+                id="roomList"
+        >
+
+
+            <!-- =========================
+                 ROOM 1
+            ========================== -->
+
+            <div
+                    class="room-card"
+                    data-status="waiting"
+                    data-price="275000"
+                    data-date="2026-09-17"
+            >
+
+                <div class="room-main">
+
+                    <div class="product-image">
+
+                        <img
+                                src="https://images.unsplash.com/photo-1613376023733-0a73315d9b06?auto=format&fit=crop&w=300&q=80"
+                                alt="One Piece"
+                        >
+
+                    </div>
+
+
+                    <div class="room-info">
+
+                        <div class="room-heading">
+
+                            <div>
+
+                                <span class="room-code">
+                                    PHÒNG #PT2049
+                                </span>
+
+                                <h3>
+                                    One Piece trọn bộ tập 1–10
+                                </h3>
+
+                            </div>
+
+
+                            <span class="status waiting">
+                                Chờ xử lý
+                            </span>
+
+                        </div>
+
+
+                        <div class="buyer-info">
+
+                            <span>
+                                👤 Người mua:
+                                <strong>Nguyễn Minh</strong>
+                            </span>
+
+                            <span>
+                                💬 12 tin nhắn
+                            </span>
+
+                            <span>
+                                📅 17/09/2026
+                            </span>
+
+                        </div>
+
+
+                        <div class="price-area">
+
+                            <div class="price-item">
+
+                                <span>
+                                    Giá niêm yết
+                                </span>
+
+                                <strong class="list-price">
+                                    320.000đ
+                                </strong>
+
+                            </div>
+
+
+                            <div class="price-arrow">
+                                →
+                            </div>
+
+
+                            <div class="price-item">
+
+                                <span>
+                                    Giá đề xuất
+                                </span>
+
+                                <strong class="offer-price">
+                                    275.000đ
+                                </strong>
+
+                            </div>
+
+
+                            <div class="deal-count">
+
+                                <span>
+                                    Deal
+                                </span>
+
+                                <strong>
+                                    2
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="room-actions">
+
+                    <button
+                            class="btn-outline"
+                            onclick="openRoom('PT2049')"
+                    >
+                        Vào phòng
+                    </button>
+
+                    <button
+                            class="btn-secondary"
+                            onclick="counterOffer('PT2049')"
+                    >
+                        Đề xuất giá
+                    </button>
+
+                    <button
+                            class="btn-primary"
+                            onclick="acceptDeal('PT2049')"
+                    >
+                        Chốt deal
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 ROOM 2
+            ========================== -->
+
+            <div
+                    class="room-card"
+                    data-status="active"
+                    data-price="180000"
+                    data-date="2026-09-16"
+            >
+
+                <div class="room-main">
+
+                    <div class="product-image">
+
+                        <img
+                                src="https://images.unsplash.com/photo-1543002588-bfa74002ed7e?auto=format&fit=crop&w=300&q=80"
+                                alt="Jujutsu Kaisen"
+                        >
+
+                    </div>
+
+
+                    <div class="room-info">
+
+                        <div class="room-heading">
+
+                            <div>
+
+                                <span class="room-code">
+                                    PHÒNG #PT2042
+                                </span>
+
+                                <h3>
+                                    Jujutsu Kaisen tập 1–8
+                                </h3>
+
+                            </div>
+
+                            <span class="status active">
+                                Đang trao đổi
+                            </span>
+
+                        </div>
+
+
+                        <div class="buyer-info">
+
+                            <span>
+                                👤 Người mua:
+                                <strong>Hoàng Nam</strong>
+                            </span>
+
+                            <span>
+                                💬 26 tin nhắn
+                            </span>
+
+                            <span>
+                                📅 16/09/2026
+                            </span>
+
+                        </div>
+
+
+                        <div class="price-area">
+
+                            <div class="price-item">
+
+                                <span>
+                                    Giá niêm yết
+                                </span>
+
+                                <strong class="list-price">
+                                    220.000đ
+                                </strong>
+
+                            </div>
+
+
+                            <div class="price-arrow">
+                                →
+                            </div>
+
+
+                            <div class="price-item">
+
+                                <span>
+                                    Giá đề xuất
+                                </span>
+
+                                <strong class="offer-price">
+                                    180.000đ
+                                </strong>
+
+                            </div>
+
+
+                            <div class="deal-count">
+
+                                <span>
+                                    Deal
+                                </span>
+
+                                <strong>
+                                    3
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="room-actions">
+
+                    <button
+                            class="btn-outline"
+                            onclick="openRoom('PT2042')"
+                    >
+                        Vào phòng
+                    </button>
+
+                    <button
+                            class="btn-secondary"
+                            onclick="counterOffer('PT2042')"
+                    >
+                        Đề xuất giá
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 ROOM 3
+            ========================== -->
+
+            <div
+                    class="room-card"
+                    data-status="accepted"
+                    data-price="150000"
+                    data-date="2026-09-15"
+            >
+
+                <div class="room-main">
+
+                    <div class="product-image">
+
+                        <img
+                                src="https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=300&q=80"
+                                alt="Spy x Family"
+                        >
+
+                    </div>
+
+
+                    <div class="room-info">
+
+                        <div class="room-heading">
+
+                            <div>
+
+                                <span class="room-code">
+                                    PHÒNG #PT2038
+                                </span>
+
+                                <h3>
+                                    Spy x Family tập 1–5
+                                </h3>
+
+                            </div>
+
+
+                            <span class="status accepted">
+                                Đã chốt
+                            </span>
+
+                        </div>
+
+
+                        <div class="buyer-info">
+
+                            <span>
+                                👤 Người mua:
+                                <strong>Thanh Hà</strong>
+                            </span>
+
+                            <span>
+                                💬 18 tin nhắn
+                            </span>
+
+                            <span>
+                                📅 15/09/2026
+                            </span>
+
+                        </div>
+
+
+                        <div class="price-area">
+
+                            <div class="price-item">
+
+                                <span>
+                                    Giá niêm yết
+                                </span>
+
+                                <strong class="list-price">
+                                    175.000đ
+                                </strong>
+
+                            </div>
+
+
+                            <div class="price-arrow">
+                                →
+                            </div>
+
+
+                            <div class="price-item">
+
+                                <span>
+                                    Giá đã chốt
+                                </span>
+
+                                <strong class="offer-price">
+                                    150.000đ
+                                </strong>
+
+                            </div>
+
+
+                            <div class="deal-count selected">
+
+                                <span>
+                                    Deal đã chọn
+                                </span>
+
+                                <strong>
+                                    #D03
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="room-actions">
+
+                    <button
+                            class="btn-outline"
+                            onclick="openRoom('PT2038')"
+                    >
+                        Xem phòng
+                    </button>
+
+                    <button
+                            class="btn-disabled"
+                            disabled
+                    >
+                        Đã chốt deal
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 ROOM 4
+            ========================== -->
+
+            <div
+                    class="room-card"
+                    data-status="waiting"
+                    data-price="290000"
+                    data-date="2026-09-14"
+            >
+
+                <div class="room-main">
+
+                    <div class="product-image">
+
+                        <img
+                                src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&w=300&q=80"
+                                alt="Demon Slayer"
+                        >
+
+                    </div>
+
+
+                    <div class="room-info">
+
+                        <div class="room-heading">
+
+                            <div>
+
+                                <span class="room-code">
+                                    PHÒNG #PT2019
+                                </span>
+
+                                <h3>
+                                    Demon Slayer Boxset
+                                </h3>
+
+                            </div>
+
+
+                            <span class="status waiting">
+                                Chờ xử lý
+                            </span>
+
+                        </div>
+
+
+                        <div class="buyer-info">
+
+                            <span>
+                                👤 Người mua:
+                                <strong>Gia Huy</strong>
+                            </span>
+
+                            <span>
+                                💬 31 tin nhắn
+                            </span>
+
+                            <span>
+                                📅 14/09/2026
+                            </span>
+
+                        </div>
+
+
+                        <div class="price-area">
+
+                            <div class="price-item">
+
+                                <span>
+                                    Giá niêm yết
+                                </span>
+
+                                <strong class="list-price">
+                                    350.000đ
+                                </strong>
+
+                            </div>
+
+
+                            <div class="price-arrow">
+                                →
+                            </div>
+
+
+                            <div class="price-item">
+
+                                <span>
+                                    Giá đề xuất
+                                </span>
+
+                                <strong class="offer-price">
+                                    290.000đ
+                                </strong>
+
+                            </div>
+
+
+                            <div class="deal-count">
+
+                                <span>
+                                    Deal
+                                </span>
+
+                                <strong>
+                                    4
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="room-actions">
+
+                    <button
+                            class="btn-outline"
+                            onclick="openRoom('PT2019')"
+                    >
+                        Vào phòng
+                    </button>
+
+                    <button
+                            class="btn-secondary"
+                            onclick="counterOffer('PT2019')"
+                    >
+                        Đề xuất giá
+                    </button>
+
+                    <button
+                            class="btn-primary"
+                            onclick="acceptDeal('PT2019')"
+                    >
+                        Chốt deal
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 ROOM 5
+            ========================== -->
+
+            <div
+                    class="room-card"
+                    data-status="closed"
+                    data-price="210000"
+                    data-date="2026-09-10"
+            >
+
+                <div class="room-main">
+
+                    <div class="product-image">
+
+                        <img
+                                src="https://images.unsplash.com/photo-1621351183012-e2f9972dd9bf?auto=format&fit=crop&w=300&q=80"
+                                alt="Haikyuu"
+                        >
+
+                    </div>
+
+
+                    <div class="room-info">
+
+                        <div class="room-heading">
+
+                            <div>
+
+                                <span class="room-code">
+                                    PHÒNG #PT1982
+                                </span>
+
+                                <h3>
+                                    Haikyuu!! tập 1–10
+                                </h3>
+
+                            </div>
+
+
+                            <span class="status closed">
+                                Đã đóng
+                            </span>
+
+                        </div>
+
+
+                        <div class="buyer-info">
+
+                            <span>
+                                👤 Người mua:
+                                <strong>Phương Anh</strong>
+                            </span>
+
+                            <span>
+                                💬 22 tin nhắn
+                            </span>
+
+                            <span>
+                                📅 10/09/2026
+                            </span>
+
+                        </div>
+
+
+                        <div class="price-area">
+
+                            <div class="price-item">
+
+                                <span>
+                                    Giá niêm yết
+                                </span>
+
+                                <strong class="list-price">
+                                    250.000đ
+                                </strong>
+
+                            </div>
+
+
+                            <div class="price-arrow">
+                                →
+                            </div>
+
+
+                            <div class="price-item">
+
+                                <span>
+                                    Giá đã chốt
+                                </span>
+
+                                <strong class="offer-price">
+                                    210.000đ
+                                </strong>
+
+                            </div>
+
+
+                            <div class="deal-count selected">
+
+                                <span>
+                                    Trạng thái
+                                </span>
+
+                                <strong>
+                                    Hoàn tất
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="room-actions">
+
+                    <button
+                            class="btn-outline"
+                            onclick="openRoom('PT1982')"
+                    >
+                        Xem phòng
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 ROOM 6
+            ========================== -->
+
+            <div
+                    class="room-card"
+                    data-status="cancelled"
+                    data-price="120000"
+                    data-date="2026-09-08"
+            >
+
+                <div class="room-main">
+
+                    <div class="product-image">
+
+                        <img
+                                src="https://images.unsplash.com/photo-1592496001020-d31bd830651f?auto=format&fit=crop&w=300&q=80"
+                                alt="Blue Lock"
+                        >
+
+                    </div>
+
+
+                    <div class="room-info">
+
+                        <div class="room-heading">
+
+                            <div>
+
+                                <span class="room-code">
+                                    PHÒNG #PT1950
+                                </span>
+
+                                <h3>
+                                    Blue Lock tập 1–5
+                                </h3>
+
+                            </div>
+
+
+                            <span class="status cancelled">
+                                Đã hủy
+                            </span>
+
+                        </div>
+
+
+                        <div class="buyer-info">
+
+                            <span>
+                                👤 Người mua:
+                                <strong>Tuấn Anh</strong>
+                            </span>
+
+                            <span>
+                                💬 15 tin nhắn
+                            </span>
+
+                            <span>
+                                📅 08/09/2026
+                            </span>
+
+                        </div>
+
+
+                        <div class="price-area">
+
+                            <div class="price-item">
+
+                                <span>
+                                    Giá niêm yết
+                                </span>
+
+                                <strong class="list-price">
+                                    150.000đ
+                                </strong>
+
+                            </div>
+
+
+                            <div class="price-arrow">
+                                →
+                            </div>
+
+
+                            <div class="price-item">
+
+                                <span>
+                                    Giá cuối
+                                </span>
+
+                                <strong class="offer-price">
+                                    120.000đ
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="room-actions">
+
+                    <button
+                            class="btn-outline"
+                            onclick="openRoom('PT1950')"
+                    >
+                        Xem phòng
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Empty -->
+        <div
+                class="empty-state"
+                id="emptyState"
+        >
+
+            <div class="empty-icon">
+                🔎
+            </div>
+
+            <h3>
+                Không tìm thấy phòng trao đổi
+            </h3>
+
+            <p>
+                Hãy thử thay đổi từ khóa hoặc trạng thái.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    /* =========================
+       FILTER
+    ========================== */
+
+    function filterRooms() {
+
+        const keyword =
+            document
+                .getElementById("searchInput")
+                .value
+                .toLowerCase()
+                .trim();
+
+
+        const status =
+            document
+                .getElementById("statusFilter")
+                .value;
+
+
+        const rooms =
+            document.querySelectorAll(".room-card");
+
+
+        let count = 0;
+
+
+        rooms.forEach(function(room) {
+
+            const text =
+                room.innerText.toLowerCase();
+
+
+            const roomStatus =
+                room.dataset.status;
+
+
+            const matchKeyword =
+                text.includes(keyword);
+
+
+            const matchStatus =
+                status === "all" ||
+                roomStatus === status;
+
+
+            if (
+                matchKeyword &&
+                matchStatus
+            ) {
+
+                room.style.display = "block";
+
+                count++;
+
+            } else {
+
+                room.style.display = "none";
+
+            }
+
+        });
+
+
+        document
+            .getElementById("resultCount")
+            .innerText =
+            "Hiển thị " +
+            count +
+            " phòng";
+
+
+        document
+            .getElementById("emptyState")
+            .style.display =
+            count === 0
+                ? "block"
+                : "none";
+    }
+
+
+    /* =========================
+       SORT
+    ========================== */
+
+    function sortRooms() {
+
+        const list =
+            document.getElementById("roomList");
+
+
+        const rooms =
+            Array.from(
+                list.querySelectorAll(".room-card")
+            );
+
+
+        const type =
+            document
+                .getElementById("sortFilter")
+                .value;
+
+
+        rooms.sort(function(a, b) {
+
+            if (type === "newest") {
+
+                return new Date(b.dataset.date)
+                    - new Date(a.dataset.date);
+
+            }
+
+
+            if (type === "oldest") {
+
+                return new Date(a.dataset.date)
+                    - new Date(b.dataset.date);
+
+            }
+
+
+            if (type === "price-high") {
+
+                return Number(b.dataset.price)
+                    - Number(a.dataset.price);
+
+            }
+
+
+            if (type === "price-low") {
+
+                return Number(a.dataset.price)
+                    - Number(b.dataset.price);
+
+            }
+
+        });
+
+
+        rooms.forEach(function(room) {
+
+            list.appendChild(room);
+
+        });
+
+    }
+
+
+    /* =========================
+       OPEN ROOM
+    ========================== */
+
+    function openRoom(roomId) {
+
+        alert(
+            "Mở phòng trao đổi #" +
+            roomId
+        );
+
+        // Sau này:
+        // window.location.href =
+        // "page19.html?room=" + roomId;
+
+    }
+
+
+    /* =========================
+       COUNTER OFFER
+    ========================== */
+
+    function counterOffer(roomId) {
+
+        const price =
+            prompt(
+                "Nhập mức giá bạn muốn đề xuất lại:"
+            );
+
+
+        if (
+            price === null ||
+            price.trim() === ""
+        ) {
+            return;
+        }
+
+
+        alert(
+            "Đã tạo đề xuất " +
+            Number(price).toLocaleString("vi-VN") +
+            "đ cho phòng #" +
+            roomId
+        );
+
+    }
+
+
+    /* =========================
+       ACCEPT DEAL
+    ========================== */
+
+    function acceptDeal(roomId) {
+
+        const confirmDeal =
+            confirm(
+                "Bạn có chắc muốn chốt deal trong phòng #" +
+                roomId +
+                "?"
+            );
+
+
+        if (!confirmDeal) {
+            return;
+        }
+
+
+        alert(
+            "Đã chốt deal trong phòng #" +
+            roomId +
+            ". Hệ thống có thể tạo đơn hàng từ deal này."
+        );
+
+    }
+
+
+    function refreshRooms() {
+
+        alert(
+            "Đã làm mới danh sách phòng trao đổi."
+        );
+
+    }
+
+</script>
+
+</body>
+</html>
