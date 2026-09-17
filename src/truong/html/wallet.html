@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản lý ví & Số dư giam | ComicHub Seller Portal</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/wallet.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- SIDEBAR (Nạp từ file sidebar.html riêng biệt) -->
+    <div id="sidebarContainer" data-active="wallet"></div>
+
+    <!-- MAIN WRAPPER -->
+    <div class="main-wrapper">
+      <!-- TOP HEADER -->
+      <header class="top-header">
+        <div class="header-left">
+          <button class="sidebar-toggle" id="sidebarToggle" title="Mở menu">
+            <span class="material-symbols-outlined">menu</span>
+          </button>
+          <div class="store-selector">
+            <span class="material-symbols-outlined">storefront</span>
+            <span>Tiệm Truyện Vũ Trụ</span>
+            <span class="material-symbols-outlined" style="font-size: 18px; color: #94a3b8;">expand_more</span>
+          </div>
+          <div class="global-search">
+            <span class="material-symbols-outlined">search</span>
+            <input type="text" placeholder="Tìm theo mã đơn, biến động số dư..." id="walletSearch">
+            <span class="search-shortcut">⌘K</span>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <button class="nav-icon-btn" title="Thông báo mới">
+            <span class="material-symbols-outlined">notifications</span>
+            <span class="notification-badge-dot"></span>
+          </button>
+          <div class="user-profile-menu">
+            <div class="user-details">
+              <div class="user-name">Trần Đăng Khoa</div>
+              <div class="user-role">Pro Seller</div>
+            </div>
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAA4W4fxRdEwEUti0BU4ZPunWEZMYRM5XRFFlgIpx5h5FcGigyLtFd7NM4wAKmn97UX_qn2USeyOTbIRFCnmQoBVyYsAZzk2Ommn4m96f0g8tJFlLLzGMdeLo7dnjurcqN9z0VjI4molZf84AY3b6Xl-s2jzDP8NviNKL_3XKBJ4WcGvVtQMCXF-FWLhW-6fAZmyE9-0dH2oGqFDNxunrsUeQMqf7VzQIHdjpzPSeoN1G2SHC3fTPCzWA" alt="Avatar" class="user-avatar">
+          </div>
+        </div>
+      </header>
+
+      <!-- CONTENT BODY -->
+      <main class="content-body">
+        <!-- PAGE HEADER -->
+        <div class="page-header">
+          <div class="breadcrumb-tag">
+            <span class="material-symbols-outlined" style="font-size: 14px;">account_balance</span>
+            Tài chính người bán • Chính sách Escrow v2.4
+          </div>
+          <div class="page-title-row">
+            <div>
+              <h2 class="page-title">Quản lý ví & Số dư giam</h2>
+              <p class="page-subtitle">Kiểm soát dòng tiền thực nhận, tiến trình ký quỹ bảo đảm và lịch thanh toán tự động vào tài khoản liên kết</p>
+            </div>
+            <div class="header-action-group">
+              <a href="transactions.html" class="btn btn-outline">
+                <span class="material-symbols-outlined">history</span>
+                Lịch sử ví
+              </a>
+              <a href="withdraw.html" class="btn btn-primary">
+                <span class="material-symbols-outlined">payments</span>
+                Yêu cầu rút tiền
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- DUAL HERO BALANCE CARDS -->
+        <div class="wallet-hero-grid">
+          <!-- CARD 1: SỐ DƯ KHẢ DỤNG -->
+          <div class="wallet-card available">
+            <div class="wallet-card-header">
+              <span class="wallet-chip">
+                <span class="material-symbols-outlined" style="font-size: 16px;">check_circle</span>
+                Ví chính khả dụng
+              </span>
+              <span style="font-size: 0.82rem; color: #94a3b8; display: flex; align-items: center; gap: 4px;">
+                BIDV •••• 8868
+                <span class="material-symbols-outlined" style="font-size: 16px; color: var(--success);">verified</span>
+              </span>
+            </div>
+            <div class="wallet-amount-label">Số dư có thể sử dụng</div>
+            <div class="wallet-big-amount">48.650.000 <span style="font-size: 1.2rem; font-weight: 600; color: #94a3b8;">VNĐ</span></div>
+            <p class="wallet-desc">Có thể rút về tài khoản ngân hàng liên kết ngay lập tức (hỗ trợ 24/7 không tính phí chuyển tiền nội địa).</p>
+            <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 16px;">
+              <span style="font-size: 0.82rem; color: #34d399; display: flex; align-items: center; gap: 6px;">
+                <span class="material-symbols-outlined" style="font-size: 18px;">bolt</span>
+                Giải ngân tức thì qua Napas 247
+              </span>
+              <a href="withdraw.html" class="btn btn-primary btn-sm">
+                Rút tiền ngay
+              </a>
+            </div>
+          </div>
+
+          <!-- CARD 2: KÝ QUỸ AN TOÀN ESCROW -->
+          <div class="wallet-card escrow">
+            <div class="wallet-card-header">
+              <span class="wallet-chip">
+                <span class="material-symbols-outlined" style="font-size: 16px;">shield_lock</span>
+                Ký quỹ an toàn (Escrow)
+              </span>
+              <span style="font-size: 0.82rem; font-weight: 700; color: #c2410c;">
+                6 đơn bảo đảm
+              </span>
+            </div>
+            <div class="wallet-amount-label">Tổng số dư đang giam giữ</div>
+            <div class="wallet-big-amount" style="color: #9a3412;">14.820.000 <span style="font-size: 1.2rem; font-weight: 600; color: #c2410c;">VNĐ</span></div>
+            <div class="wallet-desc">
+              <span class="material-symbols-outlined" style="font-size: 16px; vertical-align: -3px; color: #ea580c;">info</span>
+              Tiền bảo chứng đơn hàng, sẽ mở khóa tự động sau khi người mua nhận truyện <strong>3 ngày</strong> mà không phát sinh khiếu nại chất lượng.
+            </div>
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 14px;">
+              <span style="font-size: 0.85rem; color: #7c2d12; font-weight: 600;">
+                Dự kiến về ví hôm nay: <strong style="color: #c2410c;">5.450.000 VNĐ</strong>
+              </span>
+              <a href="#escrowTableSection" class="btn btn-outline btn-sm" style="color: #c2410c; border-color: #fed7aa; background: #fff;">
+                Xem chi tiết
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- CASHFLOW TIMELINE & ESCROW PROTECTION GUIDE -->
+        <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 24px; margin-bottom: 28px;">
+          <!-- FLOW STATS -->
+          <div class="content-card" style="margin-bottom: 0;">
+            <div class="content-card-header">
+              <div>
+                <h3 class="content-card-title">
+                  <span class="material-symbols-outlined" style="color: var(--primary-container);">trending_up</span>
+                  Dòng tiền vào & giải ngân 7 ngày qua
+                </h3>
+                <p style="font-size: 0.82rem; color: var(--text-muted);">So sánh lượng tiền vào ký quỹ (tạm giữ) và lượng tiền đã tất toán vào Ví chính.</p>
+              </div>
+              <div class="chart-legends">
+                <div class="legend-item">
+                  <span class="legend-color" style="background-color: #ea580c;"></span>
+                  <span>Giải ngân thực tế</span>
+                </div>
+                <div class="legend-item">
+                  <span class="legend-color" style="background-color: #94a3b8;"></span>
+                  <span>Ký quỹ mới</span>
+                </div>
+              </div>
+            </div>
+            <div style="padding: 24px;">
+              <!-- Mini visual chart -->
+              <svg viewBox="0 0 500 120" style="width: 100%; height: 120px;">
+                <path d="M 10,95 Q 120,40 240,65 T 480,25" fill="none" stroke="#ea580c" stroke-width="3"/>
+                <path d="M 10,110 Q 130,85 250,90 T 480,70" fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="4,4"/>
+                <circle cx="360" cy="45" r="5" fill="#ea580c"/>
+              </svg>
+              <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border-subtle); text-align: center;">
+                <div>
+                  <div style="font-size: 0.78rem; color: var(--text-muted);">Tỷ lệ mở khóa đúng hạn</div>
+                  <div style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 700; color: var(--success);">99.4%</div>
+                </div>
+                <div>
+                  <div style="font-size: 0.78rem; color: var(--text-muted);">Thời gian giam TB</div>
+                  <div style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 700; color: var(--text-main);">2.8 ngày</div>
+                </div>
+                <div>
+                  <div style="font-size: 0.78rem; color: var(--text-muted);">Khiếu nại đang xử lý</div>
+                  <div style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 700; color: var(--primary);">0 đơn</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ESCROW 3-STEP INFOGRAPHIC -->
+          <div class="content-card" style="margin-bottom: 0;">
+            <div class="content-card-header">
+              <h3 class="content-card-title">
+                <span class="material-symbols-outlined" style="color: #2563eb;">verified_user</span>
+                Cơ chế Bảo vệ Truyện Quý ComicHub
+              </h3>
+            </div>
+            <div style="padding: 20px; display: flex; flex-direction: column; gap: 14px;">
+              <div style="display: flex; gap: 12px; align-items: flex-start;">
+                <div class="escrow-step-num">1</div>
+                <div>
+                  <h4 style="font-size: 0.9rem; font-weight: 700;">Người mua thanh toán đơn</h4>
+                  <p style="font-size: 0.8rem; color: var(--text-muted);">Tiền được giữ tại tài khoản ký quỹ trung gian ComicHub Escrow an toàn tuyệt đối.</p>
+                </div>
+              </div>
+              <div style="display: flex; gap: 12px; align-items: flex-start;">
+                <div class="escrow-step-num">2</div>
+                <div>
+                  <h4 style="font-size: 0.9rem; font-weight: 700;">Giao hàng & Đồng kiểm</h4>
+                  <p style="font-size: 0.8rem; color: var(--text-muted);">Hệ thống kích hoạt 72 giờ thẩm định truyện thực tế khi nhận hàng.</p>
+                </div>
+              </div>
+              <div style="display: flex; gap: 12px; align-items: flex-start;">
+                <div class="escrow-step-num">3</div>
+                <div>
+                  <h4 style="font-size: 0.9rem; font-weight: 700;">Tự động cộng vào ví</h4>
+                  <p style="font-size: 0.8rem; color: var(--text-muted);">Không có tranh chấp, tiền lập tức chuyển sang số dư khả dụng để rút.</p>
+                </div>
+              </div>
+              <a href="#" style="font-size: 0.82rem; color: var(--primary-container); font-weight: 700; margin-top: 6px; display: flex; align-items: center; gap: 4px;">
+                Quy chế bảo hiểm thất lạc & hư hỏng
+                <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- ESCROW ORDERS TABLE -->
+        <div class="content-card" id="escrowTableSection">
+          <div class="content-card-header">
+            <div>
+              <h3 class="content-card-title">
+                <span class="material-symbols-outlined" style="color: #ea580c;">lock_clock</span>
+                Danh sách 6 đơn hàng đang giữ tiền bảo lãnh
+              </h3>
+              <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 2px;">Kiểm tra thời gian mở khóa từng đơn theo mốc cập nhật từ đơn vị vận chuyển GHN & Viettel Post</p>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <span class="badge badge-warning" style="font-size: 0.85rem; padding: 6px 12px;">
+                Tổng giam: 14.820.000 ₫
+              </span>
+              <div class="global-search" style="width: 240px;">
+                <span class="material-symbols-outlined">search</span>
+                <input type="text" placeholder="Tìm theo mã đơn, truyện...">
+              </div>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Mã đơn hàng</th>
+                  <th>Tên sách truyện / Bìa phẩm</th>
+                  <th style="text-align: right;">Giá trị giam</th>
+                  <th>Ngày giao thành công</th>
+                  <th>Dự kiến giải ngân</th>
+                  <th style="text-align: center;">Trạng thái tiền</th>
+                  <th style="text-align: center;">Thao tác</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- ROW 1 -->
+                <tr>
+                  <td>
+                    <div class="order-id-cell">
+                      <div class="order-code">
+                        <span>#ORD-90214</span>
+                        <button class="copy-btn" onclick="copyText('ORD-90214')"><span class="material-symbols-outlined" style="font-size: 16px;">content_copy</span></button>
+                      </div>
+                      <span class="order-date">Hoàng Long (Hà Nội)</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="product-cell">
+                      <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWqhFsWxpkeotx5tstyYdH6kJR4eb2k9J7eu7w0JWyyGUFp50rC3luahd-yMydgXJNweztWl-ixYTjai8-q7Vz99n5Lge96qIWhxZKOg15FGJqNHM6COiHbIBcyxkrKtytIoLAFP5Ko-0ymJXfrr3G4PyW5M05PRHrEYbbRNK2JQpMdTkonmjMoF0ThC1m3Bs9dGTKTWhpIBvS4QvjvpHqKb1gmhwR968uB2MLZ7y5fuIbZgGHd7kblg" alt="One Piece 1" class="comic-thumbnail">
+                      <div>
+                        <div class="product-title">One Piece Tập 1 (First Print)</div>
+                        <span class="tag-badge">Tình trạng: 9.6 NM • 1 cuốn</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td style="text-align: right;">
+                    <div class="price-cell">
+                      <span class="price-amount" style="color: #ea580c;">5.450.000 ₫</span>
+                      <span class="price-note">đã trừ phí sàn 4%</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div style="font-size: 0.85rem; color: var(--text-main);">19/10/2023</div>
+                    <span style="font-size: 0.75rem; color: var(--text-muted);">14:32 (Viettel Post)</span>
+                  </td>
+                  <td>
+                    <div style="font-weight: 700; font-size: 0.85rem; color: var(--text-main);">22/10/2023 (18:00)</div>
+                    <span class="badge badge-warning" style="margin-top: 2px;">
+                      <span class="material-symbols-outlined" style="font-size: 14px;">hourglass_top</span>
+                      Còn 4 giờ nữa
+                    </span>
+                  </td>
+                  <td style="text-align: center;">
+                    <span class="badge badge-success">
+                      <span class="badge-dot"></span>
+                      Đang giữ an toàn
+                    </span>
+                  </td>
+                  <td style="text-align: center;">
+                    <button class="btn btn-outline btn-sm" onclick="showToast('Xem chi tiết ký quỹ đơn #ORD-90214')">
+                      Xem chi tiết
+                    </button>
+                  </td>
+                </tr>
+
+                <!-- ROW 2 -->
+                <tr>
+                  <td>
+                    <div class="order-id-cell">
+                      <div class="order-code">
+                        <span>#ORD-90185</span>
+                        <button class="copy-btn" onclick="copyText('ORD-90185')"><span class="material-symbols-outlined" style="font-size: 16px;">content_copy</span></button>
+                      </div>
+                      <span class="order-date">Đặng Minh Triết</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="product-cell">
+                      <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBuSUii68h6j-stebejdSOVKUYOfq_UUUop_ziEKJsFM2J8SPqiV_69zlCXmc22FYsbE22viTo3zwJuUzHbMXl9g1BY4P2EXYnp3DT8c1BqCj038f46u8Bj63xPLrjYRs0Wb4bvK8cbdUwYE5ec8BknkqLzAcZqZMPlKN4e_kxICCGyRwe_5nmA1cbntgWO2zctrW10AW_9o3v7RzGzoYKscfyisNhHmMQBbJu0fi8y-KjjkSpwsfqD6g" alt="Boxset Doraemon" class="comic-thumbnail">
+                      <div>
+                        <div class="product-title">Boxset Doraemon Đại Tuyển Tập</div>
+                        <span class="tag-badge">Seal 100% • 1 Box</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td style="text-align: right;">
+                    <div class="price-cell">
+                      <span class="price-amount" style="color: #ea580c;">3.200.000 ₫</span>
+                      <span class="price-note">đã trừ phí sàn 4%</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div style="font-size: 0.85rem; color: var(--text-main);">20/10/2023</div>
+                    <span style="font-size: 0.75rem; color: var(--text-muted);">09:15 (GHN Express)</span>
+                  </td>
+                  <td>
+                    <div style="font-weight: 700; font-size: 0.85rem; color: var(--text-main);">23/10/2023</div>
+                    <span class="badge badge-warning" style="margin-top: 2px;">
+                      <span class="material-symbols-outlined" style="font-size: 14px;">hourglass_top</span>
+                      Còn 1 ngày
+                    </span>
+                  </td>
+                  <td style="text-align: center;">
+                    <span class="badge badge-success">
+                      <span class="badge-dot"></span>
+                      Đang giữ an toàn
+                    </span>
+                  </td>
+                  <td style="text-align: center;">
+                    <button class="btn btn-outline btn-sm" onclick="showToast('Xem chi tiết ký quỹ đơn #ORD-90185')">
+                      Xem chi tiết
+                    </button>
+                  </td>
+                </tr>
+
+                <!-- ROW 3 -->
+                <tr>
+                  <td>
+                    <div class="order-id-cell">
+                      <div class="order-code">
+                        <span>#ORD-89942</span>
+                        <button class="copy-btn" onclick="copyText('ORD-89942')"><span class="material-symbols-outlined" style="font-size: 16px;">content_copy</span></button>
+                      </div>
+                      <span class="order-date">Vũ Hải Yến (Đà Nẵng)</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="product-cell">
+                      <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=100&q=80" alt="Dấu Ấn Rồng Thiêng" class="comic-thumbnail">
+                      <div>
+                        <div class="product-title">Dấu Ấn Rồng Thiêng (Trọn Bộ)</div>
+                        <span class="tag-badge">Sưu tầm 9.0 • 37 cuốn</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td style="text-align: right;">
+                    <div class="price-cell">
+                      <span class="price-amount" style="color: #ea580c;">2.650.000 ₫</span>
+                      <span class="price-note">đã trừ phí sàn 4%</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div style="font-size: 0.85rem; color: var(--text-main);">21/10/2023</div>
+                    <span style="font-size: 0.75rem; color: var(--text-muted);">11:00 (SPX)</span>
+                  </td>
+                  <td>
+                    <div style="font-weight: 700; font-size: 0.85rem; color: var(--text-main);">24/10/2023</div>
+                    <span class="badge badge-warning" style="margin-top: 2px;">
+                      <span class="material-symbols-outlined" style="font-size: 14px;">schedule</span>
+                      Còn 2 ngày
+                    </span>
+                  </td>
+                  <td style="text-align: center;">
+                    <span class="badge badge-success">
+                      <span class="badge-dot"></span>
+                      Đang giữ an toàn
+                    </span>
+                  </td>
+                  <td style="text-align: center;">
+                    <button class="btn btn-outline btn-sm" onclick="showToast('Xem chi tiết ký quỹ đơn #ORD-89942')">
+                      Xem chi tiết
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="pagination-wrapper">
+            <div class="pagination-info">
+              Hiển thị <strong>6 / 6</strong> đơn hàng trong hạn bảo lãnh 72h
+            </div>
+            <div class="pagination-controls">
+              <button class="page-btn" disabled>Trang trước</button>
+              <button class="page-btn active">1</button>
+              <button class="page-btn" disabled>Trang sau</button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+  <script src="../js/common.js"></script>
+  <script src="../js/wallet.js"></script>
+</body>
+</html>

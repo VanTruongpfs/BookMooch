@@ -1,0 +1,212 @@
+/* ==========================================================================
+   WALLET & ESCROW PAGE STYLES (Chuyên biệt cho wallet.html)
+   ========================================================================== */
+
+.wallet-hero-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.wallet-card {
+  border-radius: var(--radius-xl);
+  padding: 26px 28px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.wallet-card.available {
+  background: linear-gradient(145deg, #0b1c30 0%, #172a45 100%);
+  color: #fff;
+  border: 1px solid #1e3a5f;
+}
+
+.wallet-card.escrow {
+  background: linear-gradient(145deg, #fff7ed 0%, #ffedd5 100%);
+  color: #7c2d12;
+  border: 1px solid #fed7aa;
+}
+
+.wallet-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.wallet-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.wallet-card.available .wallet-chip {
+  background: rgba(16, 185, 129, 0.2);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.wallet-card.escrow .wallet-chip {
+  background: rgba(234, 88, 12, 0.15);
+  color: #c2410c;
+  border: 1px solid rgba(234, 88, 12, 0.25);
+}
+
+.wallet-amount-label {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  margin-bottom: 4px;
+}
+
+.wallet-card.escrow .wallet-amount-label {
+  color: #9a3412;
+}
+
+.wallet-big-amount {
+  font-family: var(--font-heading);
+  font-size: 2.3rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 12px;
+}
+
+.wallet-desc {
+  font-size: 0.82rem;
+  color: #cbd5e1;
+  line-height: 1.4;
+  margin-bottom: 20px;
+}
+
+.wallet-card.escrow .wallet-desc {
+  color: #7c2d12;
+  background: rgba(255, 255, 255, 0.6);
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(249, 115, 22, 0.2);
+}
+
+/* Escrow Step Infographic */
+.escrow-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.escrow-step-card {
+  background: var(--surface-card);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
+  padding: 18px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.escrow-step-num {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--primary-container);
+  color: #fff;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 0.9rem;
+}
+
+.escrow-step-info h4 {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 3px;
+}
+
+.escrow-step-info p {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.35;
+}
+
+.comic-thumbnail {
+  width: 52px;
+  height: 72px;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+  border: 1px solid var(--border-color);
+}
+
+.product-cell {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.product-title {
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: var(--text-main);
+}
+
+.price-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  text-align: right;
+}
+
+.price-amount {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.price-note {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* Escrow Countdown Progress Bar */
+.escrow-countdown-box {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 140px;
+}
+
+.countdown-track {
+  height: 6px;
+  background-color: #e2e8f0;
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.countdown-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #f59e0b, #10b981);
+  border-radius: var(--radius-full);
+  transition: width 0.8s ease-in-out;
+}
+
+.flow-chart-point {
+  cursor: pointer;
+  transition: r 0.2s ease;
+}
+
+.flow-chart-point:hover {
+  r: 8px;
+}
