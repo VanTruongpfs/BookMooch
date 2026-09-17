@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<!-- Profile workspace: shared Sidebar plus editable personal information. -->
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hồ sơ cá nhân | BookMooch</title>
+    <link rel="stylesheet" href="../../shared/styles/global-design-tokens.css">
+    <link rel="stylesheet" href="../../shared/sidebar/sidebar.css">
+    <link rel="stylesheet" href="profile.css">
+</head>
+<body>
+    <div class="app-shell"><div data-sidebar-mount></div><main class="app-main">
+        <header class="page-header"><div><p class="eyebrow">Tài khoản & Hồ sơ</p><h1 class="page-title">Hồ sơ cá nhân</h1><p class="page-subtitle">Quản lý thông tin liên hệ và thiết lập mặc định cho các giao dịch của bạn.</p></div><span class="status-badge" data-role-badge>Khách hàng</span></header>
+        <div class="content-grid two-columns">
+            <section class="surface-card profile-card"><h2>Thông tin tài khoản</h2><div class="profile-identity"><div class="profile-avatar" data-avatar>BM</div><div><strong data-display-name>Thành viên</strong><p data-display-email>member@example.com</p><label class="button secondary avatar-button" for="avatar-input">Đổi ảnh đại diện</label><input id="avatar-input" type="file" accept="image/*" hidden></div></div><form id="profile-form" class="form-grid" novalidate><div class="form-grid two-columns"><div class="field"><label for="full-name">Tên đăng nhập</label><input id="full-name" name="fullName" required><small class="field-error" data-error-for="fullName"></small></div><div class="field"><label for="email">Email</label><input id="email" name="email" type="email" required><small class="field-error" data-error-for="email"></small></div></div><div class="form-grid two-columns"><div class="field"><label for="phone">Số điện thoại</label><input id="phone" name="phone" type="tel" placeholder="Chưa cập nhật"></div><div class="field"><label for="address">Địa chỉ mặc định</label><input id="address" name="address" placeholder="Nhập địa chỉ nhận hàng"></div></div><div class="form-actions"><button class="button" type="submit">Lưu thay đổi</button></div></form></section>
+            <aside class="surface-card role-card"><h2>Vai trò hiện tại</h2><div class="role-symbol" data-role-symbol>U</div><h3 data-role-label>Khách hàng</h3><p class="page-subtitle">Quyền truy cập và menu được hiển thị tự động theo vai trò tài khoản.</p><a class="button" data-role-action href="#">Mở kênh Người bán</a><p class="role-hint">Vai trò demo có thể đổi bằng `localStorage.userRole`.</p></aside>
+        </div>
+    </main></div><div class="toast-region" data-toast-region aria-live="polite"></div>
+    <script type="module" src="../../shared/sidebar/sidebar.js"></script>
+    <script type="module" src="profile.js"></script>
+</body>
+</html>

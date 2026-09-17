@@ -1,0 +1,13 @@
+/* Profile-only styles; colors and layout foundations come from shared tokens. */
+.profile-card { min-width: 0; }
+.profile-identity { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid var(--neutral-default); }
+.profile-avatar { display: grid; width: 76px; height: 76px; flex: 0 0 76px; place-items: center; overflow: hidden; border-radius: 50%; color: var(--secondary-default); background: var(--primary-default); font-size: 1.4rem; font-weight: 900; }
+.profile-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.profile-identity strong { color: var(--neutral-light); font-size: 1.1rem; }
+.profile-identity p { margin: 5px 0 10px; color: var(--neutral-default); font-size: .86rem; }
+.avatar-button { min-height: 34px; padding: 7px 10px; font-size: .78rem; }
+.role-card { text-align: center; }
+.role-symbol { display: grid; width: 64px; height: 64px; margin: 2px auto 14px; place-items: center; border-radius: 50%; color: var(--secondary-default); background: var(--tertiary-default); font-size: 1.6rem; font-weight: 900; }
+.role-card h3 { margin: 0; color: var(--neutral-light); }
+.role-card .button { margin-top: 18px; text-decoration: none; }
+.role-hint { margin: 20px 0 0; color: var(--neutral-default); font-size: .74rem; }

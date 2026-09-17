@@ -3,7 +3,7 @@ const http = require("http");
 const fs = require("fs");
 const path = require("path");
 
-const root = path.resolve(__dirname, "src", "vu");
+const root = path.resolve(__dirname, "src");
 const port = Number(process.env.PORT) || 5500;
 const contentTypes = {
     ".html": "text/html; charset=utf-8",
@@ -28,4 +28,4 @@ http.createServer((request, response) => {
         response.writeHead(200, { "Content-Type": contentTypes[path.extname(filePath)] || "text/plain; charset=utf-8" });
         response.end(data);
     });
-}).listen(port, () => console.log(`BookMooch frontend: http://localhost:${port}/auth/login/login.html`));
+}).listen(port, () => console.log(`BookMooch frontend: http://localhost:${port}/vu/auth/login/login.html`));
