@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | BookMooch Admin Console</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/admin-common.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+<div id="sessionWarnBanner" style="display:none; background:#fef3c7; color:#92400e; padding:8px 24px; font-size:.82rem; font-weight:600; text-align:center;">
+  ⚠️ Bạn đang xem giao diện demo chưa đăng nhập. <a href="login.html" style="color:#92400e; text-decoration:underline;">Đăng nhập</a> để dùng phiên quản trị thật.
+</div>
+
+<div class="app-container">
+  <div id="sidebarContainer" data-active="dashboard"></div>
+
+  <div class="main-wrapper">
+    <header class="top-header">
+      <div class="header-left">
+        <button class="sidebar-toggle" id="sidebarToggle"><span class="material-symbols-outlined">menu</span></button>
+        <div class="store-selector">
+          <span class="material-symbols-outlined">admin_panel_settings</span>
+          <span>Trung tâm Quản trị</span>
+        </div>
+        <div class="global-search">
+          <span class="material-symbols-outlined">search</span>
+          <input type="text" placeholder="Tìm người dùng, đơn hàng, voucher...">
+          <span class="search-shortcut">⌘K</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <button class="nav-icon-btn" title="Thông báo mới" onclick="showToast('Bạn có 5 thông báo quản trị mới')">
+          <span class="material-symbols-outlined">notifications</span>
+          <span class="notification-badge-dot"></span>
+        </button>
+        <div class="user-profile-menu">
+          <div class="user-details">
+            <div class="user-name" data-admin-name>Nguyễn Minh Admin</div>
+            <div class="user-role" data-admin-role>Super Admin</div>
+          </div>
+          <img src="https://ui-avatars.com/api/?name=Admin&background=9d4300&color=fff&bold=true" class="user-avatar" alt="Avatar quản trị viên">
+        </div>
+      </div>
+    </header>
+
+    <main class="content-body">
+      <div class="page-header">
+        <div class="breadcrumb-tag">
+          <span class="material-symbols-outlined" style="font-size: 14px;">terminal</span>
+          Admin Console • Cập nhật vừa xong
+        </div>
+        <div class="page-title-row">
+          <div>
+            <h2 class="page-title">Chào buổi sáng, <span id="greetName">Admin</span> 👋</h2>
+            <p class="page-subtitle">Toàn cảnh vận hành nền tảng BookMooch hôm nay: người dùng, đơn hàng, dòng tiền và các tác vụ cần bạn duyệt.</p>
+          </div>
+          <div class="header-action-group">
+            <button class="btn btn-outline" onclick="showToast('Đang xuất báo cáo tổng quan hệ thống (PDF)')">
+              <span class="material-symbols-outlined">download</span> Xuất báo cáo
+            </button>
+            <a href="accounts.html" class="btn btn-primary">
+              <span class="material-symbols-outlined">person_add</span> Thêm tài khoản
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- KPI OVERVIEW -->
+      <section class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-content">
+            <span class="kpi-label">Tổng người dùng hệ thống</span>
+            <span class="kpi-value" id="kpiUsers">128.940</span>
+            <span class="kpi-trend positive"><span class="material-symbols-outlined" style="font-size:16px;">trending_up</span> +412 hôm nay</span>
+          </div>
+          <div class="kpi-icon-wrapper primary"><span class="material-symbols-outlined" style="font-size:26px;">groups</span></div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-content">
+            <span class="kpi-label">Doanh thu nền tảng hôm nay</span>
+            <span class="kpi-value" id="kpiRevenue">86.400.000 ₫</span>
+            <span class="kpi-trend positive"><span class="material-symbols-outlined" style="font-size:16px;">trending_up</span> +12.6% so với hôm qua</span>
+          </div>
+          <div class="kpi-icon-wrapper success"><span class="material-symbols-outlined" style="font-size:26px;">payments</span></div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-content">
+            <span class="kpi-label">Yêu cầu rút tiền chờ duyệt</span>
+            <span class="kpi-value" style="color:#ea580c;">14 yêu cầu</span>
+            <span class="kpi-trend warning"><span class="material-symbols-outlined" style="font-size:16px;">schedule</span> 320.500.000 ₫ chờ xử lý</span>
+          </div>
+          <div class="kpi-icon-wrapper warning"><span class="material-symbols-outlined" style="font-size:26px;">account_balance_wallet</span></div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-content">
+            <span class="kpi-label">Đơn hàng phát sinh hôm nay</span>
+            <span class="kpi-value">2.318 đơn</span>
+            <span class="kpi-trend info"><span class="material-symbols-outlined" style="font-size:16px;">local_shipping</span> 96.2% giao thành công</span>
+          </div>
+          <div class="kpi-icon-wrapper info"><span class="material-symbols-outlined" style="font-size:26px;">shopping_bag</span></div>
+        </div>
+      </section>
+
+      <div class="content-grid-2col">
+        <!-- QUICK MODULES -->
+        <div>
+          <div class="section-title-row">
+            <h3>Trung tâm chức năng quản trị</h3>
+            <p>Truy cập nhanh 6 phân hệ vận hành nền tảng</p>
+          </div>
+          <div class="module-grid">
+            <a class="module-card" href="accounts.html">
+              <div class="module-icon" style="background:var(--primary-light); color:var(--primary);"><span class="material-symbols-outlined">manage_accounts</span></div>
+              <h4>Quản lý tài khoản</h4>
+              <p>Người mua, người bán, khoá/mở tài khoản vi phạm</p>
+              <span class="module-badge">3 báo cáo mới</span>
+            </a>
+            <a class="module-card" href="staff.html">
+              <div class="module-icon" style="background:#ede9fe; color:#6d28d9;"><span class="material-symbols-outlined">badge</span></div>
+              <h4>Nhân sự &amp; phân quyền</h4>
+              <p>Quản lý tài khoản nhân viên, nhóm quyền hệ thống</p>
+            </a>
+            <a class="module-card" href="fees.html">
+              <div class="module-icon" style="background:#dbeafe; color:#1d4ed8;"><span class="material-symbols-outlined">request_quote</span></div>
+              <h4>Biểu phí &amp; chính sách</h4>
+              <p>Hoa hồng, phí rút tiền, chính sách vận hành sàn</p>
+            </a>
+            <a class="module-card" href="vouchers.html">
+              <div class="module-icon" style="background:#fce7f3; color:#be185d;"><span class="material-symbols-outlined">local_activity</span></div>
+              <h4>Voucher toàn hệ thống</h4>
+              <p>Chương trình khuyến mãi áp dụng toàn sàn</p>
+              <span class="module-badge">6 đang chạy</span>
+            </a>
+            <a class="module-card" href="finance.html">
+              <div class="module-icon" style="background:var(--success-bg); color:var(--success-text);"><span class="material-symbols-outlined">monitoring</span></div>
+              <h4>Doanh thu &amp; dòng tiền</h4>
+              <p>Dashboard tài chính, duyệt rút tiền, cash flow</p>
+              <span class="module-badge">14 chờ duyệt</span>
+            </a>
+            <a class="module-card" href="orders.html">
+              <div class="module-icon" style="background:var(--info-bg); color:var(--info-text);"><span class="material-symbols-outlined">package_2</span></div>
+              <h4>Quản lý đơn hàng</h4>
+              <p>Giám sát đơn hàng toàn sàn, xử lý tranh chấp</p>
+              <span class="module-badge">7 tranh chấp</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- SIDE PANEL: TASKS + STATUS -->
+        <div>
+          <div class="surface-panel">
+            <h3 class="panel-title"><span class="material-symbols-outlined">task_alt</span> Việc cần bạn xử lý</h3>
+            <div class="task-list">
+              <a href="finance.html#withdraw" class="task-item">
+                <div class="task-icon warning"><span class="material-symbols-outlined">account_balance_wallet</span></div>
+                <div class="task-text"><h5>14 yêu cầu rút tiền</h5><p>Người bán đang chờ duyệt &gt; 24 giờ</p></div>
+                <span class="material-symbols-outlined task-arrow">chevron_right</span>
+              </a>
+              <a href="accounts.html#reports" class="task-item">
+                <div class="task-icon danger"><span class="material-symbols-outlined">flag</span></div>
+                <div class="task-text"><h5>3 tài khoản bị báo cáo</h5><p>Nghi vấn gian lận giao dịch cần xác minh</p></div>
+                <span class="material-symbols-outlined task-arrow">chevron_right</span>
+              </a>
+              <a href="orders.html#disputes" class="task-item">
+                <div class="task-icon info"><span class="material-symbols-outlined">gavel</span></div>
+                <div class="task-text"><h5>7 đơn hàng tranh chấp</h5><p>Khiếu nại chưa hoà giải giữa buyer &amp; seller</p></div>
+                <span class="material-symbols-outlined task-arrow">chevron_right</span>
+              </a>
+              <a href="vouchers.html" class="task-item">
+                <div class="task-icon success"><span class="material-symbols-outlined">event_upcoming</span></div>
+                <div class="task-text"><h5>2 voucher sắp hết hạn</h5><p>Cần gia hạn hoặc tạo chương trình mới</p></div>
+                <span class="material-symbols-outlined task-arrow">chevron_right</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="surface-panel" style="margin-top:20px;">
+            <h3 class="panel-title"><span class="material-symbols-outlined">dns</span> Tình trạng hệ thống</h3>
+            <div class="status-mini-list">
+              <div class="status-mini-row"><span>API Gateway</span><span class="badge badge-success"><span class="badge-dot"></span>Hoạt động</span></div>
+              <div class="status-mini-row"><span>Cổng thanh toán Napas</span><span class="badge badge-success"><span class="badge-dot"></span>Hoạt động</span></div>
+              <div class="status-mini-row"><span>Dịch vụ vận chuyển</span><span class="badge badge-warning"><span class="badge-dot"></span>Chậm nhẹ</span></div>
+              <div class="status-mini-row"><span>Tìm kiếm &amp; đề xuất</span><span class="badge badge-success"><span class="badge-dot"></span>Hoạt động</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RECENT ADMIN ACTIVITY -->
+      <div class="content-card" style="margin-top:24px;">
+        <div class="content-card-header">
+          <div class="content-card-title"><span class="material-symbols-outlined">history</span> Nhật ký hoạt động quản trị gần đây</div>
+          <button class="btn btn-outline btn-sm" onclick="showToast('Đang mở nhật ký đầy đủ')">Xem tất cả</button>
+        </div>
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+            <tr><th>Thời gian</th><th>Quản trị viên</th><th>Hành động</th><th>Đối tượng</th><th style="text-align:center;">Trạng thái</th></tr>
+            </thead>
+            <tbody id="activityTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+<script src="../js/common.js"></script>
+<script src="../js/dashboard.js"></script>
+</body>
+</html>
