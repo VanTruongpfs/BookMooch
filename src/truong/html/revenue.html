@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thống kê doanh thu | ComicHub Seller Portal</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/revenue.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- SIDEBAR (Nạp từ file sidebar.html riêng biệt) -->
+    <div id="sidebarContainer" data-active="revenue"></div>
+
+    <!-- MAIN WRAPPER -->
+    <div class="main-wrapper">
+      <!-- TOP HEADER -->
+      <header class="top-header">
+        <div class="header-left">
+          <button class="sidebar-toggle" id="sidebarToggle" title="Mở menu">
+            <span class="material-symbols-outlined">menu</span>
+          </button>
+          <div class="store-selector">
+            <span class="material-symbols-outlined">storefront</span>
+            <span>Tiệm Truyện Vũ Trụ</span>
+            <span class="material-symbols-outlined" style="font-size: 18px; color: #94a3b8;">expand_more</span>
+          </div>
+          <div class="global-search">
+            <span class="material-symbols-outlined">search</span>
+            <input type="text" placeholder="Tìm kiếm báo cáo, chỉ số GMV..." id="revenueSearch">
+            <span class="search-shortcut">⌘K</span>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <button class="nav-icon-btn" title="Thông báo mới">
+            <span class="material-symbols-outlined">notifications</span>
+            <span class="notification-badge-dot"></span>
+          </button>
+          <div class="user-profile-menu">
+            <div class="user-details">
+              <div class="user-name">Trần Đăng Khoa</div>
+              <div class="user-role">Pro Seller</div>
+            </div>
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAA4W4fxRdEwEUti0BU4ZPunWEZMYRM5XRFFlgIpx5h5FcGigyLtFd7NM4wAKmn97UX_qn2USeyOTbIRFCnmQoBVyYsAZzk2Ommn4m96f0g8tJFlLLzGMdeLo7dnjurcqN9z0VjI4molZf84AY3b6Xl-s2jzDP8NviNKL_3XKBJ4WcGvVtQMCXF-FWLhW-6fAZmyE9-0dH2oGqFDNxunrsUeQMqf7VzQIHdjpzPSeoN1G2SHC3fTPCzWA" alt="Avatar Trần Đăng Khoa" class="user-avatar">
+          </div>
+        </div>
+      </header>
+
+      <!-- CONTENT BODY -->
+      <main class="content-body">
+        <!-- PAGE HEADER WITH TIMEFRAME FILTERS -->
+        <div class="page-header">
+          <div class="breadcrumb-tag">
+            <span class="material-symbols-outlined" style="font-size: 14px;">analytics</span>
+            Báo cáo thương mại & Phân tích chuyên sâu
+          </div>
+          <div class="page-title-row">
+            <div>
+              <h2 class="page-title">Thống kê doanh thu & Hiệu quả kinh doanh</h2>
+              <p class="page-subtitle">Đo lường tăng trưởng doanh số (GMV), tốc độ xử lý đơn hàng và hiệu quả danh mục ấn phẩm</p>
+            </div>
+            <div class="header-action-group">
+              <div class="filter-tabs-bar" style="margin-bottom: 0;">
+                <button class="tab-chip" onclick="selectTimeFilter(this)">Hôm nay</button>
+                <button class="tab-chip" onclick="selectTimeFilter(this)">7 ngày qua</button>
+                <button class="tab-chip active" onclick="selectTimeFilter(this)">30 ngày qua</button>
+                <button class="tab-chip" onclick="selectTimeFilter(this)">Năm nay (2023)</button>
+                <button class="tab-chip" onclick="showToast('Mở bộ lọc chọn khoảng ngày')">
+                  <span class="material-symbols-outlined" style="font-size: 16px;">calendar_month</span>
+                  Tùy chọn ngày
+                </button>
+              </div>
+              <div style="display: flex; gap: 8px;">
+                <button class="btn btn-outline btn-sm" onclick="showToast('Đang xuất báo cáo PDF...')">
+                  <span class="material-symbols-outlined" style="font-size: 16px;">picture_as_pdf</span>
+                  Xuất PDF
+                </button>
+                <button class="btn btn-secondary btn-sm" onclick="showToast('Đang xuất file Excel / CSV...')">
+                  <span class="material-symbols-outlined" style="font-size: 16px;">table_chart</span>
+                  Excel / CSV
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUMMARY METRICS -->
+        <section class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-content">
+              <span class="kpi-label">Doanh thu tháng (GMV)</span>
+              <span class="kpi-value">158.420.000 ₫</span>
+              <span class="kpi-trend positive">
+                <span class="material-symbols-outlined" style="font-size: 16px;">trending_up</span>
+                +18.4% tăng trưởng
+              </span>
+            </div>
+            <div class="kpi-icon-wrapper primary">
+              <span class="material-symbols-outlined" style="font-size: 26px;">payments</span>
+            </div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-content">
+              <span class="kpi-label">Tổng đơn hàng đã duyệt</span>
+              <span class="kpi-value" style="color: #2563eb;">842 đơn</span>
+              <span class="kpi-trend info">
+                <span class="material-symbols-outlined" style="font-size: 16px;">shopping_bag</span>
+                +12.2% so với tháng trước
+              </span>
+            </div>
+            <div class="kpi-icon-wrapper info">
+              <span class="material-symbols-outlined" style="font-size: 26px;">local_shipping</span>
+            </div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-content">
+              <span class="kpi-label">Tỷ lệ hủy / Trả hàng</span>
+              <span class="kpi-value" style="color: #10b981;">1.2%</span>
+              <span class="kpi-trend positive">
+                <span class="material-symbols-outlined" style="font-size: 16px;">arrow_downward</span>
+                -0.5% (Dưới ngưỡng cho phép)
+              </span>
+            </div>
+            <div class="kpi-icon-wrapper success">
+              <span class="material-symbols-outlined" style="font-size: 26px;">remove_shopping_cart</span>
+            </div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-content">
+              <span class="kpi-label">Đánh giá cửa hàng</span>
+              <span class="kpi-value" style="color: #f59e0b;">4.9 / 5.0</span>
+              <span class="kpi-trend neutral" style="font-size: 0.78rem;">
+                ⭐ Với 1,248 lượt review độc giả
+              </span>
+            </div>
+            <div class="kpi-icon-wrapper warning">
+              <span class="material-symbols-outlined" style="font-size: 26px;">stars</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- INTERACTIVE REVENUE & ORDERS CHART -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <div class="chart-title-group">
+              <h3>Biến động doanh thu & số lượng đơn hàng</h3>
+              <p>Phân tích chu kỳ thanh khoản & mật độ xuất kho 30 ngày vừa qua</p>
+            </div>
+            <div style="display: flex; align-items: center; gap: 20px;">
+              <div class="chart-legends">
+                <div class="legend-item">
+                  <span class="legend-color revenue"></span>
+                  <span>Doanh thu (triệu VNĐ)</span>
+                </div>
+                <div class="legend-item">
+                  <span class="legend-color orders"></span>
+                  <span>Số lượng đơn hàng</span>
+                </div>
+              </div>
+              <div class="filter-tabs-bar" style="margin-bottom: 0;">
+                <button class="tab-chip active btn-sm" onclick="toggleChartMode(this, 'daily')">Theo ngày</button>
+                <button class="tab-chip btn-sm" onclick="toggleChartMode(this, 'weekly')">Theo tuần</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- SVG DYNAMIC CHART -->
+          <div class="chart-wrapper" id="chartWrapper">
+            <svg class="chart-svg" viewBox="0 0 900 280" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="revenueGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#f97316" stop-opacity="0.35"/>
+                  <stop offset="100%" stop-color="#f97316" stop-opacity="0.0"/>
+                </linearGradient>
+                <linearGradient id="barGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#fb923c" stop-opacity="0.9"/>
+                  <stop offset="100%" stop-color="#ea580c" stop-opacity="0.7"/>
+                </linearGradient>
+              </defs>
+
+              <!-- Grid horizontal lines -->
+              <line x1="40" y1="30" x2="880" y2="30" stroke="#e2e8f0" stroke-dasharray="3,3"/>
+              <text x="10" y="34" font-size="11" fill="#94a3b8" font-family="sans-serif">8tr</text>
+
+              <line x1="40" y1="90" x2="880" y2="90" stroke="#e2e8f0" stroke-dasharray="3,3"/>
+              <text x="10" y="94" font-size="11" fill="#94a3b8" font-family="sans-serif">6tr</text>
+
+              <line x1="40" y1="150" x2="880" y2="150" stroke="#e2e8f0" stroke-dasharray="3,3"/>
+              <text x="10" y="154" font-size="11" fill="#94a3b8" font-family="sans-serif">4tr</text>
+
+              <line x1="40" y1="210" x2="880" y2="210" stroke="#e2e8f0" stroke-dasharray="3,3"/>
+              <text x="10" y="214" font-size="11" fill="#94a3b8" font-family="sans-serif">2tr</text>
+
+              <line x1="40" y1="260" x2="880" y2="260" stroke="#cbd5e1"/>
+              <text x="10" y="264" font-size="11" fill="#94a3b8" font-family="sans-serif">0đ</text>
+
+              <!-- Revenue Vertical Bars -->
+              <rect x="90" y="160" width="14" height="100" rx="4" fill="url(#barGrad)"/>
+              <rect x="190" y="140" width="14" height="120" rx="4" fill="url(#barGrad)"/>
+              <rect x="290" y="120" width="14" height="140" rx="4" fill="url(#barGrad)"/>
+              <rect x="390" y="180" width="14" height="80" rx="4" fill="url(#barGrad)"/>
+              <rect x="490" y="110" width="14" height="150" rx="4" fill="url(#barGrad)"/>
+              <rect x="590" y="60" width="14" height="200" rx="4" fill="url(#barGrad)"/>
+              <rect x="690" y="90" width="14" height="170" rx="4" fill="url(#barGrad)"/>
+              <rect x="790" y="70" width="14" height="190" rx="4" fill="url(#barGrad)"/>
+
+              <!-- Spline Curved Area & Line for Orders -->
+              <path d="M 97,175 C 145,150 160,110 197,125 C 240,140 260,95 297,85 C 340,75 360,170 397,185 C 440,200 460,130 497,95 C 540,60 560,140 597,55 C 640,30 660,130 697,60 C 740,20 760,120 797,75" 
+                    fill="none" stroke="#0b1c30" stroke-width="3" stroke-linecap="round"/>
+
+              <!-- Interactive Points -->
+              <circle cx="97" cy="175" r="5" fill="#f97316" stroke="#fff" stroke-width="2" class="chart-point" data-date="01/10" data-rev="3.2Tr" data-orders="18 đơn"/>
+              <circle cx="197" cy="125" r="5" fill="#f97316" stroke="#fff" stroke-width="2" class="chart-point" data-date="05/10" data-rev="4.5Tr" data-orders="26 đơn"/>
+              <circle cx="297" cy="85" r="5" fill="#f97316" stroke="#fff" stroke-width="2" class="chart-point" data-date="10/10" data-rev="5.8Tr" data-orders="34 đơn"/>
+              <circle cx="397" cy="185" r="5" fill="#f97316" stroke="#fff" stroke-width="2" class="chart-point" data-date="15/10 (Flash Sale)" data-rev="2.6Tr" data-orders="14 đơn"/>
+              <circle cx="497" cy="95" r="5" fill="#f97316" stroke="#fff" stroke-width="2" class="chart-point" data-date="20/10" data-rev="5.2Tr" data-orders="30 đơn"/>
+              <circle cx="597" cy="55" r="6" fill="#ea580c" stroke="#fff" stroke-width="3" class="chart-point" data-date="25/10 (Hội sách)" data-rev="7.3Tr - Đỉnh điểm" data-orders="48 đơn"/>
+              <circle cx="697" cy="60" r="5" fill="#f97316" stroke="#fff" stroke-width="2" class="chart-point" data-date="28/10" data-rev="6.1Tr" data-orders="38 đơn"/>
+              <circle cx="797" cy="75" r="5" fill="#f97316" stroke="#fff" stroke-width="2" class="chart-point" data-date="30/10" data-rev="6.8Tr" data-orders="42 đơn"/>
+
+              <!-- X Axis Labels -->
+              <text x="80" y="278" font-size="11" fill="#64748b" font-family="sans-serif">Ngày 01</text>
+              <text x="180" y="278" font-size="11" fill="#64748b" font-family="sans-serif">Ngày 05</text>
+              <text x="280" y="278" font-size="11" fill="#64748b" font-family="sans-serif">Ngày 10</text>
+              <text x="365" y="278" font-size="11" fill="#64748b" font-family="sans-serif">Ngày 15 (Flash Sale)</text>
+              <text x="480" y="278" font-size="11" fill="#64748b" font-family="sans-serif">Ngày 20</text>
+              <text x="560" y="278" font-size="11" fill="#ea580c" font-weight="700" font-family="sans-serif">Ngày 25 (Hội sách)</text>
+              <text x="780" y="278" font-size="11" fill="#64748b" font-family="sans-serif">Ngày 30</text>
+            </svg>
+            <div class="chart-tooltip" id="chartTooltip"></div>
+          </div>
+
+          <div class="chart-footer-stat">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span class="material-symbols-outlined" style="font-size: 18px; color: var(--primary-container);">info</span>
+              <span>Doanh số cao nhất rơi vào ngày <strong>25 hàng tháng</strong> (7.3M VNĐ – sự kiện Manga Weekend).</span>
+            </div>
+            <div>
+              <span>Giá trị trung bình đơn (AOV): <strong style="font-family: var(--font-heading); color: var(--text-main);">188.100 ₫</strong></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- TOP 5 BEST SELLING COMICS -->
+        <div class="content-card">
+          <div class="content-card-header">
+            <div>
+              <h3 class="content-card-title">
+                <span class="material-symbols-outlined" style="color: var(--primary-container);">military_tech</span>
+                Top 5 Tác phẩm truyện tranh bán chạy nhất
+              </h3>
+              <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 2px;">Xếp hạng theo sản lượng xuất kho & tổng doanh thu đóng góp trong 30 ngày qua</p>
+            </div>
+            <a href="#" class="btn btn-outline btn-sm" onclick="showToast('Đang mở toàn bộ 142 tựa truyện...')">
+              Xem tất cả danh mục (142 truyện)
+              <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+            </a>
+          </div>
+
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th style="width: 70px; text-align: center;">Thứ hạng</th>
+                  <th>Tác phẩm & Tác giả</th>
+                  <th style="text-align: center;">Số lượng đã bán</th>
+                  <th style="text-align: right;">Tổng doanh thu</th>
+                  <th style="text-align: center;">Trạng thái tồn kho</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- ITEM 1 -->
+                <tr>
+                  <td style="text-align: center;">
+                    <span class="rank-badge rank-1">1</span>
+                  </td>
+                  <td>
+                    <div class="product-cell">
+                      <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD34F0eT3qI5QoX4W1V4PjMh5k5QoX4W1V4PjMh5k5" onerror="this.src='https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=100&q=80'" alt="Dragon Ball Super 20" class="comic-thumbnail">
+                      <div class="product-meta">
+                        <div class="product-title">Dragon Ball Super – Tập 20</div>
+                        <div style="font-size: 0.78rem; color: var(--text-muted);">Tác giả: Akira Toriyama, Toyotarou • NXB Kim Đồng</div>
+                        <div class="product-tags">
+                          <span class="tag-badge">Bản đặc biệt kèm Bookmark & Standee</span>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td style="text-align: center;">
+                    <span style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 700;">245</span>
+                    <span style="font-size: 0.78rem; color: var(--text-muted); display: block;">cuốn</span>
+                  </td>
+                  <td style="text-align: right;">
+                    <div class="price-cell">
+                      <span class="price-amount">29.400.000 ₫</span>
+                      <span class="price-note" style="color: var(--success-text);">+24% so tháng trước</span>
+                    </div>
+                  </td>
+                  <td style="text-align: center;">
+                    <span class="badge badge-success">
+                      <span class="badge-dot"></span>
+                      Còn hàng (54 bản)
+                    </span>
+                  </td>
+                </tr>
+
+                <!-- ITEM 2 -->
+                <tr>
+                  <td style="text-align: center;">
+                    <span class="rank-badge rank-2">2</span>
+                  </td>
+                  <td>
+                    <div class="product-cell">
+                      <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_a82ouzPvhOjLHV-mAMxMpx0aMaNQ4SMXFI0DeL3tCyZ4wSuXGC3SOHmtgZuphnk1wwESuj3oAV8j61uTTeD_e-8FvB0nJ1kv8UvpusyiBZloE5nIkixSvJP0HaJw-n4jVCWGTzI54Y_DTJXbRN4cfcJ4OvRnfEDBNTu_VdEtwmlFBc3UZPmoPx5fuDE8lW1AovuVeZEVmCNJHqx-4BVdm2GdoyOzARQZF0VEfr1RBLJMkE9qzuEC8w" alt="Chú Thuật Hồi Chiến 20" class="comic-thumbnail">
+                      <div class="product-meta">
+                        <div class="product-title">Jujutsu Kaisen (Chú Thuật Hồi Chiến) – Tập 20</div>
+                        <div style="font-size: 0.78rem; color: var(--text-muted);">Tác giả: Gege Akutami • NXB Trẻ</div>
+                        <div class="product-tags">
+                          <span class="tag-badge">Bìa rời tráng gương giới hạn</span>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td style="text-align: center;">
+                    <span style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 700;">192</span>
+                    <span style="font-size: 0.78rem; color: var(--text-muted); display: block;">cuốn</span>
+                  </td>
+                  <td style="text-align: right;">
+                    <div class="price-cell">
+                      <span class="price-amount">23.040.000 ₫</span>
+                      <span class="price-note" style="color: var(--success-text);">+15% so tháng trước</span>
+                    </div>
+                  </td>
+                  <td style="text-align: center;">
+                    <span class="badge badge-success">
+                      <span class="badge-dot"></span>
+                      Còn hàng (112 bản)
+                    </span>
+                  </td>
+                </tr>
+
+                <!-- ITEM 3 -->
+                <tr>
+                  <td style="text-align: center;">
+                    <span class="rank-badge rank-3">3</span>
+                  </td>
+                  <td>
+                    <div class="product-cell">
+                      <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWqhFsWxpkeotx5tstyYdH6kJR4eb2k9J7eu7w0JWyyGUFp50rC3luahd-yMydgXJNweztWl-ixYTjai8-q7Vz99n5Lge96qIWhxZKOg15FGJqNHM6COiHbIBcyxkrKtytIoLAFP5Ko-0ymJXfrr3G4PyW5M05PRHrEYbbRNK2JQpMdTkonmjMoF0ThC1m3Bs9dGTKTWhpIBvS4QvjvpHqKb1gmhwR968uB2MLZ7y5fuIbZgGHd7kblg" alt="One Piece 104" class="comic-thumbnail">
+                      <div class="product-meta">
+                        <div class="product-title">One Piece – Tập 104 (Bản kỷ niệm)</div>
+                        <div style="font-size: 0.78rem; color: var(--text-muted);">Tác giả: Eiichiro Oda • NXB Kim Đồng</div>
+                        <div class="product-tags">
+                          <span class="tag-badge">Tặng kèm Poster Khổ Lớn</span>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td style="text-align: center;">
+                    <span style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 700;">168</span>
+                    <span style="font-size: 0.78rem; color: var(--text-muted); display: block;">cuốn</span>
+                  </td>
+                  <td style="text-align: right;">
+                    <div class="price-cell">
+                      <span class="price-amount">18.480.000 ₫</span>
+                      <span class="price-note" style="color: var(--success-text);">+8% so tháng trước</span>
+                    </div>
+                  </td>
+                  <td style="text-align: center;">
+                    <span class="badge badge-success">
+                      <span class="badge-dot"></span>
+                      Còn hàng (38 bản)
+                    </span>
+                  </td>
+                </tr>
+
+                <!-- ITEM 4 -->
+                <tr>
+                  <td style="text-align: center;">
+                    <span class="rank-badge rank-other">#4</span>
+                  </td>
+                  <td>
+                    <div class="product-cell">
+                      <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD98X1Y2Z3" onerror="this.src='https://images.unsplash.com/photo-1532012164546-f432f2e3777f?w=100&q=80'" alt="Conan 102" class="comic-thumbnail">
+                      <div class="product-meta">
+                        <div class="product-title">Thám Tử Lừng Danh Conan – Tập 102</div>
+                        <div style="font-size: 0.78rem; color: var(--text-muted);">Tác giả: Gosho Aoyama • NXB Kim Đồng</div>
+                        <div class="product-tags">
+                          <span class="tag-badge">Bản phổ thông bìa gập</span>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td style="text-align: center;">
+                    <span style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 700;">142</span>
+                    <span style="font-size: 0.78rem; color: var(--text-muted); display: block;">cuốn</span>
+                  </td>
+                  <td style="text-align: right;">
+                    <div class="price-cell">
+                      <span class="price-amount">14.200.000 ₫</span>
+                      <span class="price-note">+4.2% ổn định</span>
+                    </div>
+                  </td>
+                  <td style="text-align: center;">
+                    <span class="badge badge-success">
+                      <span class="badge-dot"></span>
+                      Còn hàng (86 bản)
+                    </span>
+                  </td>
+                </tr>
+
+                <!-- ITEM 5 -->
+                <tr>
+                  <td style="text-align: center;">
+                    <span class="rank-badge rank-other">#5</span>
+                  </td>
+                  <td>
+                    <div class="product-cell">
+                      <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSM11" onerror="this.src='https://images.unsplash.com/photo-1618365908648-e71bd5716cba?w=100&q=80'" alt="Chainsaw Man 11" class="comic-thumbnail">
+                      <div class="product-meta">
+                        <div class="product-title">Chainsaw Man – Tập 11 (Phần 1 Kết Thúc)</div>
+                        <div style="font-size: 0.78rem; color: var(--text-muted);">Tác giả: Tatsuki Fujimoto • NXB Trẻ</div>
+                        <div class="product-tags">
+                          <span class="tag-badge">Bản Collector Có Hộp Boxset</span>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td style="text-align: center;">
+                    <span style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 700;">120</span>
+                    <span style="font-size: 0.78rem; color: var(--text-muted); display: block;">cuốn</span>
+                  </td>
+                  <td style="text-align: right;">
+                    <div class="price-cell">
+                      <span class="price-amount">13.200.000 ₫</span>
+                      <span class="price-note" style="color: var(--success-text);">+11% so tháng trước</span>
+                    </div>
+                  </td>
+                  <td style="text-align: center;">
+                    <span class="badge badge-warning">
+                      <span class="badge-dot"></span>
+                      Sắp hết (12 bản)
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+  <script src="../js/common.js"></script>
+  <script src="../js/revenue.js"></script>
+</body>
+</html>

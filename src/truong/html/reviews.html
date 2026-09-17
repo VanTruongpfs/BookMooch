@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản lý đánh giá | ComicHub Seller Portal</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/reviews.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- SIDEBAR (Nạp từ file sidebar.html riêng biệt) -->
+    <div id="sidebarContainer" data-active="reviews"></div>
+
+    <!-- MAIN WRAPPER -->
+    <div class="main-wrapper">
+      <!-- TOP HEADER -->
+      <header class="top-header">
+        <div class="header-left">
+          <button class="sidebar-toggle" id="sidebarToggle" title="Mở menu">
+            <span class="material-symbols-outlined">menu</span>
+          </button>
+          <div class="store-selector">
+            <span class="material-symbols-outlined">storefront</span>
+            <span>Tiệm Truyện Vũ Trụ</span>
+            <span class="material-symbols-outlined" style="font-size: 18px; color: #94a3b8;">expand_more</span>
+          </div>
+          <div class="global-search">
+            <span class="material-symbols-outlined">search</span>
+            <input type="text" placeholder="Tìm theo tên sách, độc giả..." id="reviewSearchInput">
+            <span class="search-shortcut">⌘K</span>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <button class="nav-icon-btn" title="Thông báo mới">
+            <span class="material-symbols-outlined">notifications</span>
+            <span class="notification-badge-dot"></span>
+          </button>
+          <div class="user-profile-menu">
+            <div class="user-details">
+              <div class="user-name">Trần Đăng Khoa</div>
+              <div class="user-role">Pro Seller</div>
+            </div>
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAA4W4fxRdEwEUti0BU4ZPunWEZMYRM5XRFFlgIpx5h5FcGigyLtFd7NM4wAKmn97UX_qn2USeyOTbIRFCnmQoBVyYsAZzk2Ommn4m96f0g8tJFlLLzGMdeLo7dnjurcqN9z0VjI4molZf84AY3b6Xl-s2jzDP8NviNKL_3XKBJ4WcGvVtQMCXF-FWLhW-6fAZmyE9-0dH2oGqFDNxunrsUeQMqf7VzQIHdjpzPSeoN1G2SHC3fTPCzWA" alt="Avatar" class="user-avatar">
+          </div>
+        </div>
+      </header>
+
+      <!-- CONTENT BODY -->
+      <main class="content-body">
+        <!-- PAGE HEADER -->
+        <div class="page-header">
+          <div class="breadcrumb-tag">
+            <span class="material-symbols-outlined" style="font-size: 14px;">storefront</span>
+            Kênh người bán • Tiệm Truyện Vũ Trụ
+          </div>
+          <div class="page-title-row">
+            <div>
+              <h2 class="page-title">Quản lý đánh giá nhận được</h2>
+              <p class="page-subtitle">Theo dõi mức độ hài lòng của độc giả, phản hồi nhận xét và nâng cao uy tín tiệm sách</p>
+            </div>
+            <div class="header-action-group">
+              <button class="btn btn-outline" onclick="showToast('Đang cập nhật đánh giá mới nhất theo thời gian thực')">
+                <span class="material-symbols-outlined">sync</span>
+                Cập nhật thời gian thực
+              </button>
+              <button class="btn btn-secondary" onclick="showToast('Đang xuất báo cáo đánh giá PDF...')">
+                <span class="material-symbols-outlined">download</span>
+                Xuất báo cáo
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- RATINGS SUMMARY CARD (OVERALL SCORE + PROGRESS BARS + RESPONSE TIME) -->
+        <div class="ratings-summary-card">
+          <!-- COL 1: SCORE -->
+          <div class="overall-score">
+            <div class="score-num">4.9<span style="font-size: 1.8rem; color: #94a3b8; font-weight: 500;">/5.0</span></div>
+            <div class="score-stars">
+              <span class="material-symbols-outlined fill">star</span>
+              <span class="material-symbols-outlined fill">star</span>
+              <span class="material-symbols-outlined fill">star</span>
+              <span class="material-symbols-outlined fill">star</span>
+              <span class="material-symbols-outlined fill">star</span>
+            </div>
+            <div class="score-count">Dựa trên <strong>1.248</strong> lượt đánh giá từ khách mua truyện</div>
+            <div class="kpi-trend positive" style="margin-top: 10px;">
+              <span class="material-symbols-outlined" style="font-size: 16px;">trending_up</span>
+              +0.2 điểm so với tháng trước
+            </div>
+          </div>
+
+          <!-- COL 2: STAR DISTRIBUTION BARS -->
+          <div class="rating-bars">
+            <div class="rating-bar-row">
+              <div class="star-label">5 <span class="material-symbols-outlined fill" style="font-size: 14px; color: #f59e0b;">star</span></div>
+              <div class="progress-track">
+                <div class="progress-fill" style="width: 92%;"></div>
+              </div>
+              <div class="percent-label">92%</div>
+            </div>
+            <div class="rating-bar-row">
+              <div class="star-label">4 <span class="material-symbols-outlined fill" style="font-size: 14px; color: #f59e0b;">star</span></div>
+              <div class="progress-track">
+                <div class="progress-fill" style="width: 6%;"></div>
+              </div>
+              <div class="percent-label">6%</div>
+            </div>
+            <div class="rating-bar-row">
+              <div class="star-label">3 <span class="material-symbols-outlined fill" style="font-size: 14px; color: #f59e0b;">star</span></div>
+              <div class="progress-track">
+                <div class="progress-fill" style="width: 1%;"></div>
+              </div>
+              <div class="percent-label">1%</div>
+            </div>
+            <div class="rating-bar-row">
+              <div class="star-label">2 <span class="material-symbols-outlined fill" style="font-size: 14px; color: #f59e0b;">star</span></div>
+              <div class="progress-track">
+                <div class="progress-fill" style="width: 0.5%;"></div>
+              </div>
+              <div class="percent-label">&lt;1%</div>
+            </div>
+            <div class="rating-bar-row">
+              <div class="star-label">1 <span class="material-symbols-outlined fill" style="font-size: 14px; color: #f59e0b;">star</span></div>
+              <div class="progress-track">
+                <div class="progress-fill" style="width: 0.5%;"></div>
+              </div>
+              <div class="percent-label">&lt;1%</div>
+            </div>
+          </div>
+
+          <!-- COL 3: RESPONSE STATS -->
+          <div class="seller-reputation-stats">
+            <div class="rep-stat-item">
+              <h4>Tỷ lệ phản hồi</h4>
+              <div class="val" style="color: var(--success);">99.4%</div>
+              <span style="font-size: 0.75rem; color: var(--text-muted);">Rất tích cực (Mục tiêu &gt; 95%)</span>
+            </div>
+            <div class="rep-stat-item">
+              <h4>Thời gian phản hồi</h4>
+              <div class="val" style="color: var(--primary);">~ 15 phút</div>
+              <span style="font-size: 0.75rem; color: var(--text-muted);">Thường phản hồi cực nhanh</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- FILTER TABS & SEARCH -->
+        <div class="filter-tabs-bar">
+          <button class="tab-chip active">Tất cả (1.248)</button>
+          <button class="tab-chip">5 Sao (1.150)</button>
+          <button class="tab-chip">4 Sao (75)</button>
+          <button class="tab-chip">3 Sao (12)</button>
+          <button class="tab-chip">
+            <span class="material-symbols-outlined" style="font-size: 16px;">photo_camera</span>
+            Có hình ảnh (420)
+          </button>
+          <button class="tab-chip" style="border-color: #fca5a5; color: #dc2626;">
+            <span class="badge-dot" style="background: #dc2626;"></span>
+            Chưa phản hồi (5)
+          </button>
+        </div>
+
+        <!-- REVIEW LIST -->
+        <!-- REVIEW 1 -->
+        <div class="review-card">
+          <div class="review-card-header">
+            <div class="reviewer-profile">
+              <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&q=80" alt="Avatar Tuấn" class="reviewer-avatar">
+              <div class="reviewer-info">
+                <h4>
+                  Nguyễn Minh Tuấn
+                  <span class="badge badge-success" style="font-size: 0.72rem; padding: 2px 7px;">
+                    <span class="material-symbols-outlined" style="font-size: 14px;">verified</span>
+                    Đã mua hàng
+                  </span>
+                </h4>
+                <div class="meta-time">Đánh giá 2 giờ trước • Đơn hàng #CH-99214</div>
+              </div>
+            </div>
+            <button class="nav-icon-btn" style="width: 32px; height: 32px;"><span class="material-symbols-outlined">more_horiz</span></button>
+          </div>
+
+          <div class="review-stars">
+            <span class="material-symbols-outlined fill">star</span>
+            <span class="material-symbols-outlined fill">star</span>
+            <span class="material-symbols-outlined fill">star</span>
+            <span class="material-symbols-outlined fill">star</span>
+            <span class="material-symbols-outlined fill">star</span>
+          </div>
+
+          <div class="review-product-attached">
+            <span class="material-symbols-outlined" style="font-size: 16px;">menu_book</span>
+            Dragon Ball Super – Full Color Tập 12 (Bản giới hạn) &nbsp;|&nbsp; Phân loại: Bìa cứng kèm Poster
+          </div>
+
+          <p class="review-content-text">
+            Shop đóng gói cực kỳ có tâm, bọc bóng khí chống sốc tận 3 lớp, chèn góc carton cứng cáp nên bìa truyện mới cứng bóng loáng không một vết cấn góc nào! Bản in màu sắc nét rực rỡ, kèm postcard quà tặng độc quyền của ComicHub đẹp xuất sắc. Sẽ ủng hộ shop dài lâu!
+          </p>
+
+          <div class="review-photo-gallery">
+            <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=200&q=80" alt="Ảnh review truyện 1" class="review-photo-thumb" onclick="showToast('Xem ảnh phóng to của độc giả')">
+            <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?w=200&q=80" alt="Ảnh review truyện 2" class="review-photo-thumb" onclick="showToast('Xem ảnh phóng to của độc giả')">
+            <img src="https://images.unsplash.com/photo-1532012164546-f432f2e3777f?w=200&q=80" alt="Ảnh review truyện 3" class="review-photo-thumb" onclick="showToast('Xem ảnh phóng to của độc giả')">
+          </div>
+
+          <div class="shop-reply-box">
+            <div class="shop-reply-header">
+              <div class="shop-reply-author">
+                <span class="material-symbols-outlined" style="font-size: 16px;">storefront</span>
+                Phản hồi từ Shop: Tiệm Truyện Vũ Trụ
+              </div>
+              <span class="shop-reply-time">1 giờ trước</span>
+            </div>
+            <p class="shop-reply-text">
+              Dạ Tiệm Truyện Vũ Trụ xin chân thành cảm ơn bạn Tuấn đã tin tưởng và dành thời gian đánh giá 5 sao cho tiệm ạ! Với truyện sưu tầm bản màu thì bên mình luôn ưu tiên bảo vệ tối đa các góc cạnh. Chúc bạn có những phút giây đọc truyện thật sảng khoái và hẹn gặp lại bạn ở tập 13 nhé!
+            </p>
+          </div>
+        </div>
+
+        <!-- REVIEW 2 (CHƯA PHẢN HỒI) -->
+        <div class="review-card">
+          <div class="review-card-header">
+            <div class="reviewer-profile">
+              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80" alt="Avatar Oanh" class="reviewer-avatar">
+              <div class="reviewer-info">
+                <h4>
+                  Hoàng Oanh
+                  <span class="badge badge-success" style="font-size: 0.72rem; padding: 2px 7px;">Đã mua hàng</span>
+                  <span class="badge badge-warning" style="font-size: 0.72rem; padding: 2px 7px;">Top Fan Manga</span>
+                </h4>
+                <div class="meta-time">Hôm qua 18:45 • Đơn hàng #CH-99180</div>
+              </div>
+            </div>
+            <button class="nav-icon-btn" style="width: 32px; height: 32px;"><span class="material-symbols-outlined">more_horiz</span></button>
+          </div>
+
+          <div class="review-stars">
+            <span class="material-symbols-outlined fill">star</span>
+            <span class="material-symbols-outlined fill">star</span>
+            <span class="material-symbols-outlined fill">star</span>
+            <span class="material-symbols-outlined fill">star</span>
+            <span class="material-symbols-outlined fill">star</span>
+          </div>
+
+          <div class="review-product-attached">
+            <span class="material-symbols-outlined" style="font-size: 16px;">menu_book</span>
+            One Piece – Boxset Wano Quốc (Tập 91 – 105) &nbsp;|&nbsp; Phân loại: Boxset Nguyên Seal
+          </div>
+
+          <p class="review-content-text">
+            Giao hàng hỏa tốc trong nội thành chỉ 1 tiếng là nhận được rồi. Boxset nguyên seal nilong chưa bóc tem, hộp ngoài cứng cáp sang chảnh decor bàn đọc sách bao đẹp luôn. Shop tư vấn tận tình chu đáo qua tin nhắn chat nữa! 10/10 điểm phục vụ.
+          </p>
+
+          <div class="review-photo-gallery">
+            <img src="https://images.unsplash.com/photo-1618365908648-e71bd5716cba?w=200&q=80" alt="Review ảnh 1" class="review-photo-thumb" onclick="showToast('Xem ảnh phóng to của độc giả')">
+            <img src="https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=200&q=80" alt="Review ảnh 2" class="review-photo-thumb" onclick="showToast('Xem ảnh phóng to của độc giả')">
+          </div>
+
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 14px;">
+            <div style="display: flex; gap: 10px;">
+              <button class="btn btn-outline btn-sm" onclick="toggleReplyForm(this)">
+                <span class="material-symbols-outlined" style="font-size: 16px;">reply</span>
+                Phản hồi đánh giá
+              </button>
+              <button class="btn btn-outline btn-sm" onclick="showToast('Đã ghi nhận phản hồi hữu ích', 'success')">
+                <span class="material-symbols-outlined" style="font-size: 16px;">thumb_up</span>
+                Hữu ích (14)
+              </button>
+            </div>
+            <span class="badge badge-danger" style="font-size: 0.75rem;">
+              <span class="badge-dot"></span>
+              Cần phản hồi
+            </span>
+          </div>
+        </div>
+
+        <!-- REVIEW 3 -->
+        <div class="review-card">
+          <div class="review-card-header">
+            <div class="reviewer-profile">
+              <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=100&q=80" alt="Avatar Bảo" class="reviewer-avatar">
+              <div class="reviewer-info">
+                <h4>
+                  Lê Bảo
+                  <span class="badge badge-success" style="font-size: 0.72rem; padding: 2px 7px;">Đã mua hàng</span>
+                </h4>
+                <div class="meta-time">3 ngày trước • Đơn hàng #CH-99042</div>
+              </div>
+            </div>
+            <button class="nav-icon-btn" style="width: 32px; height: 32px;"><span class="material-symbols-outlined">more_horiz</span></button>
+          </div>
+
+          <div class="review-stars">
+            <span class="material-symbols-outlined fill">star</span>
+            <span class="material-symbols-outlined fill">star</span>
+            <span class="material-symbols-outlined fill">star</span>
+            <span class="material-symbols-outlined fill">star</span>
+            <span class="material-symbols-outlined" style="color: #cbd5e1;">star</span>
+          </div>
+
+          <div class="review-product-attached">
+            <span class="material-symbols-outlined" style="font-size: 16px;">menu_book</span>
+            Jujutsu Kaisen – Chú Thuật Hồi Chiến Tập 0 (Bìa Ánh Kim) &nbsp;|&nbsp; Phân loại: Tập lẻ kèm Bookmark
+          </div>
+
+          <p class="review-content-text">
+            Truyện đẹp xuất sắc không tì vết, hiệu ứng ánh kim lấp lánh cầm trên tay thích mê. Điểm trừ xíu là bên vận chuyển giao chậm hơn dự kiến 1 ngày so với app thông báo, nhưng shop hỗ trợ check mã vận đơn cực nhiệt tình nên vẫn đánh giá cao tiệm!
+          </p>
+
+          <div class="review-photo-gallery">
+            <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=200&q=80" alt="Review 3 ảnh" class="review-photo-thumb" onclick="showToast('Xem ảnh phóng to của độc giả')">
+          </div>
+
+          <div class="shop-reply-box">
+            <div class="shop-reply-header">
+              <div class="shop-reply-author">
+                <span class="material-symbols-outlined" style="font-size: 16px;">storefront</span>
+                Phản hồi từ Shop: Tiệm Truyện Vũ Trụ
+              </div>
+              <span class="shop-reply-time">2 ngày trước</span>
+            </div>
+            <p class="shop-reply-text">
+              Tiệm cảm ơn bạn Bảo nhiều ạ. Tiệm thành thật xin lỗi vì sự bất tiện do bên đơn vị vận chuyển giao trễ tiến độ. Tiệm đã làm việc lại với bên đối tác giao vận để tối ưu tuyến đường nhanh hơn. Cảm ơn bạn đã luôn đồng hành và thấu hiểu cho tiệm!
+            </p>
+          </div>
+        </div>
+
+        <!-- LOAD MORE BUTTON -->
+        <div style="text-align: center; margin: 24px 0;">
+          <button class="btn btn-outline" id="loadMoreReviewsBtn" onclick="loadMoreReviews(this)" style="padding: 10px 24px;">
+            <span class="material-symbols-outlined">expand_more</span>
+            Xem thêm đánh giá độc giả (Load More)
+          </button>
+        </div>
+
+        <!-- PAGINATION -->
+        <div class="pagination-wrapper" style="background: var(--surface-card); border-radius: var(--radius-lg); border: 1px solid var(--border-color);">
+          <div class="pagination-info">
+            Hiển thị <strong>1 - 3</strong> trên tổng số <strong>1.248</strong> đánh giá
+          </div>
+          <div class="pagination-controls">
+            <button class="page-btn" disabled><span class="material-symbols-outlined" style="font-size: 16px;">chevron_left</span></button>
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <span style="padding: 0 4px; color: var(--text-muted);">...</span>
+            <button class="page-btn">416</button>
+            <button class="page-btn"><span class="material-symbols-outlined" style="font-size: 16px;">chevron_right</span></button>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+  <script src="../js/common.js"></script>
+  <script src="../js/reviews.js"></script>
+</body>
+</html>
