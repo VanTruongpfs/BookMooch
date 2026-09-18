@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ẩn bài đăng vi phạm</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="hide_post.css">
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="../css/hide_post.css">
+</head>
+<body>
+  <div class="app-layout">
+    
+    <!-- Sidebar Navigation (Giống layout chính) -->
+    <nav class="sidebar">
+      <div class="brand">
+        <div class="app-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <h2 class="brand-name">ModDash</h2>
+      </div>
+      
+      <div class="nav-links">
+        <a href="#queue" class="nav-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span>Hàng đợi</span>
+        </a>
+        <a href="#penalties" class="nav-item nav-item-active">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+          <span>Vi phạm</span>
+        </a>
+        <a href="#history" class="nav-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
+          <span>Lịch sử</span>
+        </a>
+        <a href="#profile" class="nav-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span>Cá nhân</span>
+        </a>
+      </div>
+    </nav>
+
+    <!-- Main Workspace -->
+    <div class="main-wrapper">
+      
+      <!-- Top Bar -->
+      <header class="top-bar">
+        <div class="header-left">
+          <button class="btn-icon-text back-btn" aria-label="Quay lại">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Quay lại hàng đợi
+          </button>
+        </div>
+        <div class="header-actions">
+          <button class="icon-btn" aria-label="Lịch sử">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
+          </button>
+          <img class="avatar avatar-sm" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Moderator">
+        </div>
+      </header>
+
+      <!-- Main Content (Form container centered for web) -->
+      <main class="main-content">
+        <div class="form-container">
+          
+          <div class="page-header">
+            <div class="shield-badge">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <h1 class="page-title">Quyết định kỷ luật bài đăng</h1>
+          </div>
+
+          <!-- Mandatory Action Alert Banner -->
+          <div class="action-alert-banner">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <div>
+              <h3 class="alert-title">Hành động kỷ luật bắt buộc</h3>
+              <p class="alert-desc">Hành động này sẽ gỡ bài viết khỏi bảng tin công khai và gửi thông báo kỷ luật chính thức đến thành viên.</p>
+            </div>
+          </div>
+
+          <!-- Compact Post Summary Card -->
+          <section class="summary-card">
+            <div class="summary-header">
+              <div class="author-row">
+                <img class="avatar avatar-md" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&auto=format&fit=crop&q=80" alt="hoangnam_tech">
+                <div>
+                  <div class="name-badge-row">
+                    <span class="author-name">@hoangnam_tech</span>
+                    <span class="badge-level">Cấp 1</span>
+                  </div>
+                  <div class="post-meta">Hội Đầu Tư Công Nghệ VN • 18 phút trước</div>
+                </div>
+              </div>
+              <div class="summary-actions">
+                <div class="ai-risk-tag">AI Đánh giá: 87% RỦI RO</div>
+                <a href="#" class="view-link" title="Xem bài gốc">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                </a>
+              </div>
+            </div>
+            
+            <p class="summary-content">
+              Cơ hội nhân tài sản đỉnh cao 2024! Nhóm VIP kín hỗ trợ kéo vốn <mark class="highlight">cam kết x10 tài khoản trong 48h</mark>. Đăng ký ngay nhận 500k tại liên kết dưới đây...
+            </p>
+            
+            <div class="link-flag-box">
+              <div class="link-text">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                <span>https://bit.ly/nhan-thuong-x10-...</span>
+              </div>
+              <span class="danger-pill">ĐỘC HẠI</span>
+            </div>
+            
+            <div class="summary-footer">
+              <span class="stat-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> 1.4k lượt xem</span>
+              <span class="stat-item text-danger"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg> 14 báo cáo xấu</span>
+            </div>
+          </section>
+
+          <!-- Form Area -->
+          <div class="action-form">
+            
+            <!-- Section: Visibility Scope -->
+            <section class="form-section">
+              <div class="section-title-row">
+                <h2 class="section-title">Phạm vi xử lý</h2>
+                <span class="tag-required">BẮT BUỘC</span>
+              </div>
+              <div class="radio-grid">
+                <label class="option-card option-card-active">
+                  <input type="radio" name="scope" checked>
+                  <div class="radio-indicator"><span class="inner-dot"></span></div>
+                  <div class="option-content">
+                    <div class="option-header">
+                      <strong>Ẩn khỏi nhóm & Bảng tin</strong>
+                      <span class="pill-primary">Khuyên dùng</span>
+                    </div>
+                    <p>Gỡ khỏi bảng tin công khai. Chỉ hiển thị trong lưu trữ.</p>
+                  </div>
+                </label>
+                
+                <label class="option-card">
+                  <input type="radio" name="scope">
+                  <div class="radio-indicator"></div>
+                  <div class="option-content">
+                    <div class="option-header">
+                      <strong>Ẩn vĩnh viễn & Khóa tương tác</strong>
+                    </div>
+                    <p>Cấm tuyệt đối mọi tương tác. Xóa hoàn toàn khỏi hệ thống.</p>
+                  </div>
+                </label>
+                
+                <label class="option-card">
+                  <input type="radio" name="scope">
+                  <div class="radio-indicator"></div>
+                  <div class="option-content">
+                    <div class="option-header">
+                      <strong>Ẩn tạm thời 24h</strong>
+                      <span class="pill-neutral">Tự động</span>
+                    </div>
+                    <p>Khóa chờ xác minh thêm. Tự động khôi phục nếu an toàn.</p>
+                  </div>
+                </label>
+              </div>
+            </section>
+
+            <!-- Section: Violation Reasons -->
+            <section class="form-section">
+              <div class="section-title-row">
+                <h2 class="section-title">Lý do vi phạm</h2>
+                <span class="tag-hint">Có thể chọn nhiều mục</span>
+              </div>
+              <div class="checkbox-grid">
+                <label class="check-item check-item-active">
+                  <div class="check-box checked">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                  </div>
+                  <span class="check-label">Spam link độc hại / Lừa đảo</span>
+                </label>
+                
+                <label class="check-item">
+                  <div class="check-box"></div>
+                  <span class="check-label">Nội dung quảng cáo cấm / QR sai quy định</span>
+                </label>
+                
+                <label class="check-item">
+                  <div class="check-box"></div>
+                  <span class="check-label">Ngôn từ kích động / Xúc phạm</span>
+                </label>
+                
+                <label class="check-item">
+                  <div class="check-box"></div>
+                  <span class="check-label">Lý do khác (Điền phía dưới)</span>
+                </label>
+              </div>
+            </section>
+
+            <!-- Section: Author Notice Message -->
+            <section class="form-section">
+              <div class="section-title-row">
+                <h2 class="section-title">Tin nhắn gửi tác giả</h2>
+                <button class="btn-text">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                  Đổi mẫu hệ thống
+                </button>
+              </div>
+              <div class="textarea-card">
+                <div class="template-status-bar">
+                  <span>Mẫu: Tiêu chuẩn cộng đồng Khoản 4.2 (Tài chính)</span>
+                  <span class="status-success">Tự động điền</span>
+                </div>
+                <textarea class="textarea-input" rows="3" readonly>Chào bạn @hoangnam_tech, bài viết của bạn đã bị ẩn do vi phạm Tiêu chuẩn Cộng đồng - Khoản 4.2 về việc chèn liên kết tài chính độc hại/lôi kéo mạo hiểm...</textarea>
+              </div>
+              <div class="subtext-note">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                Thông báo này sẽ gửi qua hệ thống in-app và email của tác giả.
+              </div>
+            </section>
+          </div>
+
+          <!-- Execution Actions -->
+          <div class="bottom-action-bar">
+            <button class="btn btn-outline">
+              Hủy bỏ thao tác
+            </button>
+            <button class="btn btn-danger">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              Xác nhận ẩn bài đăng
+            </button>
+          </div>
+
+        </div>
+      </main>
+    </div>
+  </div>
+  <script src="../js/hide_post.js"></script>
+</body>
+</html>
