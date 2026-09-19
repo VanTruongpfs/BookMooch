@@ -1,8 +1,8 @@
 /* Support-only styles for ticket cards and customer-service responses. */
 .ticket-list { display: grid; gap: 12px; }
-.ticket-item { padding: 14px; border: 1px solid var(--neutral-default); border-radius: 8px; background: var(--secondary-default); }
+.ticket-item { padding: 14px; border: 1px solid var(--border-color); border-radius: 8px; background: var(--surface-muted); }
 .ticket-item header { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
-.ticket-item strong { color: var(--neutral-light); font-size: .9rem; }
-.ticket-item p { margin: 9px 0 0; color: var(--neutral-default); font-size: .82rem; line-height: 1.45; }
-.ticket-response { margin-top: 12px !important; padding-top: 10px; border-top: 1px solid var(--secondary-light); color: var(--tertiary-light) !important; }
-.ticket-item time { display: block; margin-top: 10px; color: var(--neutral-default); font-size: .72rem; }
+.ticket-item strong { color: var(--text-main); font-size: .9rem; }
+.ticket-item p { margin: 9px 0 0; color: var(--text-secondary); font-size: .82rem; line-height: 1.45; }
+.ticket-response { margin-top: 12px !important; padding-top: 10px; border-top: 1px solid var(--border-color); color: var(--primary) !important; }
+.ticket-item time { display: block; margin-top: 10px; color: var(--text-muted); font-size: .72rem; }
