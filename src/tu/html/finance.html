@@ -73,10 +73,17 @@
       <div id="financeViewOverview" class="finance-view">
         <div class="content-card">
           <div class="content-card-header">
-            <div class="content-card-title"><span class="material-symbols-outlined">bar_chart</span> Doanh thu theo tuần (30 ngày gần nhất)</div>
-            <div class="legend-row">
-              <div class="legend-item"><span class="legend-dot" style="background:var(--primary-container);"></span> Doanh thu (GMV)</div>
-              <div class="legend-item"><span class="legend-dot" style="background:#0ea5e9;"></span> Hoa hồng sàn</div>
+            <div class="content-card-title"><span class="material-symbols-outlined">bar_chart</span> Doanh thu theo thời gian</div>
+            <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+              <div class="legend-row">
+                <div class="legend-item"><span class="legend-dot" style="background:var(--primary-container);"></span> Doanh thu (GMV)</div>
+                <div class="legend-item"><span class="legend-dot" style="background:#0ea5e9;"></span> Hoa hồng sàn</div>
+              </div>
+              <div class="seg-control" id="revenueRangeFilter" style="margin-bottom:0;">
+                <button class="seg-btn" data-range="7">7 ngày</button>
+                <button class="seg-btn active" data-range="30">30 ngày</button>
+                <button class="seg-btn" data-range="90">90 ngày</button>
+              </div>
             </div>
           </div>
           <div style="padding: 20px 24px 8px;">

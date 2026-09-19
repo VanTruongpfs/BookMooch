@@ -69,7 +69,7 @@
 
       <div class="seg-control" id="staffSegControl">
         <button class="seg-btn active" data-view="list">Danh sách nhân sự</button>
-        <button class="seg-btn" data-view="permissions">Ma trận phân quyền</button>
+        <button class="seg-btn" data-view="permissions">Chỉnh sửa phân quyền</button>
       </div>
 
       <!-- VIEW: STAFF LIST -->
@@ -93,19 +93,16 @@
       <div id="staffViewPermissions" class="staff-view" style="display:none;">
         <div class="content-card">
           <div class="content-card-header">
-            <div class="content-card-title"><span class="material-symbols-outlined">rule_settings</span> Ma trận phân quyền theo nhóm vai trò</div>
-            <button class="btn btn-primary btn-sm" onclick="savePermissions()"><span class="material-symbols-outlined" style="font-size:16px;">save</span> Lưu thay đổi</button>
+            <div class="content-card-title"><span class="material-symbols-outlined">rule_settings</span>Phân quyền theo nhóm vai trò</div>
+            <div class="header-action-group">
+              <button class="btn btn-outline btn-sm" onclick="openAddGroupModal()"><span class="material-symbols-outlined" style="font-size:16px;">add</span> Thêm nhóm quyền</button>
+              <button class="btn btn-primary btn-sm" onclick="savePermissions()"><span class="material-symbols-outlined" style="font-size:16px;">save</span> Lưu thay đổi</button>
+            </div>
           </div>
           <div class="table-responsive" style="padding: 4px 4px 12px;">
             <table class="perm-matrix" id="permMatrix">
               <thead>
-              <tr>
-                <th>Phân hệ chức năng</th>
-                <th>Super Admin</th>
-                <th>Manager</th>
-                <th>Kiểm duyệt viên</th>
-                <th>CSKH</th>
-              </tr>
+              <tr id="permMatrixHeadRow"></tr>
               </thead>
               <tbody id="permMatrixBody"></tbody>
             </table>
@@ -135,12 +132,7 @@
       <div class="field"><label>Email nội bộ</label><input type="email" id="newStaffEmail" placeholder="ten.nhanvien@bookmooch.vn"></div>
       <div class="form-grid two-columns">
         <div class="field"><label>Vai trò</label>
-          <select id="newStaffRole" style="width:100%; padding:11px 12px; border:2px solid #cbd5e1; border-radius:7px;">
-            <option value="Manager">Manager</option>
-            <option value="Kiểm duyệt viên">Kiểm duyệt viên</option>
-            <option value="CSKH">CSKH</option>
-            <option value="Super Admin">Super Admin</option>
-          </select>
+          <select id="newStaffRole" data-role-select style="width:100%; padding:11px 12px; border:2px solid #cbd5e1; border-radius:7px;"></select>
         </div>
         <div class="field"><label>Phòng ban</label>
           <select id="newStaffDept" style="width:100%; padding:11px 12px; border:2px solid #cbd5e1; border-radius:7px;">
@@ -168,6 +160,51 @@
     <div class="modal-actions">
       <button class="btn btn-outline" onclick="closeModal('lockStaffModal')">Quay lại</button>
       <button class="btn btn-danger" onclick="confirmLockStaff()"><span class="material-symbols-outlined" style="font-size:16px;">check</span> Xác nhận</button>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT STAFF MODAL -->
+<div class="modal-backdrop" id="editStaffModal" style="display:none;">
+  <div class="modal-dialog" style="max-width:480px; text-align:left;">
+    <h3 class="modal-title" style="text-align:center;">Chỉnh sửa nhân viên</h3>
+    <p class="modal-desc" style="text-align:center;">Cập nhật vai trò, phòng ban và quyền truy cập của nhân viên</p>
+    <div class="form-grid" style="margin-bottom:20px;">
+      <div class="field"><label>Họ và tên</label><input type="text" id="editStaffName"></div>
+      <div class="field"><label>Email nội bộ</label><input type="email" id="editStaffEmail"></div>
+      <div class="form-grid two-columns">
+        <div class="field"><label>Vai trò</label>
+          <select id="editStaffRole" data-role-select style="width:100%; padding:11px 12px; border:2px solid #cbd5e1; border-radius:7px;"></select>
+        </div>
+        <div class="field"><label>Phòng ban</label>
+          <select id="editStaffDept" style="width:100%; padding:11px 12px; border:2px solid #cbd5e1; border-radius:7px;">
+            <option>Vận hành</option>
+            <option>Kiểm duyệt nội dung</option>
+            <option>Chăm sóc khách hàng</option>
+            <option>Tài chính</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-actions" style="justify-content:flex-end;">
+      <button class="btn btn-outline" onclick="closeModal('editStaffModal')">Huỷ</button>
+      <button class="btn btn-primary" onclick="saveStaffEdit()">Lưu thay đổi</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADD PERMISSION GROUP MODAL -->
+<div class="modal-backdrop" id="addGroupModal" style="display:none;">
+  <div class="modal-dialog" style="max-width:420px; text-align:left;">
+    <h3 class="modal-title" style="text-align:center;">Thêm nhóm quyền mới</h3>
+    <p class="modal-desc" style="text-align:center;">Tạo một nhóm vai trò tuỳ chỉnh và cấu hình quyền truy cập từng phân hệ ngay sau khi tạo.</p>
+    <div class="field" style="margin-bottom:20px;">
+      <label>Tên nhóm quyền</label>
+      <input type="text" id="newGroupName" placeholder="VD: Kế toán, Marketing...">
+    </div>
+    <div class="modal-actions" style="justify-content:flex-end;">
+      <button class="btn btn-outline" onclick="closeModal('addGroupModal')">Huỷ</button>
+      <button class="btn btn-primary" onclick="confirmAddGroup()">Tạo nhóm quyền</button>
     </div>
   </div>
 </div>
