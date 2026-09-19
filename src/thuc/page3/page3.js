@@ -26,16 +26,27 @@ document.querySelectorAll("[data-toast]").forEach(btn => {
   btn.addEventListener("click", () => showToast(btn.dataset.toast));
 });
 
+const pathMap = {
+  "kham-pha": "../../tin/html/home.html",
+  "dang-tin-tim-mua": "../page1/page1.html",
+  "quan-ly-don-hang": "../page2/page2.html",
+  "theo-doi-trang-thai": "../page3/page3.html",
+  "huy-va-doi-tra": "../page5/page5.html",
+  "danh-gia-truyen": "../page4/page4.html",
+  "truyen-yeu-thich": "../page6/page6.html"
+};
+
 document.querySelectorAll("[data-path]").forEach(link => {
   link.addEventListener("click", e => {
     e.preventDefault();
+    const path = link.dataset.path;
+    if (pathMap[path] && path !== "theo-doi-trang-thai") {
+      window.location.href = pathMap[path];
+      return;
+    }
     document.querySelectorAll("[data-path]").forEach(x => x.classList.remove("active"));
     document.querySelectorAll(`[data-path="${link.dataset.path}"]`).forEach(x => x.classList.add("active"));
-    if (link.dataset.path === "theo-doi-trang-thai") {
-      window.scrollTo({top: 0, behavior: "smooth"});
-    } else {
-      showToast(`Đang chuyển đến: ${link.textContent.trim()}`);
-    }
+    window.scrollTo({top: 0, behavior: "smooth"});
   });
 });
 

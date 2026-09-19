@@ -32,16 +32,27 @@ document.addEventListener("DOMContentLoaded", () => {
      ACTIVE NAVIGATION
   ========================= */
 
+  const pathMap = {
+    "kham-pha": "../../tin/html/home.html",
+    "dang-tin-tim-mua": "../page1/page1.html",
+    "quan-ly-don-hang": "../page2/page2.html",
+    "theo-doi-trang-thai": "../page3/page3.html",
+    "huy-va-doi-tra": "../page5/page5.html",
+    "danh-gia-truyen": "../page4/page4.html",
+    "truyen-yeu-thich": "../page6/page6.html"
+  };
+
   document.querySelectorAll("[data-path]").forEach((link) => {
     link.addEventListener("click", (event) => {
       event.preventDefault();
-
       const path = link.dataset.path;
-
+      if (pathMap[path] && path !== "dang-tin-tim-mua") {
+        window.location.href = pathMap[path];
+        return;
+      }
       document.querySelectorAll("[data-path]").forEach((item) => {
         item.classList.remove("active");
       });
-
       document
         .querySelectorAll(`[data-path="${path}"]`)
         .forEach((item) => item.classList.add("active"));

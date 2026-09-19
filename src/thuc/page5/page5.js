@@ -499,36 +499,35 @@ document.addEventListener("DOMContentLoaded", () => {
        Active quick navigation
        ----------------------------------------------------- */
 
+    const pathMap = {
+      "kham-pha": "../../tin/html/home.html",
+      "dang-tin-tim-mua": "../page1/page1.html",
+      "quan-ly-don-hang": "../page2/page2.html",
+      "theo-doi-trang-thai": "../page3/page3.html",
+      "huy-va-doi-tra": "../page5/page5.html",
+      "danh-gia-truyen": "../page4/page4.html",
+      "truyen-yeu-thich": "../page6/page6.html"
+    };
+
     document
-        .querySelectorAll(".quick-nav a")
+        .querySelectorAll(".quick-nav a, [data-path]")
         .forEach((link) => {
-
-            const path =
-                link.dataset.path;
-
-            if (
-                path === "huy-va-doi-tra"
-            ) {
+            const path = link.dataset.path;
+            if (path === "huy-va-doi-tra") {
                 link.classList.add("active");
             }
-
-            link.addEventListener(
-                "click",
-                (event) => {
-                    event.preventDefault();
-
-                    document
-                        .querySelectorAll(
-                            ".quick-nav a"
-                        )
-                        .forEach((item) => {
-                            item.classList.remove(
-                                "active"
-                            );
-                        });
-
-                    link.classList.add("active");
+            link.addEventListener("click", (event) => {
+                event.preventDefault();
+                if (pathMap[path] && path !== "huy-va-doi-tra") {
+                    window.location.href = pathMap[path];
+                    return;
                 }
-            );
+                document
+                    .querySelectorAll(".quick-nav a, [data-path]")
+                    .forEach((item) => {
+                        item.classList.remove("active");
+                    });
+                link.classList.add("active");
+            });
         });
 });

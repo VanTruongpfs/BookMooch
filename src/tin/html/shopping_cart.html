@@ -21,7 +21,7 @@
 
         <!-- Logo Thương hiệu -->
 
-        <a href="index.html" class="brand-logo">
+        <a href="home.html" class="brand-logo">
 
             <div class="brand-logo-icon">
 
@@ -67,31 +67,37 @@
 
                 <li class="nav-item">
 
-                    <a href="index.html" class="nav-link"><i class="fa-regular fa-compass"></i> Khám phá</a>
+                    <a href="home.html" class="nav-link"><i class="fa-regular fa-compass"></i> Khám phá</a>
 
                 </li>
 
                 <li class="nav-item">
 
-                    <a href="#" class="nav-link"><i class="fa-solid fa-store"></i> Chợ Mua Bán</a>
+                    <a href="home.html#marketplace" class="nav-link"><i class="fa-solid fa-store"></i> Chợ Mua Bán</a>
 
                 </li>
 
                 <li class="nav-item">
 
-                    <a href="#" class="nav-link"><i class="fa-solid fa-arrow-right-arrow-left"></i> Sàn Trao Đổi 1-1</a>
+                    <a href="../../duy/html/dealing-room.html" class="nav-link"><i class="fa-solid fa-arrow-right-arrow-left"></i> Sàn Trao Đổi 1-1</a>
 
                 </li>
 
                 <li class="nav-item">
 
-                    <a href="#" class="nav-link highlight-gold"><i class="fa-solid fa-gem"></i> Bộ Sưu Tập Hiếm</a>
+                    <a href="voucher.html" class="nav-link highlight-gold"><i class="fa-solid fa-ticket"></i> Kho Voucher</a>
 
                 </li>
 
                 <li class="nav-item">
 
-                    <a href="#" class="nav-link"><i class="fa-solid fa-users"></i> Cộng Đồng Otaku</a>
+                    <a href="../../thuc/page1/page1.html" class="nav-link"><i class="fa-solid fa-bullhorn"></i> Đăng Tìm Mua</a>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a href="../../index.html" class="nav-link" style="color: #fb923c;"><i class="fa-solid fa-hubspot"></i> Portal</a>
 
                 </li>
 
@@ -113,7 +119,7 @@
 
             </button>
 
-            <a href="cart.html" class="btn-cart-active" aria-label="Giỏ hàng">
+            <a href="shopping_cart.html" class="btn-cart-active" aria-label="Giỏ hàng">
 
                 <i class="fa-solid fa-bag-shopping"></i>
 
@@ -121,15 +127,18 @@
 
             </a>
 
-            <a href="#" class="btn btn-post-listing">
+            <a href="../../ttruongmap/dang-ban-truyen/index.html" class="btn btn-post-listing">
 
                 <i class="fa-solid fa-circle-plus"></i>
 
                 <span>Đăng bán/Đổi truyện</span>
 
             </a>
+
             <div class="user-profile-menu">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" alt="Ảnh đại diện người dùng" class="user-avatar-img">
+                <a href="../../vu/profile/profile.html" title="Hồ sơ cá nhân">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" alt="Ảnh đại diện người dùng" class="user-avatar-img">
+                </a>
             </div>
         </div>
     </div>
@@ -140,7 +149,7 @@
     <nav class="breadcrumb-container" aria-label="Đường dẫn trang">
         <ol class="breadcrumb-list">
             <li class="breadcrumb-item">
-                <a href="index.html"><i class="fa-solid fa-house"></i> Trang chủ</a>
+                <a href="home.html"><i class="fa-solid fa-house"></i> Trang chủ</a>
             </li>
             <li class="breadcrumb-separator">/</li>
             <li class="breadcrumb-item active" aria-current="page">Giỏ Hàng &amp; Đơn Chờ Thanh Toán</li>
@@ -223,7 +232,7 @@
                             <span class="badge-format">Trọn bộ 24 tập • NXB Kim Đồng</span>
                         </div>
                         <h2 class="item-title">
-                            <a href="detail.html">Slam Dunk Deluxe Edition - Trọn Bộ 24 Tập (Bản Bìa Rời Kèm Obi &amp; Postcard)</a>
+                            <a href="product_details.html">Slam Dunk Deluxe Edition - Trọn Bộ 24 Tập (Bản Bìa Rời Kèm Obi &amp; Postcard)</a>
                         </h2>
                         <div class="item-spec-note">Quà tặng: Full 24 Postcard nguyên bao seal</div>
                         <div class="item-pricing-mobile">
@@ -400,7 +409,7 @@
 
             <!-- Nút tiếp tục mua sắm & Xóa toàn bộ giỏ hàng -->
             <div class="cart-bottom-actions">
-                <a href="index.html" class="btn-continue-shopping">
+                <a href="home.html" class="btn-continue-shopping">
                     <i class="fa-solid fa-arrow-left"></i> Tiếp tục tìm truyện khác
                 </a>
                 <button type="button" class="btn-clear-cart">
@@ -438,6 +447,9 @@
                     <input type="text" class="voucher-input" placeholder="Nhập mã COMICNEW, FREESHIP..." aria-label="Mã giảm giá">
                     <button type="button" class="btn-apply-voucher">Áp Dụng</button>
                 </form>
+                <div style="margin-top: 8px;">
+                    <a href="voucher.html" style="font-size:0.8rem; color:#f97316; text-decoration:none; font-weight:600;"><i class="fa-solid fa-ticket"></i> Mở Kho Voucher để lấy mã ưu đãi &rarr;</a>
+                </div>
                 <!-- Danh sách coupon đã áp dụng -->
                 <div class="applied-coupons-list">
                     <div class="coupon-chip">
@@ -491,9 +503,9 @@
                 </div>
                 <!-- Nút Đặt Hàng & Thanh Toán -->
                 <div class="checkout-button-wrap">
-                    <button type="button" class="btn-proceed-checkout">
+                    <a href="payment.html" class="btn-proceed-checkout" style="text-decoration:none; display:flex; align-items:center; justify-content:center; gap:8px;">
                         <i class="fa-solid fa-lock"></i> Tiến Hành Đặt Hàng (ComicHub Pay)
-                    </button>
+                    </a>
                     <div class="security-guarantee-note">
                         <i class="fa-solid fa-circle-check"></i> Tiền chỉ chuyển cho người bán sau khi bạn kiểm tra đúng tình trạng sách.
                     </div>

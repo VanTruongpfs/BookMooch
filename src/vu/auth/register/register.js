@@ -30,6 +30,9 @@ form.addEventListener("submit", async (event) => {
         form.reset();
         showErrors({ fullName: "", email: "", password: "", confirmPassword: "", terms: "" });
         showToast("Đăng ký thành công. Bạn có thể đăng nhập ngay.", "success");
+        setTimeout(() => {
+            window.location.href = "../login/login.html";
+        }, 1000);
     } catch (error) {
         showToast(error.message);
     } finally {

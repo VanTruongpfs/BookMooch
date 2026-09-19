@@ -12,41 +12,45 @@
 <body>
 <nav class="navbar">
     <div class="nav-inner">
-        <div class="nav-brand">
-            Trao đổi & Đàm phán
-        </div>
+        <a href="../../tin/html/home.html" class="nav-brand" style="text-decoration:none; color:inherit; display:flex; align-items:center; gap:8px;">
+            <span>📚 ComicHub</span>
+            <span style="font-size:0.75rem; opacity:0.7; font-weight:normal;">| Trao đổi &amp; Đàm phán</span>
+        </a>
 
         <div class="nav-links">
-
+            <a href="../../tin/html/home.html">
+                &larr; Chợ Mua Bán
+            </a>
             <a href="dealing-chat.html">
                 Phòng trao đổi
             </a>
-
             <a href="negotiation-order.html">
                 Tạo đơn hàng
             </a>
-
             <a href="shipping-fee.html">
                 Phí vận chuyển
             </a>
-
             <a href="exchange-orders.html" class="active">
                 Đơn hàng trao đổi
             </a>
-
             <a href="dealing-room.html">
                 Quản lý phòng
             </a>
-
+            <a href="../../truong/html/index.html">
+                Kênh Người Bán &rarr;
+            </a>
+            <a href="../../index.html" style="color:#f97316; font-weight:bold;">
+                Portal
+            </a>
         </div>
     </div>
 </nav>
 
 <div class="page-container">
     <div class="breadcrumb">
-        <span>Trang chủ</span>
+        <a href="../../tin/html/home.html" style="color:inherit; text-decoration:none;">Trang chủ</a>
         <span>/</span>
-        <span>Trao đổi & đàm phán</span>
+        <a href="dealing-room.html" style="color:inherit; text-decoration:none;">Trao đổi &amp; đàm phán</a>
         <span>/</span>
         <strong>Đơn hàng trao đổi</strong>
     </div>
@@ -854,47 +858,19 @@
 
 
     function viewRoom(roomId) {
-
-        alert(
-            "Mở phòng trao đổi #" + roomId
-        );
-
-        // Sau này:
-        // window.location.href =
-        // "page19.html?room=" + roomId;
+        window.location.href = "dealing-chat.html?room=" + encodeURIComponent(roomId || "1");
     }
-
 
     function createOrder(dealId) {
-
-        alert(
-            "Tiếp tục tạo đơn hàng từ Deal #" + dealId
-        );
-
-        // Sau này:
-        // window.location.href =
-        // "page20.html?deal=" + dealId;
+        window.location.href = "negotiation-order.html?deal=" + encodeURIComponent(dealId || "1");
     }
-
 
     function viewOrder(orderId) {
-
-        alert(
-            "Xem đơn hàng #" + orderId
-        );
-
-        // Sau này có thể chuyển
-        // sang trang chi tiết đơn hàng.
+        window.location.href = "shipping-fee.html?order=" + encodeURIComponent(orderId || "1");
     }
 
-
     function goToRooms() {
-
-        alert(
-            "Mở danh sách phòng trao đổi."
-        );
-
-        window.location.href = "../html/dealing-chat.html";
+        window.location.href = "dealing-room.html";
     }
 
 </script>

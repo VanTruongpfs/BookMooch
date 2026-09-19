@@ -22,6 +22,9 @@ form.addEventListener("submit", async (event) => {
     try {
         await loginUser(emailValue, passwordValue, document.querySelector("#remember").checked);
         showToast("Đăng nhập thành công.", "success");
+        setTimeout(() => {
+            window.location.href = "../../profile/profile.html";
+        }, 800);
     } catch (error) {
         showToast(error.message);
     } finally {
