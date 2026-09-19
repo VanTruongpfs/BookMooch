@@ -15,44 +15,49 @@
 
 <nav class="navbar">
     <div class="nav-inner">
-        <div class="nav-brand">
-            Trao đổi & Đàm phán
-        </div>
+        <a href="../../tin/html/home.html" class="nav-brand" style="text-decoration:none; color:inherit; display:flex; align-items:center; gap:8px;">
+            <span>📚 ComicHub</span>
+            <span style="font-size:0.75rem; opacity:0.7; font-weight:normal;">| Trao đổi &amp; Đàm phán</span>
+        </a>
 
         <div class="nav-links">
-
+            <a href="../../tin/html/home.html">
+                &larr; Chợ Mua Bán
+            </a>
             <a href="dealing-chat.html">
                 Phòng trao đổi
             </a>
-
             <a href="negotiation-order.html">
                 Tạo đơn hàng
             </a>
-
             <a href="shipping-fee.html" class="active">
                 Phí vận chuyển
             </a>
-
             <a href="exchange-orders.html">
                 Đơn hàng trao đổi
             </a>
-
             <a href="dealing-room.html">
                 Quản lý phòng
             </a>
-
+            <a href="../../truong/html/index.html">
+                Kênh Người Bán &rarr;
+            </a>
+            <a href="../../index.html" style="color:#f97316; font-weight:bold;">
+                Portal
+            </a>
         </div>
     </div>
 </nav>
 
 <main class="page">
     <div class="page-heading">
-
         <div>
             <div class="breadcrumb">
-                <span>Đơn hàng đàm phán</span>
+                <a href="../../tin/html/home.html" style="color:inherit; text-decoration:none;">Trang chủ</a>
                 <span>/</span>
-                Tính phí vận chuyển
+                <a href="negotiation-order.html" style="color:inherit; text-decoration:none;">Đơn hàng đàm phán</a>
+                <span>/</span>
+                <strong>Tính phí vận chuyển</strong>
             </div>
 
             <h1>Tính phí vận chuyển</h1>
@@ -753,9 +758,9 @@
             "Đã xác nhận phí vận chuyển "
             + formatMoney(fee)
             + " (" + method.name + ").\n\n"
-            + "Hệ thống sẽ chuyển sang bước tạo đơn hàng đàm phán."
+            + "Hệ thống sẽ chuyển sang quản lý đơn hàng trao đổi."
         );
-
+        window.location.href = "exchange-orders.html";
     }
 
 </script>
