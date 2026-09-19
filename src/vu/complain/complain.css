@@ -1,8 +1,8 @@
 /* Complaint-only styles for evidence and history presentation. */
 .file-note { color: var(--neutral-default); font-size: .78rem; }
 .history-list { display: grid; gap: 12px; }
-.history-item { padding: 14px; border: 1px solid var(--neutral-default); border-radius: 8px; background: var(--secondary-default); }
+.history-item { padding: 14px; border: 1px solid var(--border-color); border-radius: 8px; background: var(--surface-muted); }
 .history-item header { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
-.history-item strong { color: var(--neutral-light); font-size: .9rem; }
-.history-item p { margin: 9px 0 0; color: var(--neutral-default); font-size: .82rem; line-height: 1.45; }
+.history-item strong { color: var(--text-main); font-size: .9rem; }
+.history-item p { margin: 9px 0 0; color: var(--text-secondary); font-size: .82rem; line-height: 1.45; }
 .history-item time { display: block; margin-top: 10px; color: var(--neutral-default); font-size: .72rem; }
