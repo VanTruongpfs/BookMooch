@@ -519,16 +519,17 @@
     if (el) { el.classList.add('flash'); el.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); setTimeout(() => el.classList.remove('flash'), 1600); }
     toast(`Tìm thấy #${t.id}`, 'success');
   });
-
   /* ---------------------------- Sidebar nav ---------------------------- */
-  $$('.nav-item').forEach((item) => item.addEventListener('click', (e) => {
-    e.preventDefault();
-    $$('.nav-item').forEach((n) => n.classList.remove('nav-item-active'));
-    item.classList.add('nav-item-active');
-    const name = $('span:last-child', item).textContent;
-    if (item.getAttribute('href') === '#chat') { const d = $('.nav-unread-dot'); if (d) d.remove(); }
-    if (item.getAttribute('href') !== '#console') toast(`Mục "${name}" chưa được triển khai trong bản demo`);
-  }));
+$$('.nav-item').forEach((item) => {
+    item.addEventListener('click', () => {
+        // Chỉ đổi trạng thái active
+        $$('.nav-item').forEach((n) => {
+            n.classList.remove('nav-item-active');
+        });
+
+        item.classList.add('nav-item-active');
+    });
+});
 
   /* ------------------------- Help & shortcuts -------------------------- */
   function openHelp() {
