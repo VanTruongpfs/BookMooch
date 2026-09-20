@@ -13,7 +13,8 @@ export async function registerUser(user) {
 export async function loginUser(email, password, remember) {
     const user = readUsers().find((item) => item.email.toLowerCase() === email.toLowerCase());
     if (!user || user.password !== password) throw new Error("Thông tin đăng nhập chưa chính xác.");
-    if (remember) localStorage.setItem("bookmooch_session", JSON.stringify({ email: user.email }));
+    const session = JSON.stringify({ email: user.email });
+    (remember ? localStorage : sessionStorage).setItem("bookmooch_session", session);
     return wait({ ok: true, user: { name: user.fullName, email: user.email } });
 }
 export async function requestPasswordReset(email) {
@@ -24,6 +25,12 @@ export async function requestPasswordReset(email) {
         console.info(`[Mock API] Reset URL: auth/reset-password/reset-password.html?token=${encodeURIComponent(token)}`);
     }
     return wait({ ok: true, message: "Chúng tôi đã gửi đường dẫn đổi mật khẩu mới về email của bạn. Vui lòng kiểm tra hộp thư và xác nhận." });
+}
+export async function requestPasswordResetForCurrentUser() {
+    const session = JSON.parse(localStorage.getItem("bookmooch_session") || sessionStorage.getItem("bookmooch_session") || "null");
+    const profile = JSON.parse(localStorage.getItem("bookmooch_profile") || "null");
+    const email = session?.email || profile?.email || "member@example.com";
+    return requestPasswordReset(email);
 }
 export async function resetPassword(token, password) {
     const resetRequest = JSON.parse(localStorage.getItem(RESET_TOKEN_KEY) || "null");
