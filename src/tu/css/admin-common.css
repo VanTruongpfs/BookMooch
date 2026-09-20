@@ -16,9 +16,9 @@
     min-height: 100vh;
     padding: 24px;
     background:
-        radial-gradient(circle at 15% 15%, rgba(249, 115, 22, 0.16), transparent 45%),
-        radial-gradient(circle at 85% 85%, rgba(59, 130, 246, 0.14), transparent 45%),
-        var(--sidebar-bg);
+            radial-gradient(circle at 15% 15%, rgba(249, 115, 22, 0.16), transparent 45%),
+            radial-gradient(circle at 85% 85%, rgba(59, 130, 246, 0.14), transparent 45%),
+            var(--sidebar-bg);
 }
 
 .gate-card {
@@ -468,6 +468,32 @@
 
 .perm-matrix th:first-child {
     text-align: left;
+}
+
+.perm-matrix th {
+    position: relative;
+}
+
+.perm-group-remove {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    margin-left: 4px;
+    border-radius: 50%;
+    color: var(--text-light);
+    vertical-align: middle;
+    transition: var(--transition);
+}
+
+.perm-group-remove .material-symbols-outlined {
+    font-size: 14px !important;
+}
+
+.perm-group-remove:hover {
+    color: #fff;
+    background: var(--danger);
 }
 
 .perm-matrix td {

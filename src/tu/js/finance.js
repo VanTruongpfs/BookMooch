@@ -1,17 +1,37 @@
-const revenueWeeks = [
-    { label: 'Tuần 1', gmv: 62, commission: 5 },
-    { label: 'Tuần 2', gmv: 78, commission: 6.4 },
-    { label: 'Tuần 3', gmv: 70, commission: 5.7 },
-    { label: 'Tuần 4', gmv: 92, commission: 7.4 },
-    { label: 'Tuần 5', gmv: 100, commission: 8.1 },
-];
+// Dữ liệu doanh thu theo từng mốc lọc ngày (7 / 30 / 90 ngày gần nhất).
+const revenueByRange = {
+    7: [
+        { label: 'T2', gmv: 58, commission: 4.6 },
+        { label: 'T3', gmv: 66, commission: 5.2 },
+        { label: 'T4', gmv: 54, commission: 4.1 },
+        { label: 'T5', gmv: 78, commission: 6.1 },
+        { label: 'T6', gmv: 85, commission: 6.8 },
+        { label: 'T7', gmv: 100, commission: 8.1 },
+        { label: 'CN', gmv: 72, commission: 5.6 },
+    ],
+    30: [
+        { label: 'Tuần 1', gmv: 62, commission: 5 },
+        { label: 'Tuần 2', gmv: 78, commission: 6.4 },
+        { label: 'Tuần 3', gmv: 70, commission: 5.7 },
+        { label: 'Tuần 4', gmv: 92, commission: 7.4 },
+        { label: 'Tuần 5', gmv: 100, commission: 8.1 },
+    ],
+    90: [
+        { label: 'Tháng 7', gmv: 72, commission: 5.6 },
+        { label: 'Tháng 8', gmv: 86, commission: 6.9 },
+        { label: 'Tháng 9', gmv: 100, commission: 8.1 },
+    ],
+};
 
 const revenueByCategory = [
-    { name: 'Manga / Comic', percent: 38, value: '1.628.700.000 ₫' },
-    { name: 'Văn học trong nước', percent: 24, value: '1.028.760.000 ₫' },
-    { name: 'Sách dịch / Ngoại văn', percent: 18, value: '771.570.000 ₫' },
-    { name: 'Giáo trình / Tham khảo', percent: 12, value: '514.380.000 ₫' },
-    { name: 'Ấn bản hiếm / Sưu tầm', percent: 8, value: '343.090.000 ₫' },
+    { name: 'Truyện tranh / Manga', percent: 30, value: '1.285.950.000 ₫' },
+    { name: 'Manhwa / Manhua', percent: 16, value: '685.840.000 ₫' },
+    { name: 'Tiểu thuyết / Truyện dài', percent: 15, value: '642.975.000 ₫' },
+    { name: 'Truyện ngôn tình', percent: 13, value: '557.245.000 ₫' },
+    { name: 'Light Novel', percent: 10, value: '428.650.000 ₫' },
+    { name: 'Truyện trinh thám / Kinh dị', percent: 8, value: '342.920.000 ₫' },
+    { name: 'Truyện thiếu nhi', percent: 5, value: '214.325.000 ₫' },
+    { name: 'Truyện hiếm / Bản sưu tầm', percent: 3, value: '128.595.000 ₫' },
 ];
 
 const topSellers = [
@@ -53,12 +73,16 @@ const cashflowEntries = [
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
-    renderRevenueChart();
+    renderRevenueChart(30);
     renderRevenueByCategory();
     renderTopSellers();
     renderWithdrawTable();
     renderCashflowChart();
     renderCashflowTable();
+
+    initSlidingTabs(document.getElementById('revenueRangeFilter'), (tab) => {
+        renderRevenueChart(parseInt(tab.dataset.range, 10));
+    });
 
     initSlidingTabs(document.getElementById('financeSegControl'), (tab) => {
         const view = tab.dataset.view;
@@ -74,9 +98,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-function renderRevenueChart() {
+function renderRevenueChart(range = 30) {
     const el = document.getElementById('revenueChart');
-    el.innerHTML = revenueWeeks.map((w) => `
+    const data = revenueByRange[range] || revenueByRange[30];
+    el.innerHTML = data.map((w) => `
     <div class="mini-bar-col">
       <div class="mini-bar-stack" style="height:${w.gmv}%;">
         <div class="mini-bar-in" style="height:100%; background: linear-gradient(180deg, var(--primary-container), var(--primary));"></div>

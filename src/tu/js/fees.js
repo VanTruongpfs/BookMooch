@@ -1,10 +1,12 @@
 const commissionCategories = [
-    { key: 'manga', icon: 'auto_stories', label: 'Manga / Comic', rate: 7.5 },
-    { key: 'literature', icon: 'menu_book', label: 'Văn học trong nước', rate: 8 },
-    { key: 'foreign', icon: 'translate', label: 'Sách dịch / Ngoại văn', rate: 9 },
-    { key: 'children', icon: 'child_care', label: 'Sách thiếu nhi', rate: 6.5 },
-    { key: 'textbook', icon: 'school', label: 'Giáo trình / Tham khảo', rate: 5 },
-    { key: 'rare', icon: 'diamond', label: 'Ấn bản hiếm / Sưu tầm', rate: 10 },
+    { key: 'comic', icon: 'auto_stories', label: 'Truyện tranh / Manga', rate: 7.5 },
+    { key: 'manhwa', icon: 'menu_book', label: 'Manhwa / Manhua', rate: 7.5 },
+    { key: 'novel', icon: 'import_contacts', label: 'Tiểu thuyết / Truyện dài', rate: 8 },
+    { key: 'romance', icon: 'favorite', label: 'Truyện ngôn tình', rate: 8 },
+    { key: 'mystery', icon: 'visibility', label: 'Truyện trinh thám / Kinh dị', rate: 8.5 },
+    { key: 'lightnovel', icon: 'auto_awesome', label: 'Light Novel', rate: 8.5 },
+    { key: 'kids_story', icon: 'child_care', label: 'Truyện thiếu nhi', rate: 6.5 },
+    { key: 'rare_comic', icon: 'diamond', label: 'Truyện hiếm / Bản sưu tầm', rate: 10 },
 ];
 
 const policyToggles = [
@@ -26,14 +28,80 @@ function renderCommissionList() {
     const container = document.getElementById('commissionList');
     container.innerHTML = commissionCategories.map((cat) => `
     <div class="commission-row">
-      <div class="commission-row-label"><span class="material-symbols-outlined">${cat.icon}</span> ${cat.label}</div>
-      <div class="input-suffix-group">
-        <input type="text" data-key="${cat.key}" class="commission-input" value="${cat.rate}" onchange="updateSummary()">
-        <span class="input-suffix">%</span>
+      <div class="commission-row-label"><span class="material-symbols-outlined">${cat.icon}</span> ${escapeHtml(cat.label)}</div>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <div class="input-suffix-group">
+          <input type="text" data-key="${cat.key}" class="commission-input" value="${cat.rate}" onchange="updateSummary()">
+          <span class="input-suffix">%</span>
+        </div>
+        <button type="button" class="perm-group-remove" style="width:30px; height:30px;" title="Xoá danh mục" onclick="removeCategory('${cat.key}')"><span class="material-symbols-outlined">delete</span></button>
       </div>
     </div>
   `).join('');
 }
+
+/* ==========================================================================
+   THÊM / XOÁ DANH MỤC SÁCH
+   ========================================================================== */
+function slugifyCategoryKey(label) {
+    const base = label
+        .toLowerCase()
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .replace(/đ/g, 'd')
+        .replace(/[^a-z0-9]+/g, '_')
+        .replace(/^_+|_+$/g, '');
+    let key = base || `cat_${Date.now()}`;
+    let suffix = 1;
+    while (commissionCategories.some((c) => c.key === key)) {
+        key = `${base}_${suffix++}`;
+    }
+    return key;
+}
+
+function openAddCategoryModal() {
+    document.getElementById('categoryModalTitle').textContent = 'Thêm danh mục sách';
+    document.getElementById('categoryName').value = '';
+    document.getElementById('categoryRate').value = '';
+    openModal('categoryModal');
+}
+
+function confirmSaveCategory() {
+    const name = document.getElementById('categoryName').value.trim();
+    const rate = parseFloat(document.getElementById('categoryRate').value);
+    if (!name) {
+        showToast('Vui lòng nhập tên danh mục', 'warning');
+        return;
+    }
+    if (commissionCategories.some((c) => c.label.toLowerCase() === name.toLowerCase())) {
+        showToast('Danh mục này đã tồn tại', 'warning');
+        return;
+    }
+    commissionCategories.push({
+        key: slugifyCategoryKey(name),
+        icon: 'category',
+        label: name,
+        rate: isNaN(rate) ? 8 : rate,
+    });
+    renderCommissionList();
+    updateSummary();
+    closeModal('categoryModal');
+    showToast(`Đã thêm danh mục "${name}"`, 'success');
+}
+
+function removeCategory(key) {
+    if (commissionCategories.length <= 1) {
+        showToast('Phải giữ lại ít nhất 1 danh mục', 'warning');
+        return;
+    }
+    const cat = commissionCategories.find((c) => c.key === key);
+    const idx = commissionCategories.findIndex((c) => c.key === key);
+    if (idx === -1) return;
+    commissionCategories.splice(idx, 1);
+    renderCommissionList();
+    updateSummary();
+    showToast(`Đã xoá danh mục "${cat.label}"`, 'danger');
+}
+
 
 function renderPolicyToggles() {
     const container = document.getElementById('policyToggleList');

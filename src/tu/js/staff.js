@@ -23,6 +23,12 @@ const permModules = [
     { key: 'orders', label: 'Quản lý đơn hàng' },
 ];
 
+// 4 nhóm mặc định của hệ thống - không thể xoá, Super Admin không thể chỉnh sửa.
+const defaultRoles = ['Super Admin', 'Manager', 'Kiểm duyệt viên', 'CSKH'];
+
+// Danh sách nhóm quyền hiện có (mặc định + nhóm tự tạo thêm).
+let roles = [...defaultRoles];
+
 // role -> module -> checked (Super Admin luôn true & disabled)
 const permState = {
     'Super Admin': { accounts: true, staff: true, fees: true, vouchers: true, finance: true, orders: true },
@@ -32,10 +38,12 @@ const permState = {
 };
 
 let lockTarget = null;
+let editingStaffId = null;
 
 document.addEventListener('DOMContentLoaded', () => {
     renderStaffTable();
     renderPermMatrix();
+    renderRoleSelectOptions();
     initSlidingTabs(document.getElementById('staffSegControl'), (tab) => {
         const view = tab.dataset.view;
         document.getElementById('staffViewList').style.display = view === 'list' ? 'block' : 'none';
@@ -43,6 +51,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     document.getElementById('staffSearch').addEventListener('input', debounce(filterStaff, 200));
 });
+
+/* ==========================================================================
+   RENDER SELECT VAI TRÒ (dùng chung cho modal Thêm & Sửa nhân viên)
+   ========================================================================== */
+function renderRoleSelectOptions() {
+    document.querySelectorAll('select[data-role-select]').forEach((sel) => {
+        const current = sel.value;
+        sel.innerHTML = roles.map((r) => `<option value="${escapeHtml(r)}">${escapeHtml(r)}</option>`).join('');
+        if (roles.includes(current)) sel.value = current;
+    });
+}
 
 function renderStaffTable() {
     const body = document.getElementById('staffTableBody');
@@ -62,7 +81,7 @@ function renderStaffTable() {
       <td style="text-align:center;"><span class="badge badge-${s.status === 'active' ? 'success' : 'danger'}"><span class="badge-dot"></span>${s.status === 'active' ? 'Hoạt động' : 'Đã khoá'}</span></td>
       <td style="text-align:center;">
         <div style="display:flex; gap:6px; justify-content:center;">
-          <button class="btn btn-outline btn-sm" onclick="showToast('Đang mở chỉnh sửa hồ sơ ${escapeHtml(s.name)}')">Sửa</button>
+          <button class="btn btn-outline btn-sm" onclick="openEditStaffModal('${s.id}')">Sửa</button>
           ${s.status === 'active'
             ? `<button class="btn btn-sm" style="background:var(--danger-bg); color:var(--danger-text);" onclick="openLockModal('${s.id}', 'lock')" ${s.role === 'Super Admin' ? 'disabled title="Không thể khoá Super Admin"' : ''}>Khoá</button>`
             : `<button class="btn btn-primary btn-sm" onclick="openLockModal('${s.id}', 'unlock')">Mở khoá</button>`}
@@ -119,13 +138,25 @@ function addStaff() {
 }
 
 function renderPermMatrix() {
+    const theadRow = document.getElementById('permMatrixHeadRow');
+    if (theadRow) {
+        theadRow.innerHTML = `
+      <th>Phân hệ chức năng</th>
+      ${roles.map((role) => `
+        <th>
+          <span>${escapeHtml(role)}</span>
+          ${defaultRoles.includes(role) ? '' : `<button type="button" class="perm-group-remove" onclick="removeGroup('${escapeHtml(role)}')" title="Xoá nhóm quyền"><span class="material-symbols-outlined">close</span></button>`}
+        </th>
+      `).join('')}
+    `;
+    }
+
     const body = document.getElementById('permMatrixBody');
-    const roles = ['Super Admin', 'Manager', 'Kiểm duyệt viên', 'CSKH'];
     body.innerHTML = permModules.map((mod) => `
     <tr>
       <td class="perm-group-label">${mod.label}</td>
       ${roles.map((role) => {
-        const checked = permState[role][mod.key];
+        const checked = permState[role] ? permState[role][mod.key] : false;
         const disabled = role === 'Super Admin';
         return `<td><input type="checkbox" class="perm-check" data-role="${role}" data-mod="${mod.key}" ${checked ? 'checked' : ''} ${disabled ? 'disabled' : ''}></td>`;
     }).join('')}
@@ -137,5 +168,82 @@ function savePermissions() {
     document.querySelectorAll('#permMatrixBody .perm-check:not(:disabled)').forEach((cb) => {
         permState[cb.dataset.role][cb.dataset.mod] = cb.checked;
     });
-    showToast('Đã lưu thay đổi ma trận phân quyền', 'success');
+    showToast('Đã lưu thay đổi phân quyền', 'success');
+}
+
+/* ==========================================================================
+   THÊM / XOÁ NHÓM QUYỀN TUỲ CHỈNH
+   ========================================================================== */
+function openAddGroupModal() {
+    document.getElementById('newGroupName').value = '';
+    openModal('addGroupModal');
+}
+
+function confirmAddGroup() {
+    const name = document.getElementById('newGroupName').value.trim();
+    if (!name) {
+        showToast('Vui lòng nhập tên nhóm quyền', 'warning');
+        return;
+    }
+    if (roles.includes(name)) {
+        showToast('Nhóm quyền này đã tồn tại', 'warning');
+        return;
+    }
+    roles.push(name);
+    permState[name] = {};
+    permModules.forEach((mod) => { permState[name][mod.key] = false; });
+    renderPermMatrix();
+    renderRoleSelectOptions();
+    closeModal('addGroupModal');
+    showToast(`Đã thêm nhóm quyền "${name}". Tick chọn quyền rồi bấm Lưu thay đổi.`, 'success');
+}
+
+function removeGroup(role) {
+    if (defaultRoles.includes(role)) return;
+    const stillInUse = staffData.some((s) => s.role === role);
+    if (stillInUse) {
+        showToast(`Không thể xoá "${role}" vì vẫn còn nhân viên thuộc nhóm này`, 'warning');
+        return;
+    }
+    roles = roles.filter((r) => r !== role);
+    delete permState[role];
+    renderPermMatrix();
+    renderRoleSelectOptions();
+    showToast(`Đã xoá nhóm quyền "${role}"`, 'danger');
+}
+
+/* ==========================================================================
+   CHỈNH SỬA NHÂN VIÊN (vai trò, phòng ban, thông tin liên hệ)
+   ========================================================================== */
+function openEditStaffModal(id) {
+    const staff = staffData.find((s) => s.id === id);
+    if (!staff) return;
+    editingStaffId = id;
+    renderRoleSelectOptions();
+    document.getElementById('editStaffName').value = staff.name;
+    document.getElementById('editStaffEmail').value = staff.email;
+    document.getElementById('editStaffRole').value = staff.role;
+    document.getElementById('editStaffDept').value = staff.dept;
+    openModal('editStaffModal');
+}
+
+function saveStaffEdit() {
+    const staff = staffData.find((s) => s.id === editingStaffId);
+    if (!staff) return;
+    const name = document.getElementById('editStaffName').value.trim();
+    const email = document.getElementById('editStaffEmail').value.trim();
+    const role = document.getElementById('editStaffRole').value;
+    const dept = document.getElementById('editStaffDept').value;
+    if (!name || !email) {
+        showToast('Vui lòng nhập đầy đủ họ tên và email nội bộ', 'warning');
+        return;
+    }
+    staff.name = name;
+    staff.email = email;
+    staff.role = role;
+    staff.dept = dept;
+    renderStaffTable();
+    closeModal('editStaffModal');
+    showToast(`Đã cập nhật thông tin nhân viên ${name}`, 'success');
+    editingStaffId = null;
 }
