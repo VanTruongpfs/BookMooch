@@ -1278,7 +1278,7 @@ h3,
 
 /* ---------- 13. Responsive ---------- */
 @media (max-width: 1250px) {
-  .main-nav {
+  .main-navigation {
     display: none;
   }
 
@@ -1343,16 +1343,16 @@ h3,
     display: none;
   }
 
-  .main-header {
-    min-height: 72px;
+  .header-container {
+    height: 72px;
     gap: 10px;
   }
 
-  .global-search {
+  .header-search-bar {
     display: none;
   }
 
-  .profile > div:last-child {
+  .btn-post-listing span {
     display: none;
   }
 

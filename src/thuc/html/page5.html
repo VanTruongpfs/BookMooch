@@ -5,93 +5,75 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700&amp;display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
-    <link href="../page5/page5.css" rel="stylesheet"/>
+    <link href="../css/page5.css" rel="stylesheet"/>
+    <link href="../../shared/footer/footer.css" rel="stylesheet"/>
+    <link href="../../shared/header/header.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
     <title>MangaTrade — Khiếu Nại Đổi Trả</title>
   </head>
 <body class="app-body">
   <header class="site-header">
-    <div class="topbar">
-      <div class="topbar-inner">
-        <div>
-          <span>
-          </span>
-        <span>🎉 Miễn phí vận chuyển toàn quốc cho đơn truyện từ 250k - Đảm bảo sách thật 100%</span>
+    <div class="container header-container">
+      <!-- Logo Thương hiệu -->
+      <a href="../../tin/html/home.html" class="brand-logo">
+        <div class="brand-logo-icon">
+          <i class="fa-solid fa-book-open"></i>
+        </div>
+        <div class="brand-logo-text">
+          <span class="brand-name">COMIC<span class="highlight">HUB</span></span>
+          <span class="brand-slogan">Chợ Truyện &amp; Trao Đổi</span>
+        </div>
+      </a>
+
+      <!-- Thanh tìm kiếm nhanh -->
+      <div class="header-search-bar">
+        <span class="search-category-tag">Tất cả truyện</span>
+        <input type="text" class="search-input" placeholder="Tìm kiếm theo tên truyện, tác giả...">
+        <button type="submit" class="search-btn" aria-label="Tìm kiếm">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
       </div>
-    <div>
-      <span>
-        <span class="material-symbols-outlined">call</span>Hotline: 1900 8899</span>
-      <span>
-        <span class="material-symbols-outlined">help</span>Trợ giúp</span>
+
+      <!-- Menu chính -->
+      <nav class="main-navigation">
+        <ul class="nav-menu">
+          <li class="nav-item">
+            <a href="../../tin/html/home.html" class="nav-link"><i class="fa-regular fa-compass"></i> Khám phá</a>
+          </li>
+          <li class="nav-item">
+            <a href="../../tin/html/home.html#marketplace" class="nav-link"><i class="fa-solid fa-store"></i> Chợ Mua Bán</a>
+          </li>
+          <li class="nav-item">
+            <a href="../../duy/html/dealing-room.html" class="nav-link"><i class="fa-solid fa-arrow-right-arrow-left"></i> Sàn Trao Đổi 1-1</a>
+          </li>
+          <li class="nav-item">
+            <a href="../../tin/html/home.html#marketplace" class="nav-link highlight-gold"><i class="fa-solid fa-gem"></i> Bộ Sưu Tập Hiếm</a>
+          </li>
+          <li class="nav-item">
+            <a href="../../thuc/page1/page1.html" class="nav-link"><i class="fa-solid fa-users"></i> Cộng Đồng Otaku</a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Hành động người dùng -->
+      <div class="header-actions">
+        <button type="button" class="btn-notification" aria-label="Thông báo">
+          <i class="fa-regular fa-bell"></i>
+          <span class="notification-indicator"></span>
+        </button>
+        <a href="../../tin/html/shopping_cart.html" class="btn-cart-active" aria-label="Giỏ hàng">
+          <i class="fa-solid fa-bag-shopping"></i>
+          <span class="cart-count-badge">3</span>
+        </a>
+        <a href="../../ttruongmap/dang-ban-truyen/index.html" class="btn btn-post-listing">
+          <i class="fa-solid fa-circle-plus"></i>
+          <span>Đăng bán/Đổi truyện</span>
+        </a>
+        <a href="../../vu/profile/profile.html" class="user-profile-menu" style="display:flex; text-decoration:none;">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" alt="Ảnh đại diện người dùng" class="user-avatar-img">
+        </a>
+      </div>
     </div>
-</div>
-</div>
-<div class="mainbar">
-  <div class="brand">
-    <img alt="MangaTrade Logo" class="brand-logo" src="https\://lh3.googleusercontent.com/aida-public/AB6AXuBwZk5BsTWkoatKjDmh9PFUbC9zywmXAAr789uQy9YruZwlftCHr7kB_m0RrZuhmBgsYTv-TwbhcPhojSO0dVFdpfVln7kWFSQipO--PS7JaPX6qVJm_dynE6wcOiLGmdS0IFAGTpSimSusNtnj_J6l6mR_H9_nRgVHs22Pruk3_vRMvf4C1Q8VhMPYV-kkbRnIDpxrFo-N-jg3oT82ztIatXH1-kHNTx_rYtO6JmDcN4Q165Sd4L9XEw"/>
-    <div class="brand-copy">
-      <span>MangaTrade</span>
-      <span>Sàn Truyện Tranh Việt</span>
-    </div>
-</div>
-<div class="searchbox">
-  <select class="search-category">
-    <option>Tất cả</option>
-    <option>Manga</option>
-    <option>Comic</option>
-    <option>Light Novel</option>
-    <option>Boxset</option>
-  </select>
-<div>
-</div>
-<span class="material-symbols-outlined">search</span>
-<input class="search-input" id="searchInput" placeholder="Tìm theo tên manga, tác giả, NXB Kim Đồng, Trẻ..." type="text"/>
-<span>⌘K</span>
-</div>
-<nav class="primary-nav" data-active-classes="bg-primary-container text-on-primary-container font-label-lg rounded-lg">
-  <a data-path="kham-pha" href="#">Khám Phá</a>
-  <a data-path="dang-tin-tim-mua" href="#">Đăng Tin Tìm Mua</a>
-  <a data-path="quan-ly-don-hang" href="#">Đơn Hàng Của Tôi</a>
-  <a data-path="truyen-yeu-thich" href="#">Truyện Yêu Thích</a>
-</nav>
-<div class="header-actions">
-  <div class="icon-action">
-    <span class="material-symbols-outlined">notifications</span>
-    <span>3</span>
-  </div>
-<div class="icon-action">
-  <span class="material-symbols-outlined">favorite</span>
-</div>
-<div class="icon-action">
-  <span class="material-symbols-outlined">shopping_bag</span>
-  <span>2</span>
-</div>
-<div class="profile">
-  <img alt="Profile" src="https\://lh3.googleusercontent.com/aida-public/AB6AXuDR0JkgIACupclIF0mYDEdWYbrhlhjp40ndu1eXxcZ9f2iYukvvpXRBbQLYFM-I8aDI7UjgRiFqeyjkbBoJ-SWD_8NrCP7-xFMjvXaZQb-EXniwcQqIhkjQ6VMvQS-xOVZ_oJNIuQoGzOsQTh-EoWPDLc0SngG0pUXAudzDfP-czvr3vHFOrNPWPBOwk7v5kYGaKVuabfNwZi87qktn7szz698AWtlmQevEXB-9MuXw8ho2X7JVD-VuBw"/>
-  <div>
-    <span>Minh Tuấn</span>
-    <span>Otaku Pro ★</span>
-  </div>
-</div>
-</div>
-</div>
-<div class="quickbar">
-  <div class="quickbar-inner">
-    <span class="quick-label">Chuyển nhanh:</span>
-    <nav class="quick-nav" data-active-classes="bg-primary-container text-on-primary-container font-label-sm rounded-full">
-      <a data-path="dang-tin-tim-mua" href="#">1. Đăng tin tìm mua</a>
-      <span>•</span>
-      <a data-path="quan-ly-don-hang" href="#">2. Quản lý đơn hàng</a>
-      <span>•</span>
-      <a data-path="theo-doi-trang-thai" href="#">3. Theo dõi trạng thái</a>
-      <span>•</span>
-      <a data-path="huy-va-doi-tra" href="#">4. Hủy &amp; Đổi trả</a>
-      <span>•</span>
-      <a data-path="danh-gia-truyen" href="#">5. Đánh giá truyện</a>
-      <span>•</span>
-      <a data-path="truyen-yeu-thich" href="#">6. Truyện yêu thích</a>
-    </nav>
-</div>
-</div>
 </header>
 <main class="page-main">
   <div class="page-wrap">
@@ -700,7 +682,8 @@
 </div>
 </div>
 </footer>
-<script src="../page5/page5.js">
+<script src="../../shared/footer/footer.js"></script>
+<script src="../js/page5.js">
 </script>
 </body>
 </html>

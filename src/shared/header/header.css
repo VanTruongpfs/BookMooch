@@ -1,6 +1,21 @@
 /* ==========================================================================
    3. SITE HEADER & NAVIGATION
    ========================================================================== */
+:root {
+    --primary: #9D4300;
+    --secondary: #565E74;
+    --neutral-border: #CBD5E1;
+    --neutral-white: #FFFFFF;
+    --neutral-slate: #64748B;
+    --neutral-light: #CBD5E1;
+    --font-headline: "Plus Jakarta Sans", sans-serif;
+    --primary-hover: #C2410C;
+    --radius-md: 12px;
+    --radius-full: 9999px;
+    --shadow-sm: 0 1px 4px rgba(15, 23, 42, 0.05);
+    --shadow-orange: 0 4px 12px rgba(249, 115, 22, 0.25);
+}
+
 .site-header {
     width: 100%;
     background: rgba(255, 255, 255, 0.95);
@@ -21,6 +36,17 @@
     align-items: center;
     justify-content: space-between;
     gap: 16px;
+}
+
+.header-container > .brand-logo {
+    width: auto;
+    height: auto;
+}
+
+.header-container > .header-search-bar {
+    width: min(520px, 100%);
+    max-width: 520px;
+    flex: 0 1 520px;
 }
 
 /* Brand Logo */
@@ -243,4 +269,43 @@
     object-fit: cover;
     border: 2px solid #fed7aa;
     cursor: pointer;
+}
+
+@media (max-width: 1400px) {
+    .main-navigation {
+        display: none;
+    }
+
+    .header-search-bar {
+        max-width: 520px;
+    }
+}
+
+@media (max-width: 768px) {
+    .header-container {
+        height: 72px;
+        gap: 12px;
+    }
+
+    .header-search-bar {
+        display: none;
+    }
+
+    .header-actions {
+        margin-left: auto;
+    }
+}
+
+@media (max-width: 576px) {
+    .brand-name {
+        font-size: 18px;
+    }
+
+    .header-actions {
+        gap: 6px;
+    }
+
+    .btn-post-listing span {
+        display: none;
+    }
 }
