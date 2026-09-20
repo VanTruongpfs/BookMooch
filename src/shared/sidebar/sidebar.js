@@ -4,7 +4,7 @@ const commonGroups = [
         ["◈", "Trang Chủ ComicHub", "../../tin/html/home.html"],
         ["★", "Master Portal", "../../index.html"],
         ["◉", "Hồ sơ cá nhân", "../../vu/profile/profile.html"],
-        ["•", "Đổi mật khẩu", "../../vu/auth/reset-password/reset-password.html"],
+        ["⌂", "Quản lý địa chỉ", "../../vu/manage_address/manage_address.html"],
         ["¤", "Ví & Rút tiền", "../../truong/html/wallet.html"]
     ] },
     { title: "Mua hàng & Đơn hàng", items: [

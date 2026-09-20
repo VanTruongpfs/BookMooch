@@ -15,6 +15,7 @@ Sau đó mở:
 - Forgot password: http://localhost:5500/vu/auth/forgot-password/forgot-password.html
 - Reset password: http://localhost:5500/vu/auth/reset-password/reset-password.html?token=TOKEN
 - Profile: http://localhost:5500/vu/profile/profile.html
+- Manage address: http://localhost:5500/vu/manage_address/manage_address.html
 - Complaint: http://localhost:5500/vu/complain/complain.html
 - Support: http://localhost:5500/vu/request_support/request_support.html
 
