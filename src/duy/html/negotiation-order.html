@@ -7,45 +7,80 @@
 
     <title>Tạo đơn hàng đàm phán</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <link rel="stylesheet" href="../../shared/header/header.css">
+    <link rel="stylesheet" href="../../shared/footer/footer.css">
     <link rel="stylesheet" href="../css/negotiation-order.css">
 </head>
 
 <body>
-<nav class="navbar">
-    <div class="nav-inner">
-        <a href="../../tin/html/home.html" class="nav-brand" style="text-decoration:none; color:inherit; display:flex; align-items:center; gap:8px;">
-            <span>📚 ComicHub</span>
-            <span style="font-size:0.75rem; opacity:0.7; font-weight:normal;">| Trao đổi &amp; Đàm phán</span>
+<header class="site-header">
+    <div class="container header-container">
+        <!-- Logo Thương hiệu -->
+        <a href="../../tin/html/home.html" class="brand-logo">
+            <div class="brand-logo-icon">
+                <i class="fa-solid fa-book-open"></i>
+            </div>
+            <div class="brand-logo-text">
+                <span class="brand-name">COMIC<span class="highlight">HUB</span></span>
+                <span class="brand-slogan">Chợ Truyện &amp; Trao Đổi</span>
+            </div>
         </a>
 
-        <div class="nav-links">
-            <a href="../../tin/html/home.html">
-                &larr; Chợ Mua Bán
+        <!-- Thanh tìm kiếm nhanh -->
+        <div class="header-search-bar">
+            <span class="search-category-tag">Tất cả truyện</span>
+            <input type="text" class="search-input" placeholder="Tìm kiếm theo tên truyện, tác giả...">
+            <button type="submit" class="search-btn" aria-label="Tìm kiếm">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </div>
+
+        <!-- Menu chính -->
+        <nav class="main-navigation">
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="../../tin/html/home.html" class="nav-link"><i class="fa-regular fa-compass"></i> Khám phá</a>
+                </li>
+                <li class="nav-item">
+                    <a href="../../tin/html/home.html#marketplace" class="nav-link"><i class="fa-solid fa-store"></i> Chợ Mua Bán</a>
+                </li>
+                <li class="nav-item">
+                    <a href="../../duy/html/dealing-room.html" class="nav-link"><i class="fa-solid fa-arrow-right-arrow-left"></i> Sàn Trao Đổi 1-1</a>
+                </li>
+                <li class="nav-item">
+                    <a href="../../tin/html/home.html#marketplace" class="nav-link highlight-gold"><i class="fa-solid fa-gem"></i> Bộ Sưu Tập Hiếm</a>
+                </li>
+                <li class="nav-item">
+                    <a href="../../thuc/html/page1.html" class="nav-link"><i class="fa-solid fa-users"></i> Cộng Đồng Otaku</a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Hành động người dùng -->
+        <div class="header-actions">
+            <button type="button" class="btn-notification" aria-label="Thông báo">
+                <i class="fa-regular fa-bell"></i>
+                <span class="notification-indicator"></span>
+            </button>
+            <a href="../../tin/html/shopping_cart.html" class="btn-cart-active" aria-label="Giỏ hàng">
+                <i class="fa-solid fa-bag-shopping"></i>
+                <span class="cart-count-badge">3</span>
             </a>
-            <a href="dealing-chat.html">
-                Phòng trao đổi
+            <a href="../../ttruongmap/dang-ban-truyen/index.html" class="btn btn-post-listing">
+                <i class="fa-solid fa-circle-plus"></i>
+                <span>Đăng bán/Đổi truyện</span>
             </a>
-            <a href="negotiation-order.html" class="active">
-                Tạo đơn hàng
-            </a>
-            <a href="shipping-fee.html">
-                Phí vận chuyển
-            </a>
-            <a href="exchange-orders.html">
-                Đơn hàng trao đổi
-            </a>
-            <a href="dealing-room.html">
-                Quản lý phòng
-            </a>
-            <a href="../../truong/html/index.html">
-                Kênh Người Bán &rarr;
-            </a>
-            <a href="../../index.html" style="color:#f97316; font-weight:bold;">
-                Portal
+            <a href="../../vu/profile/profile.html" class="user-profile-menu" style="display:flex; text-decoration:none;">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" alt="Ảnh đại diện người dùng" class="user-avatar-img">
             </a>
         </div>
     </div>
-</nav>
+</header>
 
 <main class="page">
     <div class="breadcrumb">
@@ -561,61 +596,72 @@
 </main>
 
 
-<script>
+<script src="../js/negotiation-order.js"></script>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-top">
+            <div>
+                <div class="brand-logo" style="margin-bottom: 12px;">
+                    <div class="brand-logo-icon" style="width:36px; height:36px; font-size:16px;">
+                        <i class="fa-solid fa-book-open"></i>
+                    </div>
+                    <span class="brand-text-main" style="font-size: 20px;">COMIC<span>HUB</span></span>
+                </div>
+                <p class="footer-desc">Nền tảng thương mại điện tử chuyên biệt và sàn trao đổi truyện tranh bản quyền, hiếm, và bản sưu tầm giới hạn tại Việt Nam.</p>
+                <div class="footer-hotline">
+                    Hotline: <span class="hotline-number">1900 8828</span> (8:00 - 22:00)<br>
+                    Email: support@comichub.vn
+                </div>
+            </div>
 
-    function changeAddress() {
+            <div>
+                <h4 class="footer-col-title">Danh Mục Truyện</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Manga Shonen &amp; Seinen</a></li>
+                    <li><a href="#">Shojo Romance</a></li>
+                    <li><a href="#">Marvel &amp; DC Comics</a></li>
+                    <li><a href="#">Manhwa &amp; Webtoon In</a></li>
+                    <li><a href="#">Light Novel Giới Hạn</a></li>
+                </ul>
+            </div>
 
-        alert(
-            "Mở danh sách địa chỉ nhận hàng.\n\n"
-            + "Trong hệ thống thật, người dùng có thể chọn "
-            + "một địa chỉ khác hoặc thêm địa chỉ mới."
-        );
+            <div>
+                <h4 class="footer-col-title">Tính Năng Sàn</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Đề Xuất Đổi Ngang 1–1</a></li>
+                    <li><a href="#">Định Giá Bán Nhanh</a></li>
+                    <li><a href="#">Kho Truyện Hiếm CGC</a></li>
+                    <li><a href="#">Review Sách</a></li>
+                    <li><a href="#">Tìm Kiếm Want-List</a></li>
+                </ul>
+            </div>
 
-    }
+            <div>
+                <h4 class="footer-col-title">Chính Sách &amp; Hỗ Trợ</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Quy Định Đóng Gói</a></li>
+                    <li><a href="#">Tiêu Chuẩn Đánh Giá</a></li>
+                    <li><a href="#">Chính Sách Hoàn Tiền</a></li>
+                    <li><a href="#">Bảo Mật Otaku</a></li>
+                    <li><a href="#">Câu Hỏi Thường Gặp (FAQ)</a></li>
+                </ul>
+            </div>
+        </div>
 
+        <div class="footer-bottom">
+            <div>© 2025 ComicHub Việt Nam. Nền tảng mua bán &amp; trao đổi truyện tranh toàn diện.</div>
+            <div class="footer-sublinks">
+                <a href="#">Điều khoản sử dụng</a>
+                <span>•</span>
+                <a href="#">Chính sách bảo mật</a>
+                <span>•</span>
+                <a href="#">Chứng chỉ sàn TMĐT</a>
+            </div>
+        </div>
+    </div>
+</footer>
 
-    function continueToShipping() {
-
-        const note =
-            document.getElementById("orderNote").value.trim();
-
-        /*
-         * Trong hệ thống thật:
-         *
-         * 1. Kiểm tra người dùng có địa chỉ mặc định hay chưa.
-         * 2. Nếu chưa có -> yêu cầu thêm địa chỉ.
-         * 3. Nếu có -> tạo dữ liệu đơn hàng tạm.
-         * 4. Chuyển sang trang 21.
-         */
-
-        const hasAddress = true;
-
-        if (!hasAddress) {
-
-            alert(
-                "Bạn chưa có địa chỉ nhận hàng.\n"
-                + "Vui lòng thêm địa chỉ trước khi tiếp tục."
-            );
-
-            return;
-        }
-
-
-        console.log("Deal: #PT2049");
-        console.log("Giá Deal: 275000");
-        console.log("Ghi chú:", note);
-
-
-        alert(
-            "Thông tin đơn hàng đã được kiểm tra.\n\n"
-        window.location.href = "shipping-fee.html?deal=PT2049";
-    }
-
-    function backToRoom() {
-        window.location.href = "dealing-chat.html?id=PT2049";
-    }
-
-</script>
+<script src="../../shared/footer/footer.js"></script>
 
 </body>
 </html>

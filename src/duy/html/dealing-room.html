@@ -6,46 +6,81 @@
 
     <title>Quản lý phòng trao đổi giá</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <link rel="stylesheet" href="../../shared/header/header.css">
+    <link rel="stylesheet" href="../../shared/footer/footer.css">
     <link rel="stylesheet" href="../css/dealing-room.css">
 </head>
 
 <body>
 
-<nav class="navbar">
-    <div class="nav-inner">
-        <a href="../../tin/html/home.html" class="nav-brand" style="text-decoration:none; color:inherit; display:flex; align-items:center; gap:8px;">
-            <span>📚 ComicHub</span>
-            <span style="font-size:0.75rem; opacity:0.7; font-weight:normal;">| Trao đổi &amp; Đàm phán</span>
+<header class="site-header">
+    <div class="container header-container">
+        <!-- Logo Thương hiệu -->
+        <a href="../../tin/html/home.html" class="brand-logo">
+            <div class="brand-logo-icon">
+                <i class="fa-solid fa-book-open"></i>
+            </div>
+            <div class="brand-logo-text">
+                <span class="brand-name">COMIC<span class="highlight">HUB</span></span>
+                <span class="brand-slogan">Chợ Truyện &amp; Trao Đổi</span>
+            </div>
         </a>
 
-        <div class="nav-links">
-            <a href="../../tin/html/home.html">
-                &larr; Chợ Mua Bán
+        <!-- Thanh tìm kiếm nhanh -->
+        <div class="header-search-bar">
+            <span class="search-category-tag">Tất cả truyện</span>
+            <input type="text" class="search-input" placeholder="Tìm kiếm theo tên truyện, tác giả...">
+            <button type="submit" class="search-btn" aria-label="Tìm kiếm">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </div>
+
+        <!-- Menu chính -->
+        <nav class="main-navigation">
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="../../tin/html/home.html" class="nav-link"><i class="fa-regular fa-compass"></i> Khám phá</a>
+                </li>
+                <li class="nav-item">
+                    <a href="../../tin/html/home.html#marketplace" class="nav-link"><i class="fa-solid fa-store"></i> Chợ Mua Bán</a>
+                </li>
+                <li class="nav-item">
+                    <a href="../../duy/html/dealing-room.html" class="nav-link"><i class="fa-solid fa-arrow-right-arrow-left"></i> Sàn Trao Đổi 1-1</a>
+                </li>
+                <li class="nav-item">
+                    <a href="../../tin/html/home.html#marketplace" class="nav-link highlight-gold"><i class="fa-solid fa-gem"></i> Bộ Sưu Tập Hiếm</a>
+                </li>
+                <li class="nav-item">
+                    <a href="../../thuc/html/page1.html" class="nav-link"><i class="fa-solid fa-users"></i> Cộng Đồng Otaku</a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Hành động người dùng -->
+        <div class="header-actions">
+            <button type="button" class="btn-notification" aria-label="Thông báo">
+                <i class="fa-regular fa-bell"></i>
+                <span class="notification-indicator"></span>
+            </button>
+            <a href="../../tin/html/shopping_cart.html" class="btn-cart-active" aria-label="Giỏ hàng">
+                <i class="fa-solid fa-bag-shopping"></i>
+                <span class="cart-count-badge">3</span>
             </a>
-            <a href="dealing-chat.html">
-                Phòng trao đổi
+            <a href="../../ttruongmap/dang-ban-truyen/index.html" class="btn btn-post-listing">
+                <i class="fa-solid fa-circle-plus"></i>
+                <span>Đăng bán/Đổi truyện</span>
             </a>
-            <a href="negotiation-order.html">
-                Tạo đơn hàng
-            </a>
-            <a href="shipping-fee.html">
-                Phí vận chuyển
-            </a>
-            <a href="exchange-orders.html">
-                Đơn hàng trao đổi
-            </a>
-            <a href="dealing-room.html" class="active">
-                Quản lý phòng
-            </a>
-            <a href="../../truong/html/index.html">
-                Kênh Người Bán &rarr;
-            </a>
-            <a href="../../index.html" style="color:#f97316; font-weight:bold;">
-                Portal
+            <a href="../../vu/profile/profile.html" class="user-profile-menu" style="display:flex; text-decoration:none;">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" alt="Ảnh đại diện người dùng" class="user-avatar-img">
             </a>
         </div>
     </div>
-</nav>
+</header>
 
 <div class="page-container">
     <div class="breadcrumb">
@@ -1079,241 +1114,72 @@
 </div>
 
 
-<script>
-
-    /* =========================
-       FILTER
-    ========================== */
-
-    function filterRooms() {
-
-        const keyword =
-            document
-                .getElementById("searchInput")
-                .value
-                .toLowerCase()
-                .trim();
-
-
-        const status =
-            document
-                .getElementById("statusFilter")
-                .value;
-
-
-        const rooms =
-            document.querySelectorAll(".room-card");
-
-
-        let count = 0;
-
-
-        rooms.forEach(function(room) {
-
-            const text =
-                room.innerText.toLowerCase();
-
-
-            const roomStatus =
-                room.dataset.status;
-
-
-            const matchKeyword =
-                text.includes(keyword);
-
-
-            const matchStatus =
-                status === "all" ||
-                roomStatus === status;
-
-
-            if (
-                matchKeyword &&
-                matchStatus
-            ) {
-
-                room.style.display = "block";
-
-                count++;
-
-            } else {
-
-                room.style.display = "none";
-
-            }
-
-        });
-
-
-        document
-            .getElementById("resultCount")
-            .innerText =
-            "Hiển thị " +
-            count +
-            " phòng";
-
-
-        document
-            .getElementById("emptyState")
-            .style.display =
-            count === 0
-                ? "block"
-                : "none";
-    }
-
-
-    /* =========================
-       SORT
-    ========================== */
-
-    function sortRooms() {
-
-        const list =
-            document.getElementById("roomList");
-
-
-        const rooms =
-            Array.from(
-                list.querySelectorAll(".room-card")
-            );
-
-
-        const type =
-            document
-                .getElementById("sortFilter")
-                .value;
-
-
-        rooms.sort(function(a, b) {
-
-            if (type === "newest") {
-
-                return new Date(b.dataset.date)
-                    - new Date(a.dataset.date);
-
-            }
-
-
-            if (type === "oldest") {
-
-                return new Date(a.dataset.date)
-                    - new Date(b.dataset.date);
-
-            }
-
-
-            if (type === "price-high") {
-
-                return Number(b.dataset.price)
-                    - Number(a.dataset.price);
-
-            }
-
-
-            if (type === "price-low") {
-
-                return Number(a.dataset.price)
-                    - Number(b.dataset.price);
-
-            }
-
-        });
-
-
-        rooms.forEach(function(room) {
-
-            list.appendChild(room);
-
-        });
-
-    }
-
-
-    /* =========================
-       OPEN ROOM
-    ========================== */
-
-    function openRoom(roomId) {
-
-        alert(
-            "Mở phòng trao đổi #" +
-            roomId
-        );
-
-        // Sau này:
-        // window.location.href =
-        // "page19.html?room=" + roomId;
-
-    }
-
-
-    /* =========================
-       COUNTER OFFER
-    ========================== */
-
-    function counterOffer(roomId) {
-
-        const price =
-            prompt(
-                "Nhập mức giá bạn muốn đề xuất lại:"
-            );
-
-
-        if (
-            price === null ||
-            price.trim() === ""
-        ) {
-            return;
-        }
-
-
-        alert(
-            "Đã tạo đề xuất " +
-            Number(price).toLocaleString("vi-VN") +
-            "đ cho phòng #" +
-            roomId
-        );
-
-    }
-
-
-    /* =========================
-       ACCEPT DEAL
-    ========================== */
-
-    function acceptDeal(roomId) {
-
-        const confirmDeal =
-            confirm(
-                "Bạn có chắc muốn chốt deal trong phòng #" +
-                roomId +
-                "?"
-            );
-
-
-        if (!confirmDeal) {
-            return;
-        }
-
-
-        alert(
-            "Đã chốt deal trong phòng #" +
-            roomId +
-            ". Hệ thống có thể tạo đơn hàng từ deal này."
-        );
-
-    }
-
-
-    function refreshRooms() {
-
-        alert(
-            "Đã làm mới danh sách phòng trao đổi."
-        );
-
-    }
-
-</script>
+<script src="../js/dealing-room.js"></script>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-top">
+            <div>
+                <div class="brand-logo" style="margin-bottom: 12px;">
+                    <div class="brand-logo-icon" style="width:36px; height:36px; font-size:16px;">
+                        <i class="fa-solid fa-book-open"></i>
+                    </div>
+                    <span class="brand-text-main" style="font-size: 20px;">COMIC<span>HUB</span></span>
+                </div>
+                <p class="footer-desc">Nền tảng thương mại điện tử chuyên biệt và sàn trao đổi truyện tranh bản quyền, hiếm, và bản sưu tầm giới hạn tại Việt Nam.</p>
+                <div class="footer-hotline">
+                    Hotline: <span class="hotline-number">1900 8828</span> (8:00 - 22:00)<br>
+                    Email: support@comichub.vn
+                </div>
+            </div>
+
+            <div>
+                <h4 class="footer-col-title">Danh Mục Truyện</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Manga Shonen &amp; Seinen</a></li>
+                    <li><a href="#">Shojo Romance</a></li>
+                    <li><a href="#">Marvel &amp; DC Comics</a></li>
+                    <li><a href="#">Manhwa &amp; Webtoon In</a></li>
+                    <li><a href="#">Light Novel Giới Hạn</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="footer-col-title">Tính Năng Sàn</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Đề Xuất Đổi Ngang 1–1</a></li>
+                    <li><a href="#">Định Giá Bán Nhanh</a></li>
+                    <li><a href="#">Kho Truyện Hiếm CGC</a></li>
+                    <li><a href="#">Review Sách</a></li>
+                    <li><a href="#">Tìm Kiếm Want-List</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="footer-col-title">Chính Sách &amp; Hỗ Trợ</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Quy Định Đóng Gói</a></li>
+                    <li><a href="#">Tiêu Chuẩn Đánh Giá</a></li>
+                    <li><a href="#">Chính Sách Hoàn Tiền</a></li>
+                    <li><a href="#">Bảo Mật Otaku</a></li>
+                    <li><a href="#">Câu Hỏi Thường Gặp (FAQ)</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div>© 2025 ComicHub Việt Nam. Nền tảng mua bán &amp; trao đổi truyện tranh toàn diện.</div>
+            <div class="footer-sublinks">
+                <a href="#">Điều khoản sử dụng</a>
+                <span>•</span>
+                <a href="#">Chính sách bảo mật</a>
+                <span>•</span>
+                <a href="#">Chứng chỉ sàn TMĐT</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="../../shared/footer/footer.js"></script>
 
 </body>
 </html>
