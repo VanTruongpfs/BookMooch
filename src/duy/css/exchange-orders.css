@@ -1,3 +1,32 @@
+:root {
+    --primary-light: #FDBA74;
+    --primary: #F97316;
+    --primary-dark: #C2410C;
+
+    --secondary-light: #334155;
+    --secondary: #0F172A;
+    --secondary-dark: #020617;
+
+    --tertiary-light: #FCD34D;
+    --tertiary: #F59E0B;
+    --tertiary-dark: #B45309;
+
+    --neutral-light: #CBD5E1;
+    --neutral: #64748B;
+    --neutral-dark: #1E293B;
+
+    --background: #F8FAFC;
+    --white: #FFFFFF;
+
+    --border: #E2E8F0;
+
+    --success: #16A34A;
+    --success-bg: #F0FDF4;
+
+    --danger: #DC2626;
+    --danger-bg: #FEF2F2;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -18,143 +47,6 @@ select {
 }
 
 
-.navbar {
-    width: 100%;
-
-    background: #0f172a;
-
-    border-bottom: 1px solid #1e293b;
-}
-
-
-.nav-inner {
-    max-width: 1280px;
-
-    min-height: 58px;
-
-    margin: 0 auto;
-
-    padding: 0 24px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    gap: 30px;
-}
-
-
-.nav-brand {
-    color: white;
-
-    font-size: 15px;
-
-    font-weight: 700;
-
-    white-space: nowrap;
-}
-
-
-.nav-links {
-    display: flex;
-
-    align-items: center;
-
-    gap: 4px;
-}
-
-
-.nav-links a {
-    display: flex;
-
-    align-items: center;
-
-    min-height: 38px;
-
-    padding: 0 13px;
-
-    border-radius: 7px;
-
-    color: #cbd5e1;
-
-    text-decoration: none;
-
-    font-size: 13px;
-
-    font-weight: 500;
-
-    transition: 0.2s;
-}
-
-
-.nav-links a:hover {
-    background: #1e293b;
-
-    color: white;
-}
-
-
-.nav-links a.active {
-    background: #f97316;
-
-    color: white;
-}
-
-
-@media (max-width: 900px) {
-
-    .nav-inner {
-        align-items: flex-start;
-
-        flex-direction: column;
-
-        gap: 8px;
-
-        padding-top: 12px;
-
-        padding-bottom: 12px;
-    }
-
-
-    .nav-links {
-        width: 100%;
-
-        overflow-x: auto;
-
-        padding-bottom: 2px;
-    }
-
-
-    .nav-links a {
-        white-space: nowrap;
-    }
-
-}
-
-
-@media (max-width: 650px) {
-
-    .nav-inner {
-        padding-left: 14px;
-
-        padding-right: 14px;
-    }
-
-
-    .nav-links {
-        gap: 2px;
-    }
-
-
-    .nav-links a {
-        padding: 0 10px;
-
-        font-size: 12px;
-    }
-
-}
 
 /* =========================
    PAGE
