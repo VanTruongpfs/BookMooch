@@ -553,6 +553,10 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("closeAddModalBtn").addEventListener("click", closeModal);
   document.getElementById("cancelAddModalBtn").addEventListener("click", closeModal);
 
+  if (window.location.hash === "#openAddModalBtn") {
+    openModal();
+  }
+
   modal.addEventListener("click", event => {
     if (event.target === modal) {
       closeModal();

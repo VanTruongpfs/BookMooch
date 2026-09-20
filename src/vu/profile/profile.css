@@ -11,3 +11,10 @@
 .role-card h3 { margin: 0; color: var(--text-main); }
 .role-card .button { margin-top: 18px; text-decoration: none; }
 .role-hint { margin: 20px 0 0; color: var(--text-muted); font-size: .74rem; }
+.wishlist-profile-card { margin-top: 20px; }
+.wishlist-profile-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; }
+.wishlist-profile-heading h2 { margin: 0; color: var(--text-main); }
+.wishlist-profile-heading .eyebrow { margin-bottom: 6px; }
+.wishlist-count { flex: 0 0 auto; padding: 6px 10px; border-radius: 999px; color: var(--tertiary-dark); background: var(--tertiary-light); font-size: .78rem; font-weight: 800; }
+.wishlist-profile-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+@media (max-width: 600px) { .wishlist-profile-heading { flex-direction: column; } .wishlist-profile-actions .button { width: 100%; } }
