@@ -13,4 +13,6 @@
 .sidebar-link:hover { background: #1b3252; color: #f8fafc; }
 .sidebar-link.active { border-left-color: var(--primary-container); color: #f8fafc; background: #233f66; font-weight: 800; }
 .sidebar-link-icon { width: 20px; color: var(--primary-container); text-align: center; }
+.sidebar-logout { display: inline-flex; align-items: center; justify-content: center; width: calc(100% - 12px); margin: 18px 6px 0; padding: 11px 14px; border: 1px solid rgba(253, 186, 116, 0.3); border-radius: 8px; background: rgba(249, 115, 22, 0.1); color: #fff; font-weight: 700; cursor: pointer; transition: var(--transition); }
+.sidebar-logout:hover { background: rgba(249, 115, 22, 0.2); transform: translateY(-1px); }
 @media (max-width: 820px) { .app-sidebar { position: static; width: 100%; max-height: none; padding: 14px; } .sidebar-brand { padding-bottom: 14px; } .sidebar-profile { margin-bottom: 12px; } .sidebar-group { margin-bottom: 10px; } .sidebar-group-title { margin-top: 12px; } }
