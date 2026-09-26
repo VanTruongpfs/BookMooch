@@ -68,6 +68,22 @@ function renderGroup(group, currentPath) {
     return section;
 }
 
+function logout() {
+    const keysToClear = [
+        "bookmooch_session",
+        "bookmooch_profile",
+        "bookmooch_avatar",
+        "userRole",
+        "userName",
+        "rememberMe"
+    ];
+    keysToClear.forEach((key) => {
+        localStorage.removeItem(key);
+        sessionStorage.removeItem(key);
+    });
+    window.location.href = "../../vu/auth/login/login.html";
+}
+
 export async function mountSidebar(mount = document.querySelector("[data-sidebar-mount]")) {
     if (!mount) return;
     let template = "";
@@ -83,9 +99,10 @@ export async function mountSidebar(mount = document.querySelector("[data-sidebar
     if (!template) {
         template = `
         <aside class="app-sidebar" data-sidebar aria-label="Điều hướng chính">
-            <div class="sidebar-brand">ComicHub <span>Hub</span></div>
+            <div class="sidebar-brand">ComicWorm <span>Hub</span></div>
             <div class="sidebar-profile"><span class="sidebar-avatar" data-sidebar-avatar>BM</span><div><strong data-sidebar-name>Thành viên</strong><small data-sidebar-role>BUYER</small></div></div>
             <nav data-sidebar-nav></nav>
+            <button class="sidebar-logout" type="button" data-sidebar-logout>Đăng xuất</button>
         </aside>`;
     }
     mount.innerHTML = template;
@@ -94,9 +111,11 @@ export async function mountSidebar(mount = document.querySelector("[data-sidebar
     const nameEl = mount.querySelector("[data-sidebar-name]");
     const roleEl = mount.querySelector("[data-sidebar-role]");
     const avatarEl = mount.querySelector("[data-sidebar-avatar]");
+    const logoutButton = mount.querySelector("[data-sidebar-logout]");
     if (nameEl) nameEl.textContent = userName;
     if (roleEl) roleEl.textContent = role;
     if (avatarEl) avatarEl.textContent = userName.slice(0, 2).toUpperCase();
+    if (logoutButton) logoutButton.addEventListener("click", logout);
     const currentPath = window.location.pathname;
     const navigation = mount.querySelector("[data-sidebar-nav]");
     if (navigation) {
