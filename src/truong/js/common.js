@@ -24,10 +24,10 @@ async function loadSidebarComponent() {
   try {
     let response;
     const candidates = [
+      '/truong/html/sidebar.html',
       'sidebar.html',
       '../../truong/html/sidebar.html',
-      '../truong/html/sidebar.html',
-      '/truong/html/sidebar.html'
+      '../truong/html/sidebar.html'
     ];
     for (const url of candidates) {
       try {

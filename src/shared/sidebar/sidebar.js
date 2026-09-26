@@ -8,10 +8,10 @@ const commonGroups = [
         ["¤", "Ví & Rút tiền", "../../truong/html/wallet.html"]
     ] },
     { title: "Mua hàng & Đơn hàng", items: [
-        ["+", "Đăng tin tìm mua", "../../thuc/page1/page1.html"],
-        ["▣", "Quản lý đơn hàng mua", "../../thuc/page2/page2.html"],
-        ["↗", "Trạng thái đơn hàng GHN", "../../thuc/page3/page3.html"],
-        ["★", "Truyện yêu thích", "../../thuc/page6/page6.html"]
+        ["+", "Đăng tin tìm mua", "../../thuc/html/page1.html"],
+        ["▣", "Quản lý đơn hàng mua", "../../thuc/html/page2.html"],
+        ["↗", "Trạng thái đơn hàng GHN", "../../thuc/html/page3.html"],
+        ["★", "Truyện yêu thích", "../../thuc/html/page6.html"]
     ] },
     { title: "Trao đổi & Đàm phán", items: [
         ["⇄", "Phòng trao đổi giá", "../../duy/html/dealing-room.html"],
@@ -21,7 +21,7 @@ const commonGroups = [
     { title: "Hỗ trợ & Chăm sóc", items: [
         ["!", "Gửi khiếu nại", "../../vu/complain/complain.html"],
         ["?", "Gửi yêu cầu hỗ trợ", "../../vu/request_support/request_support.html"],
-        ["◷", "Đánh giá truyện", "../../thuc/page4/page4.html"]
+        ["◷", "Đánh giá truyện", "../../thuc/html/page4.html"]
     ] }
 ];
 

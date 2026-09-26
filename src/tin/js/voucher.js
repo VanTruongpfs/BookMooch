@@ -544,7 +544,7 @@ document.addEventListener('DOMContentLoaded', () => {
             showToast('Đang áp dụng ưu đãi và quay lại đơn hàng thanh toán...', 'primary', 'fa-shield-halved');
 
             setTimeout(() => {
-                window.location.href = 'checkout.html';
+                window.location.href = 'payment.html';
             }, 700);
         });
     }
@@ -554,7 +554,7 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             showToast('Đang quay lại giỏ hàng...', 'info', 'fa-arrow-left');
             setTimeout(() => {
-                window.location.href = 'cart.html';
+                window.location.href = 'shopping_cart.html';
             }, 500);
         });
     }
