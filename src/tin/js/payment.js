@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
         shippingMethod: 'standard',
         voucherBookDiscount: 50000,
         voucherShipDiscount: 35000,
-        paymentMethod: 'vietqr',
+        paymentMethod: 'vnpay',
         orderCode: 'CHUB' + Math.floor(100000 + Math.random() * 900000)
     };
 
@@ -196,49 +196,95 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --------------------------------------------------------------------------
-    // 4. XỬ LÝ CHỌN PHƯƠNG THỨC THANH TOÁN (VIETQR VS COD)
-    // --------------------------------------------------------------------------
-    const paymentItems = document.querySelectorAll('.payment-method-item, div.border.rounded-2xl:has(input[name="payment_method"])');
-    const qrBox = document.querySelector('.qr-payment-details-box, div.bg-slate-50:has(img[alt*="QR"])');
+// 4. XỬ LÝ CHỌN PHƯƠNG THỨC THANH TOÁN (VNPAY-QR VS COD)
+// --------------------------------------------------------------------------
+    const paymentItems = document.querySelectorAll(
+        '.payment-method-item, div.border.rounded-2xl:has(input[name="payment_method"])'
+    );
 
-    const transferCodeEl = document.querySelector('.transfer-code, span.font-mono.font-bold');
+    const qrBox = document.querySelector(
+        '.qr-payment-details-box, div.bg-slate-50:has(img[alt*="QR"])'
+    );
+
+    const transferCodeEl = document.querySelector(
+        '.transfer-code, span.font-mono.font-bold'
+    );
+
     if (transferCodeEl) {
         transferCodeEl.textContent = orderState.orderCode;
     }
 
     paymentItems.forEach((item) => {
+
         item.addEventListener('click', (e) => {
+
+            // Không đổi phương thức khi bấm nút copy
             if (e.target.closest('.btn-copy')) return;
 
+            // Bỏ trạng thái selected của tất cả phương thức
             paymentItems.forEach((p) => {
-                p.classList.remove('selected', 'border-[#F97316]', 'bg-[#FFFDFB]');
+
+                p.classList.remove(
+                    'selected',
+                    'border-[#F97316]',
+                    'bg-[#FFFDFB]'
+                );
+
                 p.style.borderColor = '#e2e8f0';
                 p.style.backgroundColor = '#ffffff';
-                const radio = p.querySelector('input[type="radio"]');
-                if (radio) radio.checked = false;
+
+                const radio = p.querySelector(
+                    'input[name="payment_method"]'
+                );
+
+                if (radio) {
+                    radio.checked = false;
+                }
             });
 
+            // Đánh dấu phương thức đang chọn
             item.classList.add('selected');
             item.style.borderColor = '#f97316';
             item.style.backgroundColor = '#fffcf8';
-            const curRadio = item.querySelector('input[type="radio"]');
-            if (curRadio) curRadio.checked = true;
 
-            const isVietQR = item.textContent.includes('VietQR') || item.textContent.includes('Chuyển khoản');
-            orderState.paymentMethod = isVietQR ? 'vietqr' : 'cod';
+            const curRadio = item.querySelector(
+                'input[name="payment_method"]'
+            );
 
-            if (qrBox) {
-                qrBox.style.display = isVietQR ? 'flex' : 'none';
+            if (curRadio) {
+                curRadio.checked = true;
             }
 
+            // Lấy trực tiếp value của radio để xác định phương thức
+            const paymentValue = curRadio?.value;
+
+            const isVNPAY = paymentValue === 'vnpay';
+
+            // Cập nhật state
+            orderState.paymentMethod = isVNPAY
+                ? 'vnpay'
+                : 'cod';
+
+            // Hiện / ẩn QR
+            if (qrBox) {
+                qrBox.style.display = isVNPAY
+                    ? 'flex'
+                    : 'none';
+            }
+
+            // Thông báo
             showToast(
-                isVietQR
-                    ? 'Thanh toán VietQR Ký quỹ: Tiền sẽ được giữ an toàn 48h để bạn đồng kiểm'
+                isVNPAY
+                    ? 'Thanh toán VNPAY-QR: Vui lòng quét mã QR để thanh toán'
                     : 'Thanh toán COD: Bạn sẽ thanh toán trực tiếp khi nhận hàng & đồng kiểm',
                 'info',
-                isVietQR ? 'fa-qrcode' : 'fa-money-bill-wave'
+                isVNPAY
+                    ? 'fa-qrcode'
+                    : 'fa-money-bill-wave'
             );
+
         });
+
     });
 
     // Sao chép thông tin chuyển khoản (Code chuyển khoản / Số tài khoản)
