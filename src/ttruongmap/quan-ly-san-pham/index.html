@@ -132,6 +132,9 @@
             </div>
 
             <div style="display: flex; gap: 8px;">
+              <button class="btn btn-secondary btn-sm" onclick="resetProductSampleData()" title="Khôi phục danh sách sản phẩm mẫu có ảnh bìa">
+                <span class="material-symbols-outlined" style="font-size: 16px;">refresh</span> Nạp lại mẫu
+              </button>
               <button class="btn btn-secondary btn-sm" onclick="showToast('Đã xuất báo cáo kiểm kê Excel', 'info')">
                 <span class="material-symbols-outlined" style="font-size: 16px;">download</span> Xuất Excel
               </button>
@@ -144,6 +147,7 @@
               <thead>
                 <tr>
                   <th>Mã SKU / ISBN</th>
+                  <th style="width: 65px; text-align: center;">Ảnh bìa</th>
                   <th>Tên sản phẩm truyện</th>
                   <th>Phân loại</th>
                   <th>Giá vốn (Nhập)</th>
@@ -190,6 +194,21 @@
           <div class="form-group">
             <label class="form-label" for="prodName">Tên sản phẩm truyện <span class="required">*</span></label>
             <input type="text" id="prodName" class="form-input" placeholder="One Piece - Tập 101 Bìa Gập" required>
+          </div>
+
+          <!-- ẢNH BÌA SẢN PHẨM -->
+          <div class="form-group">
+            <label class="form-label" for="prodImage">Link ảnh bìa sản phẩm (URL)</label>
+            <div style="display: flex; gap: 12px; align-items: center;">
+              <div style="flex: 1;">
+                <input type="url" id="prodImage" class="form-input" placeholder="https://images.unsplash.com/... hoặc dán link ảnh bìa" oninput="updateModalImagePreview(this.value)">
+                <small style="color: var(--text-muted); font-size: 0.75rem; margin-top: 4px; display: block;">Hỗ trợ link ảnh trực tiếp từ Unsplash, Imgur, CDN để hiển thị thumbnail kho sách</small>
+              </div>
+              <div id="prodImgPreviewWrapper" style="width: 50px; height: 65px; border-radius: 6px; border: 1px dashed var(--border); overflow: hidden; background: #f8fafc; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                <img id="prodImgPreview" src="" alt="Preview" style="width: 100%; height: 100%; object-fit: cover; display: none;" onerror="this.style.display='none'; document.getElementById('prodImgIcon').style.display='block';">
+                <span id="prodImgIcon" class="material-symbols-outlined" style="font-size: 22px; color: var(--text-muted);">add_photo_alternate</span>
+              </div>
+            </div>
           </div>
 
           <div class="form-grid-2">
@@ -239,15 +258,15 @@
 
   <!-- MODAL VIEW DETAIL PRODUCT -->
   <div class="modal-backdrop" id="productDetailModal">
-    <div class="modal-box" style="max-width: 550px;">
+    <div class="modal-box" style="max-width: 620px;">
       <div class="modal-header">
         <h3 class="modal-title" id="prodDetailTitle">Thông tin chi tiết sản phẩm</h3>
         <button class="modal-close" onclick="closeModal('productDetailModal')">&times;</button>
       </div>
       <div class="modal-body" id="prodDetailBody">
-        <!-- Filled dynamically -->
+        <!-- Filled dynamically with photo & specs -->
       </div>
-      <div class="modal-footer">
+      <div class="modal-footer" id="prodDetailFooter">
         <button class="btn btn-secondary" onclick="closeModal('productDetailModal')">Đóng</button>
       </div>
     </div>
@@ -303,7 +322,7 @@
       if (filtered.length === 0) {
         tbody.innerHTML = `
           <tr>
-            <td colspan="9" style="text-align: center; padding: 36px; color: var(--text-muted);">
+            <td colspan="10" style="text-align: center; padding: 36px; color: var(--text-muted);">
               Không tìm thấy sản phẩm nào trong kho.
             </td>
           </tr>
@@ -316,11 +335,16 @@
         if (p.stockQty <= 0) badge = '<span class="badge badge-danger">Hết hàng</span>';
         else if (p.stockQty <= (p.minStockWarning || 3)) badge = '<span class="badge badge-warning">Sắp hết</span>';
 
+        const coverImg = p.image || 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=300';
+
         return `
           <tr>
             <td>
               <span style="font-weight: 700; color: var(--text-primary); font-family: monospace;">${p.sku}</span>
               <div style="font-size: 0.72rem; color: var(--text-muted);">${p.isbn || 'N/A'}</div>
+            </td>
+            <td style="text-align: center;">
+              <img src="${coverImg}" alt="${p.name}" class="table-thumb" style="cursor: pointer;" onclick="viewProductDetail('${p.sku}')" onerror="this.src='https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=300'" title="Bấm xem chi tiết: ${p.name}">
             </td>
             <td>
               <div style="font-weight: 600; cursor: pointer; color: var(--primary);" onclick="viewProductDetail('${p.sku}')">
@@ -352,11 +376,27 @@
       }).join('');
     }
 
+    function updateModalImagePreview(url) {
+      const img = document.getElementById('prodImgPreview');
+      const icon = document.getElementById('prodImgIcon');
+      if (url && url.trim()) {
+        img.src = url.trim();
+        img.style.display = 'block';
+        icon.style.display = 'none';
+      } else {
+        img.src = '';
+        img.style.display = 'none';
+        icon.style.display = 'block';
+      }
+    }
+
     function openAddProductModal() {
       editingSku = null;
       document.getElementById('productModalTitle').innerHTML = '<span class="material-symbols-outlined" style="color: var(--primary);">add_box</span> Thêm sản phẩm mới vào kho';
       document.getElementById('prodSku').readOnly = false;
       document.getElementById('productForm').reset();
+      document.getElementById('prodImage').value = '';
+      updateModalImagePreview('');
       document.getElementById('productModal').classList.add('show');
     }
 
@@ -371,6 +411,8 @@
       document.getElementById('prodSku').readOnly = true;
       document.getElementById('prodIsbn').value = p.isbn || '';
       document.getElementById('prodName').value = p.name || '';
+      document.getElementById('prodImage').value = p.image || '';
+      updateModalImagePreview(p.image || '');
       document.getElementById('prodCategory').value = p.category || '';
       document.getElementById('prodFormat').value = p.format || '';
       document.getElementById('prodCostPrice').value = p.costPrice || '';
@@ -387,6 +429,7 @@
       const name = document.getElementById('prodName').value.trim();
       const sellingPrice = parseFloat(document.getElementById('prodSellingPrice').value);
       const stockQty = parseInt(document.getElementById('prodStock').value, 10);
+      const image = document.getElementById('prodImage').value.trim() || 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=300';
 
       if (!sku || !name || isNaN(sellingPrice) || isNaN(stockQty)) {
         showToast('Vui lòng điền các trường bắt buộc (*)', 'error');
@@ -400,6 +443,7 @@
         if (p) {
           p.isbn = document.getElementById('prodIsbn').value;
           p.name = name;
+          p.image = image;
           p.category = document.getElementById('prodCategory').value;
           p.format = document.getElementById('prodFormat').value;
           p.costPrice = parseFloat(document.getElementById('prodCostPrice').value) || 0;
@@ -419,6 +463,7 @@
           sku: sku,
           isbn: document.getElementById('prodIsbn').value || 'N/A',
           name: name,
+          image: image,
           category: document.getElementById('prodCategory').value || 'Manga',
           format: document.getElementById('prodFormat').value || 'Bìa mềm',
           costPrice: parseFloat(document.getElementById('prodCostPrice').value) || 0,
@@ -440,26 +485,51 @@
       const p = DataStore.getProducts().find(item => item.sku === sku);
       if (!p) return;
 
+      const coverImg = p.image || 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=300';
       document.getElementById('prodDetailTitle').innerText = p.name;
       document.getElementById('prodDetailBody').innerHTML = `
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
-          <div><strong>Mã SKU:</strong> <code style="background: #f1f5f9; padding: 2px 6px; border-radius: 4px;">${p.sku}</code></div>
-          <div><strong>Mã ISBN:</strong> ${p.isbn || 'Không có'}</div>
-          <div><strong>Thể loại:</strong> ${p.category}</div>
-          <div><strong>Quy cách:</strong> ${p.format || 'Bìa mềm'}</div>
-          <div><strong>Giá vốn:</strong> ${formatVND(p.costPrice || 0)}</div>
-          <div><strong>Giá niêm yết:</strong> <span style="color: var(--primary); font-weight: 700;">${formatVND(p.sellingPrice)}</span></div>
-          <div><strong>Tồn kho thực tế:</strong> <strong>${p.stockQty} cuốn</strong></div>
-          <div><strong>Cảnh báo khi dưới:</strong> ${p.minStockWarning || 3} cuốn</div>
-          <div><strong>Nhà cung cấp:</strong> ${p.supplier || 'N/A'}</div>
-          <div><strong>Nhập kho gần nhất:</strong> ${p.lastRestocked || 'Gần đây'}</div>
+        <div style="display: flex; gap: 20px; margin-bottom: 18px; align-items: flex-start; flex-wrap: wrap;">
+          <div style="flex-shrink: 0; text-align: center; margin: 0 auto;">
+            <img src="${coverImg}" alt="${p.name}" style="width: 125px; height: 175px; object-fit: cover; border-radius: 8px; border: 1px solid var(--border); box-shadow: 0 4px 12px rgba(0,0,0,0.1);" onerror="this.src='https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=300'">
+            <div style="margin-top: 10px;">
+              <span class="badge ${p.stockQty > (p.minStockWarning || 3) ? 'badge-success' : (p.stockQty > 0 ? 'badge-warning' : 'badge-danger')}">
+                ${p.stockQty > (p.minStockWarning || 3) ? 'Còn hàng' : (p.stockQty > 0 ? 'Sắp hết' : 'Hết hàng')}
+              </span>
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px 14px; flex: 1; min-width: 280px; font-size: 0.88rem;">
+            <div><span style="color: var(--text-muted); font-size: 0.76rem; display: block;">Mã SKU:</span> <code style="background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-weight: 700; color: var(--text-primary); font-family: monospace;">${p.sku}</code></div>
+            <div><span style="color: var(--text-muted); font-size: 0.76rem; display: block;">Mã Barcode / ISBN:</span> <strong>${p.isbn || 'Không có'}</strong></div>
+            <div><span style="color: var(--text-muted); font-size: 0.76rem; display: block;">Thể loại:</span> <span class="badge badge-neutral">${p.category}</span></div>
+            <div><span style="color: var(--text-muted); font-size: 0.76rem; display: block;">Quy cách đóng gói:</span> <strong>${p.format || 'Bìa mềm'}</strong></div>
+            <div><span style="color: var(--text-muted); font-size: 0.76rem; display: block;">Giá vốn nhập:</span> <strong>${formatVND(p.costPrice || 0)}</strong></div>
+            <div><span style="color: var(--text-muted); font-size: 0.76rem; display: block;">Giá bán niêm yết:</span> <strong style="color: var(--primary); font-size: 1.05rem;">${formatVND(p.sellingPrice)}</strong></div>
+            <div><span style="color: var(--text-muted); font-size: 0.76rem; display: block;">Tồn kho thực tế:</span> <strong style="color: ${p.stockQty > 0 ? 'var(--text-primary)' : 'var(--danger)'};">${p.stockQty} cuốn</strong></div>
+            <div><span style="color: var(--text-muted); font-size: 0.76rem; display: block;">Ngưỡng cảnh báo:</span> <strong>Dưới ${p.minStockWarning || 3} cuốn</strong></div>
+            <div><span style="color: var(--text-muted); font-size: 0.76rem; display: block;">Nhà cung cấp:</span> <strong>${p.supplier || 'N/A'}</strong></div>
+            <div><span style="color: var(--text-muted); font-size: 0.76rem; display: block;">Nhập kho gần nhất:</span> <strong>${p.lastRestocked || 'Gần đây'}</strong></div>
+          </div>
         </div>
-        <div style="background: #f8fafc; padding: 12px; border-radius: 8px; border: 1px solid var(--border); font-size: 0.85rem;">
-          <div style="font-weight: 600; margin-bottom: 4px;">Tóm tắt tình trạng:</div>
-          <div>${p.stockQty > 0 ? 'Sản phẩm đang sẵn sàng giao hàng và có thể liên kết đăng bán ngay.' : 'Sản phẩm đã hết hàng trong kho vật lý, cần tạo lệnh nhập bổ sung.'}</div>
+        <div style="background: #f8fafc; padding: 12px 16px; border-radius: 8px; border: 1px solid var(--border); font-size: 0.85rem; display: flex; align-items: center; gap: 10px;">
+          <span class="material-symbols-outlined" style="color: var(--primary); font-size: 22px;">info</span>
+          <div>${p.stockQty > 0 ? 'Sản phẩm đang sẵn sàng xuất kho và có thể liên kết đăng bán ngay trên sàn BookMooch.' : 'Sản phẩm đã hết hàng trong kho vật lý, cần tạo phiếu nhập bổ sung.'}</div>
         </div>
       `;
+      document.getElementById('prodDetailFooter').innerHTML = `
+        <button class="btn btn-secondary" onclick="closeModal('productDetailModal')">Đóng</button>
+        <button class="btn btn-primary" onclick="closeModal('productDetailModal'); openEditProductModal('${p.sku}')">
+          <span class="material-symbols-outlined" style="font-size: 16px;">edit</span> Chỉnh sửa sản phẩm
+        </button>
+      `;
       document.getElementById('productDetailModal').classList.add('show');
+    }
+
+    function resetProductSampleData() {
+      if (confirm('Khôi phục danh sách sản phẩm kho về dữ liệu mẫu chuẩn (kèm hình ảnh bìa truyện đầy đủ)?')) {
+        localStorage.removeItem(STORAGE_KEYS.PRODUCTS);
+        showToast('Đã nạp lại dữ liệu sản phẩm mẫu có ảnh bìa!', 'success');
+        renderProductTable();
+      }
     }
 
     function deleteProduct(sku, name) {

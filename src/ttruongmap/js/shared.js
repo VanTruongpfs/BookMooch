@@ -160,7 +160,8 @@ const DEFAULT_PRODUCTS = [
     minStockWarning: 5,
     supplier: "Kim Đồng Distribution",
     status: "in_stock", // in_stock | low_stock | out_of_stock
-    lastRestocked: "2026-09-01"
+    lastRestocked: "2026-09-01",
+    image: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=300&auto=format&fit=crop&q=60"
   },
   {
     sku: "MANGA-CONAN-COL",
@@ -174,7 +175,8 @@ const DEFAULT_PRODUCTS = [
     minStockWarning: 5,
     supplier: "Thu mua lại từ Reader",
     status: "low_stock",
-    lastRestocked: "2026-09-08"
+    lastRestocked: "2026-09-08",
+    image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=300&auto=format&fit=crop&q=60"
   },
   {
     sku: "MANGA-JJK-SET",
@@ -188,7 +190,8 @@ const DEFAULT_PRODUCTS = [
     minStockWarning: 3,
     supplier: "Ký gửi cá nhân",
     status: "low_stock",
-    lastRestocked: "2026-09-11"
+    lastRestocked: "2026-09-11",
+    image: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=300&auto=format&fit=crop&q=60"
   },
   {
     sku: "MANGA-DORA-24",
@@ -202,7 +205,8 @@ const DEFAULT_PRODUCTS = [
     minStockWarning: 2,
     supplier: "Kho truyện cũ SG",
     status: "out_of_stock",
-    lastRestocked: "2026-08-15"
+    lastRestocked: "2026-08-15",
+    image: "https://images.unsplash.com/photo-1532012164546-f432f2e3edd4?w=300&auto=format&fit=crop&q=60"
   },
   {
     sku: "MANGA-SPY-11",
@@ -216,7 +220,8 @@ const DEFAULT_PRODUCTS = [
     minStockWarning: 2,
     supplier: "Kim Đồng Distribution",
     status: "low_stock",
-    lastRestocked: "2026-08-28"
+    lastRestocked: "2026-08-28",
+    image: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?w=300&auto=format&fit=crop&q=60"
   },
   {
     sku: "MANGA-KMY-BOX",
@@ -230,7 +235,8 @@ const DEFAULT_PRODUCTS = [
     minStockWarning: 2,
     supplier: "NXB Kim Đồng",
     status: "in_stock",
-    lastRestocked: "2026-09-02"
+    lastRestocked: "2026-09-02",
+    image: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=300&auto=format&fit=crop&q=60"
   }
 ];
 
@@ -322,7 +328,28 @@ const DataStore = {
   getPosts: () => getStoredData(STORAGE_KEYS.POSTS, DEFAULT_POSTS),
   savePosts: (posts) => saveStoredData(STORAGE_KEYS.POSTS, posts),
   
-  getProducts: () => getStoredData(STORAGE_KEYS.PRODUCTS, DEFAULT_PRODUCTS),
+  getProducts: () => {
+    const products = getStoredData(STORAGE_KEYS.PRODUCTS, DEFAULT_PRODUCTS);
+    let updated = false;
+    const defaultImgMap = {
+      'MANGA-OP-100': 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=300&auto=format&fit=crop&q=60',
+      'MANGA-CONAN-COL': 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=300&auto=format&fit=crop&q=60',
+      'MANGA-JJK-SET': 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=300&auto=format&fit=crop&q=60',
+      'MANGA-DORA-24': 'https://images.unsplash.com/photo-1532012164546-f432f2e3edd4?w=300&auto=format&fit=crop&q=60',
+      'MANGA-SPY-11': 'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?w=300&auto=format&fit=crop&q=60',
+      'MANGA-KMY-BOX': 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=300&auto=format&fit=crop&q=60',
+    };
+    products.forEach((p, index) => {
+      if (!p.image) {
+        p.image = defaultImgMap[p.sku] || DEFAULT_PRODUCTS[index % DEFAULT_PRODUCTS.length]?.image || 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=300';
+        updated = true;
+      }
+    });
+    if (updated) {
+      saveStoredData(STORAGE_KEYS.PRODUCTS, products);
+    }
+    return products;
+  },
   saveProducts: (products) => saveStoredData(STORAGE_KEYS.PRODUCTS, products),
   
   getVouchers: () => getStoredData(STORAGE_KEYS.VOUCHERS, DEFAULT_VOUCHERS),

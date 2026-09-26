@@ -356,7 +356,7 @@ document.addEventListener('DOMContentLoaded', () => {
             showToast(`Đang chuyển đến trang Thanh Toán Bảo Chứng cho "${bookTitle}"...`, 'primary', 'fa-spinner fa-spin');
 
             setTimeout(() => {
-                window.location.href = 'checkout.html';
+                window.location.href = 'payment.html';
             }, 700);
         });
     }

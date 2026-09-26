@@ -495,7 +495,7 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             showToast('Đang chuyển hướng đến Kho Voucher ComicHub...', 'primary', 'fa-ticket');
             setTimeout(() => {
-                window.location.href = 'voucher-vault.html';
+                window.location.href = 'voucher.html';
             }, 500);
         });
     }
@@ -568,10 +568,10 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
 
         <div style="display: flex; gap: 12px; justify-content: center;">
-          <a href="index.html" style="padding: 12px 24px; border-radius: 9999px; border: 1px solid #e2e8f0; background: #ffffff; color: #475569; font-weight: 700; font-size: 13px; text-decoration: none;">
+          <a href="home.html" style="padding: 12px 24px; border-radius: 9999px; border: 1px solid #e2e8f0; background: #ffffff; color: #475569; font-weight: 700; font-size: 13px; text-decoration: none;">
             Về Trang Chủ
           </a>
-          <a href="index.html" style="padding: 12px 28px; border-radius: 9999px; border: none; background: #f97316; color: #ffffff; font-weight: 700; font-size: 13px; text-decoration: none; box-shadow: 0 4px 14px rgba(249, 115, 22, 0.35);">
+          <a href="../../thuc/html/page3.html" style="padding: 12px 28px; border-radius: 9999px; border: none; background: #f97316; color: #ffffff; font-weight: 700; font-size: 13px; text-decoration: none; box-shadow: 0 4px 14px rgba(249, 115, 22, 0.35);">
             Theo Dõi Đơn Hàng
           </a>
         </div>

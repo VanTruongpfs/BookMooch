@@ -501,12 +501,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const pathMap = {
       "kham-pha": "../../tin/html/home.html",
-      "dang-tin-tim-mua": "../page1/page1.html",
-      "quan-ly-don-hang": "../page2/page2.html",
-      "theo-doi-trang-thai": "../page3/page3.html",
-      "huy-va-doi-tra": "../page5/page5.html",
-      "danh-gia-truyen": "../page4/page4.html",
-      "truyen-yeu-thich": "../page6/page6.html"
+      "dang-tin-tim-mua": "page1.html",
+      "quan-ly-don-hang": "page2.html",
+      "theo-doi-trang-thai": "page3.html",
+      "huy-va-doi-tra": "page5.html",
+      "danh-gia-truyen": "page4.html",
+      "truyen-yeu-thich": "page6.html"
     };
 
     document

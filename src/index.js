@@ -205,38 +205,38 @@ async function loadSidebarComponent() {
       </div>
       <nav class="sidebar-nav">
         <div class="nav-section-title">Kênh Bán Hàng</div>
-        <a href="orders.html" class="nav-item" data-page="orders" data-view="view-orders">
+        <a href="truong/html/orders.html" class="nav-item" data-page="orders" data-view="view-orders">
           <div class="nav-item-content">
             <span class="material-symbols-outlined">package_2</span>
             <span>Quản lý đơn hàng</span>
           </div>
           <span class="nav-badge">12</span>
         </a>
-        <a href="reviews.html" class="nav-item" data-page="reviews" data-view="view-reviews">
+        <a href="truong/html/reviews.html" class="nav-item" data-page="reviews" data-view="view-reviews">
           <div class="nav-item-content">
             <span class="material-symbols-outlined">star_rate</span>
             <span>Quản lý đánh giá</span>
           </div>
         </a>
-        <a href="wallet.html" class="nav-item" data-page="wallet" data-view="view-wallet">
+        <a href="truong/html/wallet.html" class="nav-item" data-page="wallet" data-view="view-wallet">
           <div class="nav-item-content">
             <span class="material-symbols-outlined">account_balance_wallet</span>
             <span>Quản lý ví</span>
           </div>
         </a>
-        <a href="transactions.html" class="nav-item" data-page="transactions" data-view="view-transactions">
+        <a href="truong/html/transactions.html" class="nav-item" data-page="transactions" data-view="view-transactions">
           <div class="nav-item-content">
             <span class="material-symbols-outlined">receipt_long</span>
             <span>Lịch sử giao dịch</span>
           </div>
         </a>
-        <a href="withdraw.html" class="nav-item" data-page="withdraw" data-view="view-withdraw">
+        <a href="truong/html/withdraw.html" class="nav-item" data-page="withdraw" data-view="view-withdraw">
           <div class="nav-item-content">
             <span class="material-symbols-outlined">payments</span>
             <span>Yêu cầu rút tiền</span>
           </div>
         </a>
-        <a href="revenue.html" class="nav-item" data-page="revenue" data-view="view-revenue">
+        <a href="truong/html/revenue.html" class="nav-item" data-page="revenue" data-view="view-revenue">
           <div class="nav-item-content">
             <span class="material-symbols-outlined">monitoring</span>
             <span>Thống kê doanh thu</span>

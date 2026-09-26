@@ -669,7 +669,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             showToast('Đang chuyển đến cổng Thanh Toán Bảo Chứng ComicHub...', 'primary', 'fa-shield-halved fa-spin');
             setTimeout(() => {
-                window.location.href = 'checkout.html';
+                window.location.href = 'payment.html';
             }, 700);
         });
     }
