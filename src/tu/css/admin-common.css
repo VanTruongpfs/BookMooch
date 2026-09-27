@@ -730,7 +730,56 @@
 }
 
 /* ==========================================================================
-   11. RESPONSIVE
+   11. QUY TRÌNH DẠNG BƯỚC (modal "Xem quy trình đầy đủ" - dùng ở nhiều trang)
+   ========================================================================== */
+.policy-step-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    max-height: 58vh;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+.policy-step {
+    display: flex;
+    gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.policy-step:last-child { border-bottom: none; }
+
+.policy-step-num {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-container), var(--primary));
+    color: #fff;
+    font-weight: 700;
+    font-size: .82rem;
+    flex-shrink: 0;
+}
+
+.policy-step-text h5 {
+    margin: 0 0 4px;
+    color: var(--text-main);
+    font-size: .88rem;
+    font-weight: 700;
+}
+
+.policy-step-text p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: .8rem;
+    line-height: 1.55;
+}
+
+/* ==========================================================================
+   12. RESPONSIVE
    ========================================================================== */
 @media (max-width: 560px) {
     .gate-card { padding: 28px 22px 24px; }

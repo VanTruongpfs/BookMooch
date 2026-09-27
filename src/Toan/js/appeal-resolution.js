@@ -4,6 +4,19 @@ document.addEventListener("DOMContentLoaded", function () {
     // 1. LẤY CÁC PHẦN TỬ HTML
     // =========================================================
 
+    const appealListView = document.querySelector("#appealListView");
+    const appealDetailView = document.querySelector("#appealDetailView");
+
+    const appealItems = document.querySelectorAll(".appeal-item");
+    const appealViewButtons = document.querySelectorAll(".appeal-view-btn");
+
+    const appealCount = document.querySelector("#appealCount");
+
+    const pageTitle = document.querySelector("#pageTitle");
+    const detailMeta = document.querySelector("#detailMeta");
+    const appealStatus = document.querySelector("#appealStatus");
+    const appealType = document.querySelector("#appealType");
+
     const backBtn = document.querySelector(".back-btn");
 
     const historyBtn = document.querySelector(
@@ -38,7 +51,53 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     // =========================================================
-    // 2. HÀM HIỂN THỊ THÔNG BÁO
+    // 2. BIẾN TRẠNG THÁI
+    // =========================================================
+
+    let currentAppealId = null;
+
+    let formChanged = false;
+
+
+    // =========================================================
+    // 3. DỮ LIỆU KHÁNG NGHỊ
+    // =========================================================
+
+    const appealData = {
+
+        "APL-8921": {
+            type: "Phân loại: Kháng cáo Spam Bot",
+            status: "ĐANG XỬ LÝ",
+            user: "@hoangnam_tech",
+            originalCase: "#RP-8492"
+        },
+
+        "APL-8918": {
+            type: "Phân loại: Kháng nghị bài viết bị ẩn",
+            status: "ĐANG XỬ LÝ",
+            user: "@comic_seller",
+            originalCase: "#RP-8491"
+        },
+
+        "APL-8914": {
+            type: "Phân loại: Kháng nghị cảnh cáo tài khoản",
+            status: "ĐANG XỬ LÝ",
+            user: "@user789",
+            originalCase: "#RP-8488"
+        },
+
+        "APL-8909": {
+            type: "Phân loại: Kháng nghị vi phạm liên kết ngoài",
+            status: "ĐANG XỬ LÝ",
+            user: "@comicfan",
+            originalCase: "#RP-8485"
+        }
+
+    };
+
+
+    // =========================================================
+    // 4. TOAST THÔNG BÁO
     // =========================================================
 
     function showToast(message, type) {
@@ -87,6 +146,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.body.appendChild(toast);
 
         setTimeout(function () {
+
             toast.style.opacity = "0";
             toast.style.transform = "translateY(10px)";
 
@@ -99,60 +159,313 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     // =========================================================
-    // 3. CHỌN PHƯƠNG ÁN PHÁN QUYẾT
+    // 5. CẬP NHẬT SỐ LƯỢNG KHÁNG NGHỊ
+    // =========================================================
+
+    function updateAppealCount() {
+
+        if (!appealCount) {
+            return;
+        }
+
+        const pendingItems =
+            document.querySelectorAll(
+                ".appeal-item:not(.appeal-item-processed)"
+            );
+
+        appealCount.textContent =
+            pendingItems.length + " yêu cầu";
+    }
+
+
+    // =========================================================
+    // 6. HIỂN THỊ DANH SÁCH KHÁNG NGHỊ
+    // =========================================================
+
+    function showAppealList() {
+
+        if (appealListView) {
+            appealListView.style.display = "";
+        }
+
+        if (appealDetailView) {
+            appealDetailView.style.display = "none";
+        }
+
+        if (pageTitle) {
+            pageTitle.textContent = "Danh sách kháng nghị";
+        }
+
+        if (detailMeta) {
+            detailMeta.style.display = "none";
+        }
+
+        currentAppealId = null;
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+        updateAppealCount();
+    }
+
+
+    // =========================================================
+    // 7. HIỂN THỊ CHI TIẾT KHÁNG NGHỊ
+    // =========================================================
+
+    function showAppealDetail(appealId) {
+
+        const data = appealData[appealId];
+
+        currentAppealId = appealId;
+
+        if (appealListView) {
+            appealListView.style.display = "none";
+        }
+
+        if (appealDetailView) {
+            appealDetailView.style.display = "block";
+        }
+
+        if (pageTitle) {
+            pageTitle.textContent =
+                "Hồ sơ Kháng nghị #" + appealId;
+        }
+
+        if (detailMeta) {
+            detailMeta.style.display = "flex";
+        }
+
+        if (appealStatus) {
+
+            if (data) {
+                appealStatus.textContent = data.status;
+            }
+            else {
+                appealStatus.textContent = "ĐANG XỬ LÝ";
+            }
+
+        }
+
+        if (appealType) {
+
+            if (data) {
+                appealType.textContent = data.type;
+            }
+            else {
+                appealType.textContent =
+                    "Phân loại: Kháng nghị";
+            }
+
+        }
+
+        /*
+         * Nội dung chi tiết hiện tại trong HTML được thiết kế
+         * theo hồ sơ APL-8921.
+         *
+         * Khi mở APL-8918 / APL-8914 / APL-8909,
+         * phần giao diện chi tiết vẫn dùng mẫu chi tiết hiện tại,
+         * nhưng mã hồ sơ trên thanh tiêu đề sẽ thay đổi.
+         */
+
+        updateReadyTitle();
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }
+
+
+    // =========================================================
+    // 8. CLICK VÀO "XEM KHÁNG NGHỊ"
+    // =========================================================
+
+    appealViewButtons.forEach(function (button) {
+
+        button.addEventListener("click", function (event) {
+
+            event.stopPropagation();
+
+            const appealItem =
+                button.closest(".appeal-item");
+
+            if (!appealItem) {
+                return;
+            }
+
+            const appealId =
+                appealItem.getAttribute("data-appeal-id");
+
+            if (!appealId) {
+                return;
+            }
+
+            showAppealDetail(appealId);
+
+        });
+
+    });
+
+
+    // =========================================================
+    // 9. CLICK VÀO TOÀN BỘ ITEM
+    // =========================================================
+
+    appealItems.forEach(function (item) {
+
+        item.addEventListener("click", function (event) {
+
+            /*
+             * Nếu click trực tiếp vào button
+             * thì button đã xử lý rồi.
+             */
+            if (event.target.closest(".appeal-view-btn")) {
+                return;
+            }
+
+            const appealId =
+                item.getAttribute("data-appeal-id");
+
+            if (!appealId) {
+                return;
+            }
+
+            showAppealDetail(appealId);
+
+        });
+
+    });
+
+
+    // =========================================================
+    // 10. NÚT QUAY LẠI
+    // =========================================================
+
+    if (backBtn) {
+
+        backBtn.addEventListener("click", function () {
+
+            /*
+             * ĐANG Ở DETAIL
+             * -> quay về danh sách
+             */
+            if (
+                appealDetailView &&
+                appealDetailView.style.display !== "none"
+            ) {
+
+                if (formChanged) {
+
+                    const confirmed = confirm(
+                        "Bạn có chắc muốn quay lại danh sách?\n\n" +
+                        "Các thay đổi chưa lưu sẽ không được ban hành."
+                    );
+
+                    if (!confirmed) {
+                        return;
+                    }
+
+                }
+
+                formChanged = false;
+
+                showAppealList();
+
+                return;
+            }
+
+
+            /*
+             * ĐANG Ở LIST
+             * -> quay về postModeration.html
+             */
+            const confirmed = confirm(
+                "Bạn có chắc muốn quay lại hàng đợi duyệt bài?"
+            );
+
+            if (!confirmed) {
+                return;
+            }
+
+            window.location.href = "postModeration.html";
+
+        });
+
+    }
+
+
+    // =========================================================
+    // 11. CHỌN PHƯƠNG ÁN PHÁN QUYẾT
     // =========================================================
 
     decisionCards.forEach(function (card) {
 
         card.addEventListener("click", function () {
 
-            // Bỏ active ở tất cả card
+            if (publishBtn && publishBtn.disabled) {
+                return;
+            }
+
             decisionCards.forEach(function (item) {
 
-                item.classList.remove("decision-card-active");
-
-                const radio = item.querySelector(
-                    'input[type="radio"]'
+                item.classList.remove(
+                    "decision-card-active"
                 );
+
+                const radio =
+                    item.querySelector(
+                        'input[type="radio"]'
+                    );
 
                 if (radio) {
                     radio.checked = false;
                 }
 
-                const customRadio = item.querySelector(".custom-radio");
+                const customRadio =
+                    item.querySelector(".custom-radio");
 
                 if (customRadio) {
                     customRadio.innerHTML = "";
                 }
+
             });
 
 
-            // Active card đang chọn
-            card.classList.add("decision-card-active");
-
-            const radio = card.querySelector(
-                'input[type="radio"]'
+            card.classList.add(
+                "decision-card-active"
             );
+
+
+            const radio =
+                card.querySelector(
+                    'input[type="radio"]'
+                );
 
             if (radio) {
                 radio.checked = true;
             }
 
 
-            // Tạo dấu chấm bên trong radio
-            const customRadio = card.querySelector(".custom-radio");
+            const customRadio =
+                card.querySelector(".custom-radio");
 
             if (customRadio) {
 
-                const dot = document.createElement("span");
+                const dot =
+                    document.createElement("span");
 
-                dot.className = "radio-inner-dot";
+                dot.className =
+                    "radio-inner-dot";
 
                 customRadio.appendChild(dot);
             }
 
 
-            // Cập nhật nội dung khu vực ban hành
+            formChanged = true;
+
             updateDecisionStatus();
 
         });
@@ -161,123 +474,191 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     // =========================================================
-    // 4. CẬP NHẬT TRẠNG THÁI PHÁN QUYẾT
+    // 12. LẤY PHÁN QUYẾT ĐANG CHỌN
     // =========================================================
 
-    function updateDecisionStatus() {
+    function getSelectedDecision() {
 
-        const selectedCard = document.querySelector(
-            ".decision-card-active"
-        );
+        const selectedCard =
+            document.querySelector(
+                ".decision-card-active"
+            );
 
         if (!selectedCard) {
-            return;
+            return null;
         }
 
-        const titleElement = selectedCard.querySelector(
-            ".decision-title-row strong"
-        );
+        const titleElement =
+            selectedCard.querySelector(
+                ".decision-title-row strong"
+            );
 
         if (!titleElement) {
-            return;
+            return null;
         }
 
-        const decisionText = titleElement.textContent.trim();
-
-
-        // Chấp thuận & mở khóa
-        if (decisionText === "Chấp thuận & Mở khóa ngay") {
-
-            readyTitle.textContent =
-                "Sẵn sàng ban hành phán quyết #APL-8921";
-
-            readyDesc.textContent =
-                "Gửi email tự động và cập nhật trạng thái án phạt: gỡ bỏ hoàn toàn.";
-
-            actionReadyCard.style.background = "#dcfce7";
-            actionReadyCard.style.borderColor = "#16a34a";
-
-            return;
-        }
-
-
-        // Giảm án
-        if (decisionText === "Giảm nhẹ án phạt xuống 24 giờ") {
-
-            readyTitle.textContent =
-                "Sẵn sàng ban hành phán quyết #APL-8921";
-
-            readyDesc.textContent =
-                "Gửi email tự động và cập nhật trạng thái án phạt xuống còn 24 giờ.";
-
-            actionReadyCard.style.background = "var(--primary-light)";
-            actionReadyCard.style.borderColor = "var(--primary)";
-
-            return;
-        }
-
-
-        // Bác bỏ
-        if (decisionText === "Bác bỏ khiếu nại & Giữ y án") {
-
-            readyTitle.textContent =
-                "Sẵn sàng ban hành phán quyết #APL-8921";
-
-            readyDesc.textContent =
-                "Gửi email tự động và duy trì án phạt hiện hành 7 ngày.";
-
-            actionReadyCard.style.background = "#fee2e2";
-            actionReadyCard.style.borderColor = "#dc2626";
-
-            return;
-        }
-
-
-        // Chuyển cấp cao
-        if (decisionText === "Chuyển Thẩm định Cấp cao") {
-
-            readyTitle.textContent =
-                "Sẵn sàng chuyển hồ sơ #APL-8921";
-
-            readyDesc.textContent =
-                "Hồ sơ sẽ được chuyển đến bộ phận thẩm định cấp cao Tier-3.";
-
-            actionReadyCard.style.background = "#eff4ff";
-            actionReadyCard.style.borderColor = "#1e40af";
-        }
+        return titleElement.textContent.trim();
     }
 
 
     // =========================================================
-    // 5. MACRO CHIPS - MẪU PHẢN HỒI
+    // 13. CẬP NHẬT KHU VỰC BAN HÀNH
+    // =========================================================
+
+    function updateDecisionStatus() {
+
+        const selectedDecision =
+            getSelectedDecision();
+
+        if (!selectedDecision) {
+            return;
+        }
+
+        updateReadyTitle();
+
+
+        if (selectedDecision ===
+            "Chấp thuận & Mở khóa ngay") {
+
+            readyDesc.textContent =
+                "Gửi email tự động và cập nhật trạng thái án phạt: gỡ bỏ hoàn toàn.";
+
+            actionReadyCard.style.background =
+                "#dcfce7";
+
+            actionReadyCard.style.borderColor =
+                "#16a34a";
+
+            return;
+        }
+
+
+        if (selectedDecision ===
+            "Giảm nhẹ án phạt xuống 24 giờ") {
+
+            readyDesc.textContent =
+                "Gửi email tự động và cập nhật trạng thái án phạt xuống còn 24 giờ.";
+
+            actionReadyCard.style.background =
+                "var(--primary-light)";
+
+            actionReadyCard.style.borderColor =
+                "var(--primary)";
+
+            return;
+        }
+
+
+        if (selectedDecision ===
+            "Bác bỏ khiếu nại & Giữ y án") {
+
+            readyDesc.textContent =
+                "Gửi email tự động và duy trì án phạt hiện hành 7 ngày.";
+
+            actionReadyCard.style.background =
+                "#fee2e2";
+
+            actionReadyCard.style.borderColor =
+                "#dc2626";
+
+            return;
+        }
+
+
+        if (selectedDecision ===
+            "Chuyển Thẩm định Cấp cao") {
+
+            readyDesc.textContent =
+                "Hồ sơ sẽ được chuyển đến bộ phận thẩm định cấp cao Tier-3.";
+
+            actionReadyCard.style.background =
+                "#eff4ff";
+
+            actionReadyCard.style.borderColor =
+                "#1e40af";
+        }
+
+    }
+
+
+    // =========================================================
+    // 14. CẬP NHẬT READY TITLE
+    // =========================================================
+
+    function updateReadyTitle() {
+
+        if (!readyTitle) {
+            return;
+        }
+
+        const id =
+            currentAppealId || "APL-8921";
+
+        const selectedDecision =
+            getSelectedDecision();
+
+        if (
+            selectedDecision ===
+            "Chuyển Thẩm định Cấp cao"
+        ) {
+
+            readyTitle.textContent =
+                "Sẵn sàng chuyển hồ sơ #" + id;
+
+        }
+        else {
+
+            readyTitle.textContent =
+                "Sẵn sàng ban hành phán quyết #" + id;
+
+        }
+
+    }
+
+
+    // =========================================================
+    // 15. MACRO CHIPS
     // =========================================================
 
     macroChips.forEach(function (chip) {
 
         chip.addEventListener("click", function () {
 
-            // Bỏ active tất cả
+            if (publishBtn && publishBtn.disabled) {
+                return;
+            }
+
             macroChips.forEach(function (item) {
-                item.classList.remove("chip-macro-active");
+
+                item.classList.remove(
+                    "chip-macro-active"
+                );
+
             });
 
-            // Active chip hiện tại
-            chip.classList.add("chip-macro-active");
+
+            chip.classList.add(
+                "chip-macro-active"
+            );
 
 
-            const chipText = chip.textContent.trim();
+            const chipText =
+                chip.textContent.trim();
 
+            const caseId =
+                currentAppealId || "APL-8921";
 
-            // ---------------------------------------------
-            // Mẫu: Giảm án
-            // ---------------------------------------------
 
             if (chipText === "Giảm án") {
 
                 replyTextarea.value =
-                    "Chào bạn @hoangnam_tech, Bộ phận Kiểm duyệt An toàn Cộng đồng đã tiếp nhận và rà soát kháng nghị #APL-8921. Sau khi đối chiếu nhật ký truyền tải mạng, chúng tôi nhận thấy hành động gửi lặp của bạn không mang tính chất lừa đảo, tuy nhiên vẫn vi phạm chính sách chống rác dữ liệu. Chúng tôi quyết định giảm mức phạt xuống còn 24h.";
+                    "Chào bạn, Bộ phận Kiểm duyệt An toàn Cộng đồng đã tiếp nhận và rà soát kháng nghị #" +
+                    caseId +
+                    ". Sau khi đối chiếu dữ liệu hệ thống, chúng tôi quyết định giảm mức phạt xuống còn 24h.";
 
                 updateCharCount();
+
+                formChanged = true;
 
                 showToast(
                     "Đã áp dụng mẫu phản hồi: Giảm án",
@@ -288,16 +669,16 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
 
-            // ---------------------------------------------
-            // Mẫu: Bác bỏ
-            // ---------------------------------------------
-
             if (chipText === "Bác bỏ (Tái phạm)") {
 
                 replyTextarea.value =
-                    "Chào bạn @hoangnam_tech, chúng tôi đã tiếp nhận kháng nghị #APL-8921 và hoàn tất quá trình đối soát. Qua kiểm tra lịch sử vi phạm và dữ liệu hệ thống, hành vi spam tự động đã được ghi nhận trước đó. Vì vậy, khiếu nại chưa đủ cơ sở để thay đổi quyết định ban đầu và án phạt 7 ngày sẽ được giữ nguyên.";
+                    "Chào bạn, chúng tôi đã tiếp nhận kháng nghị #" +
+                    caseId +
+                    " và hoàn tất quá trình đối soát. Qua kiểm tra lịch sử vi phạm và dữ liệu hệ thống, khiếu nại chưa đủ cơ sở để thay đổi quyết định ban đầu. Án phạt hiện tại sẽ được giữ nguyên.";
 
                 updateCharCount();
+
+                formChanged = true;
 
                 showToast(
                     "Đã áp dụng mẫu phản hồi: Bác bỏ",
@@ -308,21 +689,22 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
 
-            // ---------------------------------------------
-            // Mẫu: Yêu cầu CCCD
-            // ---------------------------------------------
-
             if (chipText === "Yêu cầu CCCD") {
 
                 replyTextarea.value =
-                    "Chào bạn @hoangnam_tech, để tiếp tục quá trình xác minh kháng nghị #APL-8921, vui lòng cung cấp thông tin định danh theo yêu cầu của bộ phận Kiểm duyệt An toàn Cộng đồng. Hồ sơ sẽ được tiếp tục xử lý sau khi thông tin xác minh được tiếp nhận.";
+                    "Chào bạn, để tiếp tục quá trình xác minh kháng nghị #" +
+                    caseId +
+                    ", vui lòng cung cấp thông tin định danh theo yêu cầu của bộ phận Kiểm duyệt An toàn Cộng đồng. Hồ sơ sẽ được tiếp tục xử lý sau khi thông tin xác minh được tiếp nhận.";
 
                 updateCharCount();
+
+                formChanged = true;
 
                 showToast(
                     "Đã áp dụng mẫu yêu cầu xác minh",
                     "success"
                 );
+
             }
 
         });
@@ -331,7 +713,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     // =========================================================
-    // 6. ĐẾM SỐ KÝ TỰ PHẢN HỒI
+    // 16. ĐẾM KÝ TỰ
     // =========================================================
 
     function updateCharCount() {
@@ -340,9 +722,11 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        const count = replyTextarea.value.length;
+        const count =
+            replyTextarea.value.length;
 
-        charCount.textContent = count + " ký tự";
+        charCount.textContent =
+            count + " ký tự";
     }
 
 
@@ -350,7 +734,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
         replyTextarea.addEventListener(
             "input",
-            updateCharCount
+            function () {
+
+                formChanged = true;
+
+                updateCharCount();
+
+            }
         );
 
         updateCharCount();
@@ -358,118 +748,154 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     // =========================================================
-    // 7. LINK ÁN PHẠT GỐC
+    // 17. LINK ÁN PHẠT GỐC
     // =========================================================
 
     if (originalCaseLink) {
 
-        originalCaseLink.addEventListener("click", function (event) {
+        originalCaseLink.addEventListener(
+            "click",
+            function (event) {
 
-            event.preventDefault();
+                event.preventDefault();
 
-            showToast(
-                "Đang mở hồ sơ án phạt gốc #RP-8492...",
-                "warning"
-            );
+                const data =
+                    appealData[currentAppealId];
 
-            setTimeout(function () {
+                const originalCase =
+                    data
+                        ? data.originalCase
+                        : "#RP-8492";
 
-                alert(
-                    "HỒ SƠ ÁN PHẠT GỐC\n\n" +
-                    "Mã hồ sơ: #RP-8492\n" +
-                    "Hình thức: Khóa tính năng đăng bài 7 ngày\n" +
-                    "Lý do: Nghi vấn spam tự động bot v3\n" +
-                    "Trạng thái: Có hiệu lực"
+                showToast(
+                    "Đang mở hồ sơ án phạt gốc " +
+                    originalCase +
+                    "...",
+                    "warning"
                 );
 
-            }, 300);
+                setTimeout(function () {
 
-        });
+                    alert(
+                        "HỒ SƠ ÁN PHẠT GỐC\n\n" +
+                        "Mã hồ sơ: " +
+                        originalCase +
+                        "\n" +
+                        "Trạng thái: Có hiệu lực"
+                    );
+
+                }, 300);
+
+            }
+        );
 
     }
 
 
     // =========================================================
-    // 8. NÚT LỊCH SỬ THAY ĐỔI
+    // 18. LỊCH SỬ THAY ĐỔI
     // =========================================================
 
     if (historyBtn) {
 
-        historyBtn.addEventListener("click", function () {
+        historyBtn.addEventListener(
+            "click",
+            function () {
 
-            alert(
-                "LỊCH SỬ THAY ĐỔI #APL-8921\n\n" +
-                "09:42 - Bot Sentinel tạo án phạt #RP-8492\n" +
-                "10:15 - Người dùng gửi kháng nghị\n" +
-                "10:18 - Hồ sơ được chuyển sang Mod cấp 2\n" +
-                "10:25 - Bắt đầu đối soát telemetry\n" +
-                "Hiện tại - Đang chờ ban hành phán quyết"
-            );
+                const caseId =
+                    currentAppealId || "APL-8921";
 
-        });
+                alert(
+                    "LỊCH SỬ THAY ĐỔI #" +
+                    caseId +
+                    "\n\n" +
+                    "09:42 - Bot Sentinel tạo án phạt\n" +
+                    "10:15 - Người dùng gửi kháng nghị\n" +
+                    "10:18 - Hồ sơ được chuyển sang Mod cấp 2\n" +
+                    "10:25 - Bắt đầu đối soát telemetry\n" +
+                    "Hiện tại - Đang chờ ban hành phán quyết"
+                );
+
+            }
+        );
 
     }
 
 
     // =========================================================
-    // 9. NÚT TÙY CHỌN
+    // 19. NÚT TÙY CHỌN
     // =========================================================
 
     if (optionBtn) {
 
-        optionBtn.addEventListener("click", function () {
+        optionBtn.addEventListener(
+            "click",
+            function () {
 
-            const choice = prompt(
-                "TÙY CHỌN HỒ SƠ\n\n" +
-                "Nhập lựa chọn:\n" +
-                "1 - Đánh dấu cần kiểm tra thêm\n" +
-                "2 - Chuyển Mod khác\n" +
-                "3 - Sao chép mã hồ sơ"
-            );
+                const caseId =
+                    currentAppealId || "APL-8921";
+
+                const choice =
+                    prompt(
+                        "TÙY CHỌN HỒ SƠ\n\n" +
+                        "Hồ sơ: #" +
+                        caseId +
+                        "\n\n" +
+                        "Nhập lựa chọn:\n" +
+                        "1 - Đánh dấu cần kiểm tra thêm\n" +
+                        "2 - Chuyển Mod khác\n" +
+                        "3 - Sao chép mã hồ sơ"
+                    );
 
 
-            if (choice === "1") {
+                if (choice === "1") {
 
-                showToast(
-                    "Đã đánh dấu hồ sơ cần kiểm tra thêm.",
-                    "warning"
-                );
+                    showToast(
+                        "Đã đánh dấu hồ sơ cần kiểm tra thêm.",
+                        "warning"
+                    );
+
+                }
+                else if (choice === "2") {
+
+                    showToast(
+                        "Đã gửi yêu cầu chuyển hồ sơ.",
+                        "success"
+                    );
+
+                }
+                else if (choice === "3") {
+
+                    copyCaseId();
+
+                }
+                else if (
+                    choice !== null &&
+                    choice !== ""
+                ) {
+
+                    showToast(
+                        "Lựa chọn không hợp lệ.",
+                        "danger"
+                    );
+
+                }
 
             }
-            else if (choice === "2") {
-
-                showToast(
-                    "Đã gửi yêu cầu chuyển hồ sơ.",
-                    "success"
-                );
-
-            }
-            else if (choice === "3") {
-
-                copyCaseId();
-
-            }
-            else if (choice !== null && choice !== "") {
-
-                showToast(
-                    "Lựa chọn không hợp lệ.",
-                    "danger"
-                );
-
-            }
-
-        });
+        );
 
     }
 
 
     // =========================================================
-    // 10. COPY MÃ HỒ SƠ
+    // 20. COPY MÃ HỒ SƠ
     // =========================================================
 
     function copyCaseId() {
 
-        const caseId = "#APL-8921";
+        const caseId =
+            "#" +
+            (currentAppealId || "APL-8921");
 
 
         if (
@@ -481,7 +907,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 .then(function () {
 
                     showToast(
-                        "Đã sao chép mã hồ sơ " + caseId,
+                        "Đã sao chép mã hồ sơ " +
+                        caseId,
                         "success"
                     );
 
@@ -504,49 +931,12 @@ document.addEventListener("DOMContentLoaded", function () {
             );
 
         }
-    }
-
-
-    // =========================================================
-    // 11. NÚT QUAY LẠI
-    // =========================================================
-
-    if (backBtn) {
-
-        backBtn.addEventListener("click", function () {
-
-            const confirmed = confirm(
-                "Bạn có chắc muốn quay lại hàng đợi?\n\n" +
-                "Các thay đổi chưa lưu sẽ không được ban hành."
-            );
-
-
-            if (!confirmed) {
-                return;
-            }
-
-
-            if (window.history.length > 1) {
-
-                window.history.back();
-
-            }
-            else {
-
-                showToast(
-                    "Không có trang trước để quay lại.",
-                    "warning"
-                );
-
-            }
-
-        });
 
     }
 
 
     // =========================================================
-    // 12. CÁC FILE ĐÍNH KÈM
+    // 21. FILE ĐÍNH KÈM
     // =========================================================
 
     const attachmentChips =
@@ -555,303 +945,297 @@ document.addEventListener("DOMContentLoaded", function () {
 
     attachmentChips.forEach(function (attachment) {
 
-        attachment.addEventListener("click", function (event) {
+        attachment.addEventListener(
+            "click",
+            function (event) {
 
-            event.preventDefault();
+                event.preventDefault();
 
-            const fileNameElement =
-                attachment.querySelector("span");
+                const fileNameElement =
+                    attachment.querySelector("span");
 
-            let fileName = "Tệp đính kèm";
+                let fileName =
+                    "Tệp đính kèm";
 
-            if (fileNameElement) {
-                fileName = fileNameElement.textContent.trim();
-            }
+                if (fileNameElement) {
 
-            showToast(
-                "Đang mở tệp: " + fileName,
-                "warning"
-            );
+                    fileName =
+                        fileNameElement.textContent.trim();
 
+                }
 
-            setTimeout(function () {
-
-                alert(
-                    "FILE PREVIEW\n\n" +
-                    fileName +
-                    "\n\n" +
-                    "Demo: Tệp được mô phỏng trong giao diện quản trị."
+                showToast(
+                    "Đang mở tệp: " +
+                    fileName,
+                    "warning"
                 );
 
-            }, 300);
+                setTimeout(function () {
 
-        });
+                    alert(
+                        "FILE PREVIEW\n\n" +
+                        fileName +
+                        "\n\n" +
+                        "Demo: Tệp được mô phỏng trong giao diện quản trị."
+                    );
+
+                }, 300);
+
+            }
+        );
 
     });
 
 
     // =========================================================
-    // 13. TEXTAREA AUDIT - KIỂM TRA GHI CHÚ NỘI BỘ
+    // 22. TEXTAREA AUDIT
     // =========================================================
 
     if (auditTextarea) {
 
-        auditTextarea.addEventListener("input", function () {
+        auditTextarea.addEventListener(
+            "input",
+            function () {
 
-            const text = auditTextarea.value.trim();
+                formChanged = true;
 
-            if (text.length === 0) {
+                const text =
+                    auditTextarea.value.trim();
 
-                auditTextarea.style.borderColor =
-                    "var(--danger)";
+                if (text.length === 0) {
+
+                    auditTextarea.style.borderColor =
+                        "var(--danger)";
+
+                }
+                else {
+
+                    auditTextarea.style.borderColor =
+                        "var(--neutral-200)";
+
+                }
 
             }
-            else {
-
-                auditTextarea.style.borderColor =
-                    "var(--neutral-200)";
-
-            }
-
-        });
+        );
 
     }
 
 
     // =========================================================
-    // 14. LƯU NHÁP
+    // 23. LƯU NHÁP
     // =========================================================
 
     if (saveDraftBtn) {
 
-        saveDraftBtn.addEventListener("click", function () {
+        saveDraftBtn.addEventListener(
+            "click",
+            function () {
 
-            const selectedDecision =
-                getSelectedDecision();
+                const selectedDecision =
+                    getSelectedDecision();
 
-            const reply =
-                replyTextarea
-                    ? replyTextarea.value.trim()
-                    : "";
+                const reply =
+                    replyTextarea
+                        ? replyTextarea.value.trim()
+                        : "";
 
-            const audit =
-                auditTextarea
-                    ? auditTextarea.value.trim()
-                    : "";
+                const audit =
+                    auditTextarea
+                        ? auditTextarea.value.trim()
+                        : "";
 
 
-            if (!selectedDecision) {
+                if (!selectedDecision) {
 
-                showToast(
-                    "Vui lòng chọn phương án phán quyết trước khi lưu.",
-                    "danger"
+                    showToast(
+                        "Vui lòng chọn phương án phán quyết trước khi lưu.",
+                        "danger"
+                    );
+
+                    return;
+                }
+
+
+                if (audit.length === 0) {
+
+                    showToast(
+                        "Vui lòng nhập ghi chú kiểm duyệt nội bộ.",
+                        "danger"
+                    );
+
+                    auditTextarea.focus();
+
+                    return;
+                }
+
+
+                const draftData = {
+
+                    caseId:
+                        "#" +
+                        (currentAppealId || "APL-8921"),
+
+                    decision:
+                        selectedDecision,
+
+                    reply:
+                        reply,
+
+                    audit:
+                        audit,
+
+                    savedAt:
+                        new Date().toLocaleString("vi-VN")
+
+                };
+
+
+                console.log(
+                    "DRAFT SAVED:",
+                    draftData
                 );
 
-                return;
-            }
 
+                formChanged = false;
 
-            if (audit.length === 0) {
 
                 showToast(
-                    "Vui lòng nhập ghi chú kiểm duyệt nội bộ.",
-                    "danger"
+                    "Đã lưu bản nháp phán quyết " +
+                    draftData.caseId +
+                    ".",
+                    "success"
                 );
 
-                auditTextarea.focus();
 
-                return;
-            }
-
-
-            // Mô phỏng lưu dữ liệu
-            const draftData = {
-                caseId: "#APL-8921",
-                decision: selectedDecision,
-                reply: reply,
-                audit: audit,
-                savedAt: new Date().toLocaleString("vi-VN")
-            };
-
-
-            console.log(
-                "DRAFT SAVED:",
-                draftData
-            );
-
-
-            showToast(
-                "Đã lưu bản nháp phán quyết #APL-8921.",
-                "success"
-            );
-
-
-            // Đổi trạng thái nút trong thời gian ngắn
-            const originalText =
-                saveDraftBtn.textContent;
-
-            saveDraftBtn.textContent =
-                "Đã lưu nháp";
-
-            setTimeout(function () {
+                const originalText =
+                    saveDraftBtn.textContent;
 
                 saveDraftBtn.textContent =
-                    originalText;
+                    "Đã lưu nháp";
 
-            }, 2000);
 
-        });
+                setTimeout(function () {
+
+                    saveDraftBtn.textContent =
+                        originalText;
+
+                }, 2000);
+
+            }
+        );
 
     }
 
 
     // =========================================================
-    // 15. LẤY PHÁN QUYẾT ĐANG CHỌN
-    // =========================================================
-
-    function getSelectedDecision() {
-
-        const selectedCard =
-            document.querySelector(
-                ".decision-card-active"
-            );
-
-
-        if (!selectedCard) {
-            return null;
-        }
-
-
-        const titleElement =
-            selectedCard.querySelector(
-                ".decision-title-row strong"
-            );
-
-
-        if (!titleElement) {
-            return null;
-        }
-
-
-        return titleElement.textContent.trim();
-    }
-
-
-    // =========================================================
-    // 16. BAN HÀNH PHÁN QUYẾT
+    // 24. BAN HÀNH PHÁN QUYẾT
     // =========================================================
 
     if (publishBtn) {
 
-        publishBtn.addEventListener("click", function () {
+        publishBtn.addEventListener(
+            "click",
+            function () {
 
-            const selectedDecision =
-                getSelectedDecision();
+                const selectedDecision =
+                    getSelectedDecision();
+
+                const reply =
+                    replyTextarea
+                        ? replyTextarea.value.trim()
+                        : "";
+
+                const audit =
+                    auditTextarea
+                        ? auditTextarea.value.trim()
+                        : "";
 
 
-            const reply =
-                replyTextarea
-                    ? replyTextarea.value.trim()
-                    : "";
+                const caseId =
+                    "#" +
+                    (currentAppealId || "APL-8921");
 
 
-            const audit =
-                auditTextarea
-                    ? auditTextarea.value.trim()
-                    : "";
+                if (!selectedDecision) {
+
+                    showToast(
+                        "Vui lòng chọn phương án phán quyết.",
+                        "danger"
+                    );
+
+                    return;
+                }
 
 
-            // ---------------------------------------------
-            // Kiểm tra phương án
-            // ---------------------------------------------
+                if (reply.length === 0) {
 
-            if (!selectedDecision) {
+                    showToast(
+                        "Phản hồi người dùng không được để trống.",
+                        "danger"
+                    );
 
-                showToast(
-                    "Vui lòng chọn phương án phán quyết.",
-                    "danger"
+                    replyTextarea.focus();
+
+                    return;
+                }
+
+
+                if (audit.length === 0) {
+
+                    showToast(
+                        "Vui lòng nhập ghi chú kiểm duyệt nội bộ.",
+                        "danger"
+                    );
+
+                    auditTextarea.focus();
+
+                    return;
+                }
+
+
+                const confirmed =
+                    confirm(
+
+                        "XÁC NHẬN BAN HÀNH PHÁN QUYẾT\n\n" +
+
+                        "Hồ sơ: " +
+                        caseId +
+                        "\n" +
+
+                        "Phán quyết:\n" +
+                        selectedDecision +
+                        "\n\n" +
+
+                        "Hệ thống sẽ:\n" +
+                        "- Cập nhật trạng thái án phạt\n" +
+                        "- Gửi phản hồi vào Inbox\n" +
+                        "- Gửi email cho người dùng\n" +
+                        "- Lưu log kiểm duyệt\n\n" +
+
+                        "Bạn có chắc muốn ban hành?"
+
+                    );
+
+
+                if (!confirmed) {
+                    return;
+                }
+
+
+                executeResolution(
+                    selectedDecision,
+                    reply,
+                    audit
                 );
 
-                return;
             }
-
-
-            // ---------------------------------------------
-            // Kiểm tra phản hồi
-            // ---------------------------------------------
-
-            if (reply.length === 0) {
-
-                showToast(
-                    "Phản hồi người dùng không được để trống.",
-                    "danger"
-                );
-
-                replyTextarea.focus();
-
-                return;
-            }
-
-
-            // ---------------------------------------------
-            // Kiểm tra audit
-            // ---------------------------------------------
-
-            if (audit.length === 0) {
-
-                showToast(
-                    "Vui lòng nhập ghi chú kiểm duyệt nội bộ.",
-                    "danger"
-                );
-
-                auditTextarea.focus();
-
-                return;
-            }
-
-
-            // ---------------------------------------------
-            // Hiển thị xác nhận
-            // ---------------------------------------------
-
-            const confirmed = confirm(
-
-                "XÁC NHẬN BAN HÀNH PHÁN QUYẾT\n\n" +
-
-                "Hồ sơ: #APL-8921\n" +
-
-                "Phán quyết:\n" +
-                selectedDecision +
-                "\n\n" +
-
-                "Hệ thống sẽ:\n" +
-                "- Cập nhật trạng thái án phạt\n" +
-                "- Gửi phản hồi vào Inbox\n" +
-                "- Gửi email cho người dùng\n" +
-                "- Lưu log kiểm duyệt\n\n" +
-
-                "Bạn có chắc muốn ban hành?"
-            );
-
-
-            if (!confirmed) {
-                return;
-            }
-
-
-            executeResolution(
-                selectedDecision,
-                reply,
-                audit
-            );
-
-        });
+        );
 
     }
 
 
     // =========================================================
-    // 17. THỰC THI PHÁN QUYẾT
+    // 25. THỰC THI PHÁN QUYẾT
     // =========================================================
 
     function executeResolution(
@@ -860,23 +1244,34 @@ document.addEventListener("DOMContentLoaded", function () {
         audit
     ) {
 
-        // Disable nút
+        const resolvedAppealId =
+            currentAppealId || "APL-8921";
+
+        const caseId =
+            "#" + resolvedAppealId;
+
+
         publishBtn.disabled = true;
         saveDraftBtn.disabled = true;
 
         publishBtn.style.opacity = "0.6";
         saveDraftBtn.style.opacity = "0.6";
-        publishBtn.style.cursor = "not-allowed";
-        saveDraftBtn.style.cursor = "not-allowed";
+
+        publishBtn.style.cursor =
+            "not-allowed";
+
+        saveDraftBtn.style.cursor =
+            "not-allowed";
 
 
-        // Hiển thị đang xử lý
         publishBtn.textContent =
             "Đang ban hành...";
 
 
         readyTitle.textContent =
-            "Đang ban hành phán quyết #APL-8921";
+            "Đang ban hành phán quyết " +
+            caseId;
+
 
         readyDesc.textContent =
             "Hệ thống đang cập nhật trạng thái và gửi thông báo người dùng.";
@@ -888,20 +1283,24 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
 
-        // Mô phỏng API xử lý
         setTimeout(function () {
 
             const resolutionData = {
 
-                caseId: "#APL-8921",
+                caseId:
+                    caseId,
 
-                decision: selectedDecision,
+                decision:
+                    selectedDecision,
 
-                reply: reply,
+                reply:
+                    reply,
 
-                audit: audit,
+                audit:
+                    audit,
 
-                moderator: "Mod_Agent_442",
+                moderator:
+                    "Mod_Agent_442",
 
                 resolvedAt:
                     new Date().toLocaleString("vi-VN")
@@ -915,14 +1314,13 @@ document.addEventListener("DOMContentLoaded", function () {
             );
 
 
-            // ---------------------------------------------
-            // Cập nhật giao diện
-            // ---------------------------------------------
-
             publishBtn.disabled = true;
 
             publishBtn.style.opacity = "1";
-            publishBtn.style.cursor = "default";
+
+            publishBtn.style.cursor =
+                "default";
+
 
             publishBtn.innerHTML =
                 `
@@ -938,7 +1336,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
             readyTitle.textContent =
-                "Đã ban hành phán quyết #APL-8921";
+                "Đã ban hành phán quyết " +
+                caseId;
+
 
             readyDesc.textContent =
                 "Phán quyết đã được ghi nhận và thông báo đã được gửi đến người dùng.";
@@ -954,6 +1354,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const readyDot =
                 document.querySelector(".ready-dot");
 
+
             if (readyDot) {
 
                 readyDot.style.background =
@@ -963,44 +1364,76 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
             showToast(
-                "Phán quyết #APL-8921 đã được ban hành thành công.",
+                "Phán quyết " +
+                caseId +
+                " đã được ban hành thành công.",
                 "success"
             );
 
 
             // ---------------------------------------------
-            // Khóa form sau khi ban hành
+            // Đánh dấu item trong danh sách đã xử lý
             // ---------------------------------------------
 
-            decisionCards.forEach(function (card) {
-
-                card.style.pointerEvents =
-                    "none";
-
-                card.style.opacity =
-                    "0.7";
-
-            });
+            markAppealAsProcessed(
+                resolvedAppealId
+            );
 
 
-            macroChips.forEach(function (chip) {
+            formChanged = false;
 
-                chip.style.pointerEvents =
-                    "none";
 
-                chip.style.opacity =
-                    "0.7";
+            // ---------------------------------------------
+            // Khóa form
+            // ---------------------------------------------
 
-            });
+            decisionCards.forEach(
+                function (card) {
+
+                    card.style.pointerEvents =
+                        "none";
+
+                    card.style.opacity =
+                        "0.7";
+
+                }
+            );
+
+
+            macroChips.forEach(
+                function (chip) {
+
+                    chip.style.pointerEvents =
+                        "none";
+
+                    chip.style.opacity =
+                        "0.7";
+
+                }
+            );
 
 
             if (replyTextarea) {
                 replyTextarea.readOnly = true;
             }
 
+
             if (auditTextarea) {
                 auditTextarea.readOnly = true;
             }
+
+
+            /*
+             * Sau khi ban hành thành công,
+             * quay lại danh sách sau 1.5 giây.
+             */
+            setTimeout(function () {
+
+                showAppealList();
+
+                resetDetailForm();
+
+            }, 1500);
 
 
         }, 1800);
@@ -1009,109 +1442,218 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     // =========================================================
-    // 18. CẢNH BÁO KHI RỜI TRANG NẾU CÓ THAY ĐỔI
+    // 26. ĐÁNH DẤU KHÁNG NGHỊ ĐÃ XỬ LÝ
     // =========================================================
 
-    let formChanged = false;
+    function markAppealAsProcessed(appealId) {
+
+        const appealItem =
+            document.querySelector(
+                '.appeal-item[data-appeal-id="' +
+                appealId +
+                '"]'
+            );
 
 
-    decisionCards.forEach(function (card) {
-
-        card.addEventListener("click", function () {
-
-            formChanged = true;
-
-        });
-
-    });
+        if (!appealItem) {
+            return;
+        }
 
 
-    macroChips.forEach(function (chip) {
-
-        chip.addEventListener("click", function () {
-
-            formChanged = true;
-
-        });
-
-    });
+        appealItem.classList.add(
+            "appeal-item-processed"
+        );
 
 
-    if (replyTextarea) {
+        const status =
+            appealItem.querySelector(
+                ".appeal-status"
+            );
 
-        replyTextarea.addEventListener("input", function () {
 
-            formChanged = true;
+        if (status) {
 
-        });
+            status.classList.remove(
+                "appeal-status-urgent",
+                "appeal-status-warning"
+            );
+
+            status.classList.add(
+                "appeal-status-processed"
+            );
+
+
+            status.innerHTML =
+                `
+                <span class="appeal-status-dot"></span>
+                Đã xử lý
+                `;
+
+            status.style.color =
+                "#16a34a";
+
+            status.style.background =
+                "#dcfce7";
+
+        }
+
+
+        const button =
+            appealItem.querySelector(
+                ".appeal-view-btn"
+            );
+
+
+        if (button) {
+
+            button.innerHTML =
+                `
+                Xem lại
+                <span>→</span>
+                `;
+
+        }
+
+
+        updateAppealCount();
 
     }
 
 
-    if (auditTextarea) {
+    // =========================================================
+    // 27. RESET FORM
+    // =========================================================
 
-        auditTextarea.addEventListener("input", function () {
+    function resetDetailForm() {
 
-            formChanged = true;
+        publishBtn.disabled = false;
+        saveDraftBtn.disabled = false;
 
-        });
+        publishBtn.style.opacity = "1";
+        saveDraftBtn.style.opacity = "1";
+
+        publishBtn.style.cursor =
+            "pointer";
+
+        saveDraftBtn.style.cursor =
+            "pointer";
+
+
+        publishBtn.innerHTML =
+            `
+            <svg width="18" height="18"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2.5">
+                <polygon points="12 2 2 7 12 12 22 7 12 2" />
+                <polyline points="2 17 12 22 22 17" />
+                <polyline points="2 12 12 17 22 12" />
+            </svg>
+            Ban hành phán quyết
+            `;
+
+
+        decisionCards.forEach(
+            function (card) {
+
+                card.style.pointerEvents =
+                    "";
+
+                card.style.opacity =
+                    "";
+
+            }
+        );
+
+
+        macroChips.forEach(
+            function (chip) {
+
+                chip.style.pointerEvents =
+                    "";
+
+                chip.style.opacity =
+                    "";
+
+            }
+        );
+
+
+        if (replyTextarea) {
+            replyTextarea.readOnly = false;
+        }
+
+
+        if (auditTextarea) {
+            auditTextarea.readOnly = false;
+        }
 
     }
 
 
     // =========================================================
-    // 19. KHỞI TẠO TRẠNG THÁI BAN ĐẦU
+    // 28. KHỞI TẠO DECISION CARD
     // =========================================================
 
     function initializeDecisionCards() {
 
-        decisionCards.forEach(function (card) {
+        decisionCards.forEach(
+            function (card) {
 
-            const radio =
-                card.querySelector(
-                    'input[type="radio"]'
-                );
+                const radio =
+                    card.querySelector(
+                        'input[type="radio"]'
+                    );
 
-            const customRadio =
-                card.querySelector(".custom-radio");
-
-
-            if (
-                radio &&
-                radio.checked
-            ) {
-
-                card.classList.add(
-                    "decision-card-active"
-                );
+                const customRadio =
+                    card.querySelector(
+                        ".custom-radio"
+                    );
 
 
                 if (
-                    customRadio &&
-                    !customRadio.querySelector(
-                        ".radio-inner-dot"
-                    )
+                    radio &&
+                    radio.checked
                 ) {
 
-                    const dot =
-                        document.createElement("span");
+                    card.classList.add(
+                        "decision-card-active"
+                    );
 
-                    dot.className =
-                        "radio-inner-dot";
 
-                    customRadio.appendChild(dot);
+                    if (
+                        customRadio &&
+                        !customRadio.querySelector(
+                            ".radio-inner-dot"
+                        )
+                    ) {
+
+                        const dot =
+                            document.createElement(
+                                "span"
+                            );
+
+                        dot.className =
+                            "radio-inner-dot";
+
+                        customRadio.appendChild(
+                            dot
+                        );
+
+                    }
+
+                }
+                else {
+
+                    card.classList.remove(
+                        "decision-card-active"
+                    );
+
                 }
 
             }
-            else {
-
-                card.classList.remove(
-                    "decision-card-active"
-                );
-
-            }
-
-        });
+        );
 
 
         updateDecisionStatus();
@@ -1119,15 +1661,25 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
+    // =========================================================
+    // 29. KHỞI TẠO TRANG
+    // =========================================================
+
+    showAppealList();
+
     initializeDecisionCards();
+
+    updateAppealCount();
+
+    updateCharCount();
 
 
     // =========================================================
-    // 20. LOG KIỂM TRA
+    // 30. LOG
     // =========================================================
 
     console.log(
         "Vanguard Appeal Resolution UI đã khởi tạo thành công."
     );
 
-});
+}); 
