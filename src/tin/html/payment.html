@@ -290,53 +290,89 @@
                         <!-- Lựa chọn 1: Chuyển khoản QR (Khuyên dùng) -->
                         <div class="payment-method-item selected">
                             <label class="payment-label">
-                                <input type="radio" name="payment_method" value="vietqr" class="payment-radio" checked>
+                                <input type="radio" name="payment_method" value="vnpay" class="payment-radio" checked>
                                 <div class="payment-header-row">
-                                    <span class="payment-title">ComicHub Escrow VietQR / Chuyển Khoản Tự Động</span>
-                                    <span class="badge-recommend">Khuyên dùng cho Collector</span>
-                                </div>
-                                <span class="payment-subtitle">Tạo mã QR động – Tự động khớp lệnh 24/7 – Tiền giữ tại Vault trung gian</span>
+            <span class="payment-title">
+                Thanh Toán Bằng VNPAY-QR
+            </span>
+            <span class="badge-recommend">Khuyên dùng</span>
+                 </div>
+                                <span class="payment-subtitle">Quét mã QR bằng ứng dụng VNPAY để thanh toán nhanh chóng và an toàn</span>
                             </label>
-
-                            <!-- Box hiển thị thông tin VietQR khi chọn -->
+                            <!-- Box hiển thị thông tin VNPAY-QR -->
                             <div class="qr-payment-details-box">
                                 <div class="qr-code-wrapper">
-                                    <!-- Ảnh QR code minh họa -->
-                                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=COMICHUB-ORDER-99882" alt="Mã QR Chuyển Khoản ComicHub Escrow" class="qr-code-img">
-                                    <span class="qr-scan-instruction"><i class="fa-solid fa-qrcode"></i> Quét bằng app ngân hàng</span>
+                                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=VNPAY-COMICHUB-CHUB99882-5050000" alt="Mã QR thanh toán VNPAY" class="qr-code-img">
+                                    <span class="qr-scan-instruction">
+                <i class="fa-solid fa-qrcode"></i>
+                Mở VNPAY và quét mã QR
+            </span>
                                 </div>
                                 <div class="bank-transfer-info-table">
+
                                     <div class="info-row">
-                                        <span class="info-label">Ngân hàng thụ hưởng:</span>
-                                        <strong class="info-value">MB Bank (Ngân Hàng Quân Đội)</strong>
+                <span class="info-label">
+                    Đơn vị thanh toán:
+                </span>
+
+                                        <strong class="info-value">
+                                            VNPAY
+                                        </strong>
                                     </div>
+
                                     <div class="info-row">
-                                        <span class="info-label">Số tài khoản Escrow:</span>
+                <span class="info-label">
+                    Đơn vị chấp nhận thanh toán:
+                </span>
+
+                                        <strong class="info-value">
+                                            COMICHUB
+                                        </strong>
+                                    </div>
+
+                                    <div class="info-row">
+                <span class="info-label">
+                    Số tiền:
+                </span>
+
+                                        <strong class="info-value highlight-amount">
+                                            5.050.000₫
+                                        </strong>
+                                    </div>
+
+                                    <div class="info-row">
+                <span class="info-label">
+                    Mã đơn hàng:
+                </span>
+
                                         <div class="copyable-value">
-                                            <strong>8888 6688 9999</strong>
-                                            <button type="button" class="btn-copy" aria-label="Sao chép số tài khoản"><i class="fa-regular fa-copy"></i></button>
+
+                                            <strong class="transfer-code">
+                                                CHUB 99882
+                                            </strong>
+
+                                            <button
+                                                    type="button"
+                                                    class="btn-copy"
+                                                    aria-label="Sao chép mã đơn hàng"
+                                            >
+                                                <i class="fa-regular fa-copy"></i>
+                                            </button>
+
                                         </div>
                                     </div>
-                                    <div class="info-row">
-                                        <span class="info-label">Chủ tài khoản:</span>
-                                        <strong class="info-value">CONG TY CP COMICHUB VIET NAM</strong>
-                                    </div>
-                                    <div class="info-row">
-                                        <span class="info-label">Số tiền:</span>
-                                        <strong class="info-value highlight-amount">5.050.000₫</strong>
-                                    </div>
-                                    <div class="info-row">
-                                        <span class="info-label">Nội dung chuyển khoản:</span>
-                                        <div class="copyable-value">
-                                            <strong class="transfer-code">CHUB 99882</strong>
-                                            <button type="button" class="btn-copy" aria-label="Sao chép nội dung chuyển khoản"><i class="fa-regular fa-copy"></i></button>
-                                        </div>
-                                    </div>
+
                                     <p class="qr-security-note">
-                                        <i class="fa-solid fa-clock-rotate-left"></i> Sau khi chuyển tiền, hệ thống tự động xác nhận đơn trong 30 giây. Tiền của bạn không gửi thẳng cho người bán mà được phong tỏa bảo đảm.
+                                        <i class="fa-solid fa-shield-halved"></i>
+
+                                        Mở ứng dụng VNPAY và quét mã QR để thanh toán.
+                                        Sau khi thanh toán thành công, hệ thống sẽ xác nhận đơn hàng.
                                     </p>
+
                                 </div>
+
                             </div>
+
                         </div>
 
                         <!-- Lựa chọn 2: COD Đồng kiểm -->
@@ -555,7 +591,7 @@
                     <div class="checkout-submit-group">
                         <button type="button" class="btn-submit-checkout" onclick="alert('Đặt hàng & Thanh toán thành công! Đang chuyển tới trang theo dõi đơn hàng GHN...'); window.location.href='../../thuc/html/page3.html';">
                             <i class="fa-solid fa-lock"></i>
-                            <span>Xác Nhận Thanh Toán Bảo Đảm</span>
+                            <span>Xác Nhận Thanh Toán</span>
                         </button>
                         <p class="terms-disclaimer">
                             Nhấn xác nhận đồng nghĩa với việc bạn đồng ý với <a href="../../thuc/html/page2.html">Quy chế Escrow ký quỹ</a> của ComicHub.
