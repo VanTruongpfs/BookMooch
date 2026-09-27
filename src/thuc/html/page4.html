@@ -7,12 +7,16 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+<link rel="stylesheet" href="../../shared/styles/global-design-tokens.css">
 <link rel="stylesheet" href="../css/page4.css">
 <link rel="stylesheet" href="../../shared/footer/footer.css">
 <link rel="stylesheet" href="../../shared/header/header.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="../../shared/sidebar/sidebar.css">
+<link rel="stylesheet" href="../css/shared-sidebar-layout.css">
 </head>
-<body>
+<body class="thuc-sidebar-layout has-fixed-header page4-layout">
+<div data-sidebar-mount></div>
 <header class="site-header">
   <div class="container header-container">
     <!-- Logo Thương hiệu -->
@@ -176,6 +180,7 @@
   <div><h3>Bản tin MangaTrade</h3><p>Nhận thông báo khi có manga hiếm hoặc ưu đãi freeship.</p><form id="newsletter"><input id="email" type="email" placeholder="Email của bạn..." required><button>Gửi</button></form></div>
 </div><div class="container copyright">© 2024 MangaTrade Việt Nam. Bản quyền nội dung thuộc các nhà xuất bản được cấp phép.</div></footer>
 <div id="toast" class="toast"></div>
+<script type="module" src="../../shared/sidebar/sidebar.js"></script>
 <script src="../../shared/footer/footer.js"></script>
 <script src="../js/page4.js"></script>
 </body>

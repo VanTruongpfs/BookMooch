@@ -60,7 +60,8 @@ function renderGroup(group, currentPath) {
     section.innerHTML = `<h2 class="sidebar-group-title">${group.title}</h2>`;
     group.items.forEach(([icon, label, href]) => {
         const link = document.createElement("a");
-        link.className = `sidebar-link ${currentPath.includes(href) ? "active" : ""}`;
+        const targetPath = new URL(href, window.location.href).pathname;
+        link.className = `sidebar-link ${currentPath === targetPath ? "active" : ""}`;
         link.href = href;
         link.innerHTML = `<span class="sidebar-link-icon" aria-hidden="true">${icon}</span><span>${label}</span>`;
         section.append(link);
