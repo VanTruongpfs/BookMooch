@@ -539,7 +539,61 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         );
     });
+    //13.5
+const postTypeTabs = document.querySelectorAll(".post-type-tab");
+const productDemo = document.querySelector("#productDemo");
+const communityPost = document.querySelector("#communityPost");
+const currentPostType = document.querySelector("#currentPostType");
 
+postTypeTabs.forEach(function (tab) {
+
+    tab.addEventListener("click", function () {
+
+        // Xóa active ở tất cả tab
+        postTypeTabs.forEach(function (item) {
+            item.classList.remove("active");
+        });
+
+        // Active tab đang chọn
+        tab.classList.add("active");
+
+        const type = tab.getAttribute("data-type");
+
+        if (type === "product") {
+
+            // Hiện sản phẩm
+            productDemo.style.display = "flex";
+
+            // Ẩn bài viết cộng đồng
+            communityPost.style.display = "none";
+
+            // Đổi nhãn
+            currentPostType.textContent = "🛒 BÀI ĐĂNG SẢN PHẨM BÁN MỚI";
+
+            showToast("Đang hiển thị bài đăng sản phẩm bán mới.", "success");
+
+        } else {
+
+            // Ẩn sản phẩm
+            productDemo.style.display = "none";
+
+            // Hiện bài viết cộng đồng
+            communityPost.style.display = "block";
+
+            // Đổi nhãn
+            currentPostType.textContent = "📝 BÀI VIẾT CỘNG ĐỒNG";
+
+            showToast("Đang hiển thị bài viết cộng đồng.", "success");
+        }
+    });
+}
+);
+// Mặc định khi mở trang: hiển thị bài đăng sản phẩm
+const defaultProductTab = document.querySelector('.post-type-tab[data-type="product"]');
+
+if (defaultProductTab) {
+    defaultProductTab.click();
+}
 
     // =========================================================
     // 14. KHỞI TẠO
@@ -551,5 +605,6 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log(
         "Post Moderation JavaScript đã được tải thành công."
     );
+    
 
 });

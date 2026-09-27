@@ -1,24 +1,19 @@
 document.addEventListener("DOMContentLoaded", function () {
 
     // =========================================================
-    // 1. KHAI BÁO CÁC ELEMENT
+    // 1. CÁC ELEMENT CHÍNH
     // =========================================================
 
-    const postActionCards = document.querySelectorAll(
-        'input[name="post_action"]'
-    );
+    const reportListView = document.querySelector("#reportListView");
+    const reportDetailView = document.querySelector("#reportDetailView");
 
-    const accountActionCards = document.querySelectorAll(
-        'input[name="acc_action"]'
-    );
+    const reportItems = document.querySelectorAll(".report-item");
+    const reportViewButtons = document.querySelectorAll(".report-view-btn");
 
-    const checkboxInputs = document.querySelectorAll(
-        '.check-box-card input[type="checkbox"]'
-    );
+    const reportCount = document.querySelector("#reportCount");
 
-    const auditTextarea = document.querySelector(".textarea-audit");
-
-    const revealMediaBtn = document.querySelector(".btn-reveal-media");
+    const pageTitle = document.querySelector("#pageTitle");
+    const ticketTag = document.querySelector(".ticket-tag");
 
     const backBtn = document.querySelector(".back-btn");
 
@@ -32,202 +27,553 @@ document.addEventListener("DOMContentLoaded", function () {
         '.icon-btn[aria-label="Tùy chọn"]'
     );
 
+    // QUAN TRỌNG:
+    // Không dùng ".btn.btn-outline" vì danh sách báo cáo cũng có nút này.
     const escalateBtn = document.querySelector(
-        '.btn.btn-outline'
+        ".bottom-action-bar .btn-outline"
     );
 
-    const applyBtn = document.querySelector(
-        '.btn.btn-primary'
-    );
+    // Lấy chính xác nút Áp dụng xử lý
+    const applyBtn = document.querySelector("#applyActionBtn");
 
-    const maliciousLinks = document.querySelectorAll(
-        ".malicious-link"
-    );
+    const auditTextarea = document.querySelector(".textarea-audit");
+
+    const maliciousLinks = document.querySelectorAll(".malicious-link");
+
+    const originalLink = document.querySelector(".link-original");
+
+    const revealMediaBtn = document.querySelector(".btn-reveal-media");
 
 
     // =========================================================
-    // 2. RADIO - PHẠM VI ẨN BÀI VIẾT
+    // 2. BIẾN LƯU BÁO CÁO HIỆN TẠI
     // =========================================================
+
+    let currentReportId = null;
+
+
+    // =========================================================
+    // 3. HIỂN THỊ TOAST
+    // =========================================================
+
+    function showToast(message, type) {
+
+        const oldToast = document.querySelector(".custom-toast");
+
+        if (oldToast) {
+            oldToast.remove();
+        }
+
+        const toast = document.createElement("div");
+
+        toast.className = "custom-toast";
+        toast.innerText = message;
+
+        toast.style.position = "fixed";
+        toast.style.right = "24px";
+        toast.style.bottom = "24px";
+        toast.style.zIndex = "9999";
+
+        toast.style.padding = "14px 20px";
+        toast.style.borderRadius = "10px";
+
+        toast.style.background = "#0f172a";
+        toast.style.color = "#ffffff";
+
+        toast.style.fontFamily = "var(--font-body)";
+        toast.style.fontSize = "14px";
+        toast.style.fontWeight = "600";
+
+        toast.style.boxShadow =
+            "0 10px 25px rgba(0,0,0,0.15)";
+
+        toast.style.maxWidth = "400px";
+
+        toast.style.opacity = "0";
+        toast.style.transform = "translateY(20px)";
+        toast.style.transition = "all 0.25s ease";
+
+
+        if (type === "success") {
+
+            toast.style.borderLeft =
+                "4px solid #22c55e";
+
+        } else if (type === "error") {
+
+            toast.style.borderLeft =
+                "4px solid #dc2626";
+
+        } else if (type === "warning") {
+
+            toast.style.borderLeft =
+                "4px solid #f59e0b";
+
+        } else {
+
+            toast.style.borderLeft =
+                "4px solid #f97316";
+        }
+
+
+        document.body.appendChild(toast);
+
+
+        setTimeout(function () {
+
+            toast.style.opacity = "1";
+            toast.style.transform = "translateY(0)";
+
+        }, 10);
+
+
+        setTimeout(function () {
+
+            toast.style.opacity = "0";
+            toast.style.transform = "translateY(20px)";
+
+            setTimeout(function () {
+
+                toast.remove();
+
+            }, 300);
+
+        }, 3000);
+    }
+
+
+    // =========================================================
+    // 4. HIỂN THỊ DANH SÁCH BÁO CÁO
+    // =========================================================
+
+    function showReportList() {
+
+        if (reportDetailView) {
+            reportDetailView.style.display = "none";
+        }
+
+        if (reportListView) {
+            reportListView.style.display = "";
+        }
+
+        if (pageTitle) {
+            pageTitle.textContent = "Danh sách báo cáo";
+        }
+
+        if (ticketTag) {
+            ticketTag.style.display = "none";
+        }
+
+        currentReportId = null;
+    }
+
+
+    // =========================================================
+    // 5. HIỂN THỊ CHI TIẾT BÁO CÁO
+    // =========================================================
+
+    function showReportDetail(reportId) {
+
+        currentReportId = reportId;
+
+        if (reportListView) {
+            reportListView.style.display = "none";
+        }
+
+        if (reportDetailView) {
+            reportDetailView.style.display = "block";
+        }
+
+        if (pageTitle) {
+            pageTitle.textContent = "Chi tiết báo cáo";
+        }
+
+        if (ticketTag) {
+            ticketTag.textContent = "#" + reportId;
+            ticketTag.style.display = "";
+        }
+
+        // Đưa trang về đầu
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+        console.log(
+            "Đang xem báo cáo:",
+            reportId
+        );
+    }
+
+
+    // =========================================================
+    // 6. CLICK "XEM BÁO CÁO"
+    // =========================================================
+
+    reportViewButtons.forEach(function (button) {
+
+        button.addEventListener("click", function (event) {
+
+            event.stopPropagation();
+
+            const reportItem =
+                button.closest(".report-item");
+
+            if (!reportItem) {
+                return;
+            }
+
+            const reportId =
+                reportItem.getAttribute("data-report-id");
+
+            if (!reportId) {
+                return;
+            }
+
+            showReportDetail(reportId);
+        });
+    });
+
+
+    // =========================================================
+    // 7. CLICK TRÊN TOÀN BỘ REPORT ITEM
+    // =========================================================
+
+    reportItems.forEach(function (item) {
+
+        item.style.cursor = "pointer";
+
+        item.addEventListener("click", function (event) {
+
+            // Nếu click trực tiếp vào button
+            // thì button tự xử lý
+            if (
+                event.target.closest(".report-view-btn")
+            ) {
+                return;
+            }
+
+            const reportId =
+                item.getAttribute("data-report-id");
+
+            if (!reportId) {
+                return;
+            }
+
+            showReportDetail(reportId);
+        });
+    });
+
+
+    // =========================================================
+    // 8. NÚT QUAY LẠI
+    // =========================================================
+
+    if (backBtn) {
+
+        backBtn.addEventListener(
+            "click",
+            function () {
+
+                // Nếu đang ở trang chi tiết
+                if (
+                    reportDetailView &&
+                    reportDetailView.style.display !== "none"
+                ) {
+
+                    showReportList();
+
+                    return;
+                }
+
+
+                // Nếu đang ở danh sách
+                const confirmBack = confirm(
+                    "Bạn có muốn quay lại trang Duyệt bài?"
+                );
+
+                if (!confirmBack) {
+                    return;
+                }
+
+                window.location.href =
+                    "postModeration.html";
+            }
+        );
+    }
+
+
+    // =========================================================
+    // 9. RADIO - PHẠM VI ẨN BÀI VIẾT
+    // =========================================================
+
+    const postActionCards =
+        document.querySelectorAll(
+            'input[name="post_action"]'
+        );
+
 
     postActionCards.forEach(function (radio) {
 
-        radio.addEventListener("change", function () {
+        radio.addEventListener(
+            "change",
+            function () {
 
-            // Tìm tất cả card chứa radio
-            const cards = document.querySelectorAll(
-                'input[name="post_action"]'
-            );
+                postActionCards.forEach(
+                    function (item) {
 
-            cards.forEach(function (item) {
+                        const card =
+                            item.closest(".radio-card");
 
-                const card = item.closest(".radio-card");
-                const customRadio = card.querySelector(".custom-radio");
+                        const customRadio =
+                            card.querySelector(
+                                ".custom-radio"
+                            );
 
-                card.classList.remove("radio-card-active");
+                        card.classList.remove(
+                            "radio-card-active"
+                        );
 
-                // Xóa dấu chấm cũ
-                const oldDot = customRadio.querySelector(".radio-dot");
+                        const oldDot =
+                            customRadio.querySelector(
+                                ".radio-dot"
+                            );
 
-                if (oldDot) {
-                    oldDot.remove();
-                }
-            });
-
-
-            // Card đang được chọn
-            const selectedCard = radio.closest(".radio-card");
-
-            selectedCard.classList.add("radio-card-active");
-
-            const selectedRadio = selectedCard.querySelector(
-                ".custom-radio"
-            );
-
-            // Tạo dấu chấm
-            const dot = document.createElement("span");
-
-            dot.classList.add("radio-dot");
-
-            selectedRadio.appendChild(dot);
+                        if (oldDot) {
+                            oldDot.remove();
+                        }
+                    }
+                );
 
 
-            // Cập nhật thông báo
-            updateAutomaticNotice();
-        });
+                const selectedCard =
+                    radio.closest(".radio-card");
+
+                selectedCard.classList.add(
+                    "radio-card-active"
+                );
+
+
+                const selectedRadio =
+                    selectedCard.querySelector(
+                        ".custom-radio"
+                    );
+
+
+                const dot =
+                    document.createElement("span");
+
+                dot.classList.add("radio-dot");
+
+                selectedRadio.appendChild(dot);
+
+
+                updateAutomaticNotice();
+            }
+        );
     });
 
 
     // =========================================================
-    // 3. RADIO - XỬ PHẠT TÀI KHOẢN
+    // 10. RADIO - XỬ PHẠT TÀI KHOẢN
     // =========================================================
+
+    const accountActionCards =
+        document.querySelectorAll(
+            'input[name="acc_action"]'
+        );
+
 
     accountActionCards.forEach(function (radio) {
 
-        radio.addEventListener("change", function () {
+        radio.addEventListener(
+            "change",
+            function () {
 
-            const cards = document.querySelectorAll(
-                'input[name="acc_action"]'
-            );
+                accountActionCards.forEach(
+                    function (item) {
 
-            cards.forEach(function (item) {
+                        const card =
+                            item.closest(".radio-card");
 
-                const card = item.closest(".radio-card");
+                        const customRadio =
+                            card.querySelector(
+                                ".custom-radio"
+                            );
 
-                const customRadio = card.querySelector(
-                    ".custom-radio"
+                        card.classList.remove(
+                            "radio-card-active"
+                        );
+
+
+                        const oldDot =
+                            customRadio.querySelector(
+                                ".radio-dot"
+                            );
+
+                        if (oldDot) {
+                            oldDot.remove();
+                        }
+                    }
                 );
 
-                card.classList.remove("radio-card-active");
 
-                const oldDot = customRadio.querySelector(
-                    ".radio-dot"
+                const selectedCard =
+                    radio.closest(".radio-card");
+
+                selectedCard.classList.add(
+                    "radio-card-active"
                 );
 
-                if (oldDot) {
-                    oldDot.remove();
-                }
-            });
+
+                const selectedRadio =
+                    selectedCard.querySelector(
+                        ".custom-radio"
+                    );
 
 
-            // Card được chọn
-            const selectedCard = radio.closest(".radio-card");
+                const dot =
+                    document.createElement("span");
 
-            selectedCard.classList.add("radio-card-active");
+                dot.classList.add("radio-dot");
 
-            const selectedRadio = selectedCard.querySelector(
-                ".custom-radio"
-            );
-
-            const dot = document.createElement("span");
-
-            dot.classList.add("radio-dot");
-
-            selectedRadio.appendChild(dot);
+                selectedRadio.appendChild(dot);
 
 
-            // Cập nhật thông báo
-            updateAutomaticNotice();
-        });
+                updateAutomaticNotice();
+            }
+        );
     });
 
 
     // =========================================================
-    // 4. CHECKBOX - LÝ DO VI PHẠM
+    // 11. CHECKBOX - LÝ DO VI PHẠM
     // =========================================================
+
+    const checkboxInputs =
+        document.querySelectorAll(
+            '.check-box-card input[type="checkbox"]'
+        );
+
 
     checkboxInputs.forEach(function (checkbox) {
 
-        checkbox.addEventListener("change", function () {
+        checkbox.addEventListener(
+            "change",
+            function () {
 
-            const card = checkbox.closest(".check-box-card");
-
-            const customCheckbox = card.querySelector(
-                ".custom-checkbox"
-            );
-
-
-            if (checkbox.checked) {
-
-                card.classList.add(
-                    "check-box-card-active"
-                );
-
-                customCheckbox.classList.add("checked");
-
-
-                // Nếu chưa có icon check thì tạo
-                if (!customCheckbox.querySelector("svg")) {
-
-                    const svg = document.createElementNS(
-                        "http://www.w3.org/2000/svg",
-                        "svg"
+                const card =
+                    checkbox.closest(
+                        ".check-box-card"
                     );
 
-                    svg.setAttribute("width", "14");
-                    svg.setAttribute("height", "14");
-                    svg.setAttribute("viewBox", "0 0 24 24");
-                    svg.setAttribute("fill", "none");
-                    svg.setAttribute("stroke", "currentColor");
-                    svg.setAttribute("stroke-width", "3");
+                const customCheckbox =
+                    card.querySelector(
+                        ".custom-checkbox"
+                    );
 
-                    const polyline =
-                        document.createElementNS(
-                            "http://www.w3.org/2000/svg",
-                            "polyline"
+
+                if (checkbox.checked) {
+
+                    card.classList.add(
+                        "check-box-card-active"
+                    );
+
+                    customCheckbox.classList.add(
+                        "checked"
+                    );
+
+
+                    if (
+                        !customCheckbox.querySelector(
+                            "svg"
+                        )
+                    ) {
+
+                        const svg =
+                            document.createElementNS(
+                                "http://www.w3.org/2000/svg",
+                                "svg"
+                            );
+
+                        svg.setAttribute(
+                            "width",
+                            "14"
                         );
 
-                    polyline.setAttribute(
-                        "points",
-                        "20 6 9 17 4 12"
+                        svg.setAttribute(
+                            "height",
+                            "14"
+                        );
+
+                        svg.setAttribute(
+                            "viewBox",
+                            "0 0 24 24"
+                        );
+
+                        svg.setAttribute(
+                            "fill",
+                            "none"
+                        );
+
+                        svg.setAttribute(
+                            "stroke",
+                            "currentColor"
+                        );
+
+                        svg.setAttribute(
+                            "stroke-width",
+                            "3"
+                        );
+
+
+                        const polyline =
+                            document.createElementNS(
+                                "http://www.w3.org/2000/svg",
+                                "polyline"
+                            );
+
+
+                        polyline.setAttribute(
+                            "points",
+                            "20 6 9 17 4 12"
+                        );
+
+
+                        svg.appendChild(polyline);
+
+                        customCheckbox.appendChild(
+                            svg
+                        );
+                    }
+
+                } else {
+
+                    card.classList.remove(
+                        "check-box-card-active"
                     );
 
-                    svg.appendChild(polyline);
+                    customCheckbox.classList.remove(
+                        "checked"
+                    );
 
-                    customCheckbox.appendChild(svg);
-                }
 
-            } else {
+                    const svg =
+                        customCheckbox.querySelector(
+                            "svg"
+                        );
 
-                card.classList.remove(
-                    "check-box-card-active"
-                );
-
-                customCheckbox.classList.remove(
-                    "checked"
-                );
-
-                const svg = customCheckbox.querySelector("svg");
-
-                if (svg) {
-                    svg.remove();
+                    if (svg) {
+                        svg.remove();
+                    }
                 }
             }
-        });
+        );
     });
 
 
     // =========================================================
-    // 5. TẠM HIỆN ẢNH GỐC
+    // 12. TẠM HIỆN ẢNH GỐC
     // =========================================================
 
     if (revealMediaBtn) {
@@ -236,55 +582,58 @@ document.addEventListener("DOMContentLoaded", function () {
             "click",
             function () {
 
-                const mediaBox =
-                    document.querySelector(
-                        ".media-restricted-box"
-                    );
-
-                const currentState =
-                    mediaBox.dataset.revealed === "true";
-
-
-                if (!currentState) {
-
-                    mediaBox.dataset.revealed = "true";
-
-                    mediaBox.innerHTML = `
-                        <div class="media-icon-ring">
-                            <svg width="24" height="24"
-                                 viewBox="0 0 24 24"
-                                 fill="none"
-                                 stroke="currentColor"
-                                 stroke-width="2">
-                                <path d="M1 12s4-8 11-8
-                                         11 8 11 8
-                                         -4 8-11 8
-                                         -11-8-11-8z"/>
-                                <circle cx="12" cy="12" r="3"/>
-                            </svg>
-                        </div>
-
-                        <p class="media-title">
-                            Ảnh gốc đang được tạm hiển thị
-                        </p>
-
-                        <button class="btn-reveal-media">
-                            Ẩn ảnh lại
-                        </button>
-                    `;
-
-
-                    // Gắn sự kiện cho nút mới
-                    mediaBox
-                        .querySelector(".btn-reveal-media")
-                        .addEventListener(
-                            "click",
-                            hideMedia
-                        );
-
-                }
+                showMediaImage();
             }
         );
+    }
+
+
+    function showMediaImage() {
+
+        const mediaBox =
+            document.querySelector(
+                ".media-restricted-box"
+            );
+
+        if (!mediaBox) {
+            return;
+        }
+
+
+        mediaBox.dataset.revealed = "true";
+
+
+        mediaBox.innerHTML = `
+            <div class="media-icon-ring">
+                <svg width="24" height="24"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2">
+                    <path d="M1 12s4-8 11-8
+                             11 8 11 8
+                             -4 8-11 8
+                             -11-8-11-8z"/>
+                    <circle cx="12" cy="12" r="3"/>
+                </svg>
+            </div>
+
+            <p class="media-title">
+                Ảnh gốc đang được tạm hiển thị
+            </p>
+
+            <button class="btn-reveal-media">
+                Ẩn ảnh lại
+            </button>
+        `;
+
+
+        mediaBox
+            .querySelector(".btn-reveal-media")
+            .addEventListener(
+                "click",
+                hideMedia
+            );
     }
 
 
@@ -295,7 +644,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 ".media-restricted-box"
             );
 
+        if (!mediaBox) {
+            return;
+        }
+
+
         mediaBox.dataset.revealed = "false";
+
 
         mediaBox.innerHTML = `
             <div class="media-icon-ring">
@@ -329,39 +684,13 @@ document.addEventListener("DOMContentLoaded", function () {
             .querySelector(".btn-reveal-media")
             .addEventListener(
                 "click",
-                function () {
-
-                    mediaBox.dataset.revealed = "true";
-
-                    mediaBox.innerHTML = `
-                        <div class="media-icon-ring">
-                            👁
-                        </div>
-
-                        <p class="media-title">
-                            Ảnh gốc đang được tạm hiển thị
-                        </p>
-
-                        <button class="btn-reveal-media">
-                            Ẩn ảnh lại
-                        </button>
-                    `;
-
-                    mediaBox
-                        .querySelector(
-                            ".btn-reveal-media"
-                        )
-                        .addEventListener(
-                            "click",
-                            hideMedia
-                        );
-                }
+                showMediaImage
             );
     }
 
 
     // =========================================================
-    // 6. XEM HỒ SƠ
+    // 13. XEM HỒ SƠ
     // =========================================================
 
     if (profileBtn) {
@@ -374,6 +703,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     "Đang mở hồ sơ @hoangnam_tech...",
                     "info"
                 );
+
 
                 setTimeout(function () {
 
@@ -392,7 +722,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     // =========================================================
-    // 7. LỊCH SỬ
+    // 14. LỊCH SỬ
     // =========================================================
 
     if (historyBtn) {
@@ -414,7 +744,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     // =========================================================
-    // 8. MENU TÙY CHỌN
+    // 15. MENU TÙY CHỌN
     // =========================================================
 
     if (optionsBtn) {
@@ -437,39 +767,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     // =========================================================
-    // 9. QUAY LẠI
-    // =========================================================
-
-    if (backBtn) {
-
-        backBtn.addEventListener(
-            "click",
-            function () {
-
-                const confirmBack =
-                    confirm(
-                        "Bạn có chắc muốn quay lại?\n" +
-                        "Các thay đổi chưa lưu sẽ bị mất."
-                    );
-
-                if (confirmBack) {
-
-                    if (window.history.length > 1) {
-
-                        window.history.back();
-
-                    } else {
-
-                        window.location.href = "#queue";
-                    }
-                }
-            }
-        );
-    }
-
-
-    // =========================================================
-    // 10. CHUYỂN DUYỆT
+    // 16. CHUYỂN DUYỆT
     // =========================================================
 
     if (escalateBtn) {
@@ -478,31 +776,41 @@ document.addEventListener("DOMContentLoaded", function () {
             "click",
             function () {
 
+                const reportId =
+                    currentReportId || "RP-8492";
+
+
                 const confirmEscalate =
                     confirm(
-                        "Chuyển báo cáo #RP-8492 cho cấp duyệt cao hơn?\n\n" +
+                        "Chuyển báo cáo #" +
+                        reportId +
+                        " cho cấp duyệt cao hơn?\n\n" +
                         "Vụ việc sẽ được đánh dấu cần xem xét."
                     );
 
-                if (confirmEscalate) {
 
-                    showToast(
-                        "Đã chuyển vụ việc cho cấp duyệt cao hơn.",
-                        "success"
-                    );
-
-                    updateStatus(
-                        "ĐÃ CHUYỂN DUYỆT",
-                        "status-ai"
-                    );
+                if (!confirmEscalate) {
+                    return;
                 }
+
+
+                showToast(
+                    "Đã chuyển vụ việc cho cấp duyệt cao hơn.",
+                    "success"
+                );
+
+
+                updateStatus(
+                    "ĐÃ CHUYỂN DUYỆT",
+                    "status-ai"
+                );
             }
         );
     }
 
 
     // =========================================================
-    // 11. ÁP DỤNG XỬ LÝ NGAY
+    // 17. ÁP DỤNG XỬ LÝ NGAY
     // =========================================================
 
     if (applyBtn) {
@@ -511,7 +819,15 @@ document.addEventListener("DOMContentLoaded", function () {
             "click",
             function () {
 
+                // -----------------------------------------
                 // Kiểm tra ghi chú
+                // -----------------------------------------
+
+                if (!auditTextarea) {
+                    return;
+                }
+
+
                 const note =
                     auditTextarea.value.trim();
 
@@ -532,14 +848,19 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
+                // -----------------------------------------
                 // Kiểm tra checkbox
+                // -----------------------------------------
+
                 const selectedViolations =
                     document.querySelectorAll(
                         '.check-box-card input[type="checkbox"]:checked'
                     );
 
 
-                if (selectedViolations.length === 0) {
+                if (
+                    selectedViolations.length === 0
+                ) {
 
                     showToast(
                         "Vui lòng chọn ít nhất một lý do vi phạm.",
@@ -550,18 +871,38 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
+                // -----------------------------------------
                 // Lấy hành động bài viết
+                // -----------------------------------------
+
                 const selectedPostAction =
                     document.querySelector(
                         'input[name="post_action"]:checked'
                     );
 
 
+                // -----------------------------------------
                 // Lấy hành động tài khoản
+                // -----------------------------------------
+
                 const selectedAccountAction =
                     document.querySelector(
                         'input[name="acc_action"]:checked'
                     );
+
+
+                if (
+                    !selectedPostAction ||
+                    !selectedAccountAction
+                ) {
+
+                    showToast(
+                        "Vui lòng chọn đầy đủ hình thức xử lý.",
+                        "error"
+                    );
+
+                    return;
+                }
 
 
                 const postText =
@@ -570,6 +911,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         .querySelector("strong")
                         .innerText;
 
+
                 const accountText =
                     selectedAccountAction
                         .closest(".radio-card")
@@ -577,9 +919,20 @@ document.addEventListener("DOMContentLoaded", function () {
                         .innerText;
 
 
+                // -----------------------------------------
+                // Xác nhận
+                // -----------------------------------------
+
+                const reportId =
+                    currentReportId || "RP-8492";
+
+
                 const confirmApply =
                     confirm(
                         "XÁC NHẬN XỬ LÝ\n\n" +
+                        "Báo cáo: #" +
+                        reportId +
+                        "\n\n" +
                         "Bài viết:\n" +
                         postText +
                         "\n\n" +
@@ -595,21 +948,35 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
 
+                // -----------------------------------------
                 // Xử lý thành công
+                // -----------------------------------------
+
                 showToast(
                     "Đã áp dụng xử lý thành công!",
                     "success"
                 );
 
 
-                // Đổi trạng thái
                 updateStatus(
                     "ĐÃ XỬ LÝ",
                     "status-ai"
                 );
 
 
-                // Disable nút
+                // -----------------------------------------
+                // Đánh dấu report trong danh sách
+                // -----------------------------------------
+
+                markReportAsProcessed(
+                    reportId
+                );
+
+
+                // -----------------------------------------
+                // Khóa nút
+                // -----------------------------------------
+
                 applyBtn.disabled = true;
 
                 applyBtn.style.opacity = "0.6";
@@ -628,16 +995,124 @@ document.addEventListener("DOMContentLoaded", function () {
                             points="20 6 9 17 4 12">
                         </polyline>
                     </svg>
-
                     Đã xử lý
                 `;
+
+
+                // -----------------------------------------
+                // Sau một khoảng thời gian quay về list
+                // -----------------------------------------
+
+                setTimeout(function () {
+
+                    showReportList();
+
+                    showToast(
+                        "Báo cáo #" +
+                        reportId +
+                        " đã được xử lý.",
+                        "success"
+                    );
+
+                }, 1200);
             }
         );
     }
 
 
     // =========================================================
-    // 12. CHẶN LINK ĐỘC HẠI TRONG PREVIEW
+    // 18. ĐÁNH DẤU REPORT ĐÃ XỬ LÝ
+    // =========================================================
+
+    function markReportAsProcessed(reportId) {
+
+        const reportItem =
+            document.querySelector(
+                '.report-item[data-report-id="' +
+                reportId +
+                '"]'
+            );
+
+
+        if (!reportItem) {
+            return;
+        }
+
+
+        const status =
+            reportItem.querySelector(
+                ".report-status"
+            );
+
+
+        if (status) {
+
+            status.classList.remove(
+                "urgent",
+                "warning"
+            );
+
+            status.classList.add(
+                "processed"
+            );
+
+
+            status.innerHTML = `
+                <span class="report-status-dot"></span>
+                Đã xử lý
+            `;
+        }
+
+
+        // Đổi màu/nút thành trạng thái đã xử lý
+        const viewButton =
+            reportItem.querySelector(
+                ".report-view-btn"
+            );
+
+
+        if (viewButton) {
+
+            viewButton.innerHTML = `
+                Xem lại
+                <span>→</span>
+            `;
+        }
+
+
+        reportItem.classList.add(
+            "report-item-processed"
+        );
+
+
+        // Cập nhật số báo cáo chờ xử lý
+        updateReportCount();
+    }
+
+
+    // =========================================================
+    // 19. CẬP NHẬT SỐ LƯỢNG BÁO CÁO
+    // =========================================================
+
+    function updateReportCount() {
+
+        const pendingReports =
+            document.querySelectorAll(
+                ".report-item:not(.report-item-processed)"
+            ).length;
+
+
+        if (reportCount) {
+
+            reportCount.textContent =
+                pendingReports +
+                " báo cáo";
+        }
+    }
+
+
+    // =========================================================
+    // 20. CHẶN LINK NGUY HIỂM
     // =========================================================
 
     maliciousLinks.forEach(function (link) {
@@ -657,9 +1132,9 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
-    // Link "Xem bài gốc"
-    const originalLink =
-        document.querySelector(".link-original");
+    // =========================================================
+    // 21. LINK XEM BÀI GỐC
+    // =========================================================
 
     if (originalLink) {
 
@@ -679,7 +1154,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     // =========================================================
-    // 13. CẬP NHẬT THÔNG BÁO TỰ ĐỘNG
+    // 22. CẬP NHẬT THÔNG BÁO TỰ ĐỘNG
     // =========================================================
 
     function updateAutomaticNotice() {
@@ -757,27 +1232,45 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
 
-        noticeBox.querySelector("p").innerText =
-            "Bài viết của bạn tại nhóm " +
-            "[Giao Lưu Lập Trình Viên VN] " +
-            "đã được xử lý do chứa nội dung vi phạm quy chuẩn. " +
-            accountMessage;
+        const noticeText =
+            noticeBox.querySelector("p");
+
+
+        if (noticeText) {
+
+            noticeText.innerText =
+                "Bài viết của bạn tại nhóm " +
+                "[Giao Lưu Lập Trình Viên VN] " +
+                "đã được xử lý do chứa nội dung vi phạm quy chuẩn. " +
+                accountMessage;
+        }
     }
 
 
     // =========================================================
-    // 14. UPDATE TRẠNG THÁI VỤ VIỆC
+    // 23. CẬP NHẬT TRẠNG THÁI CHI TIẾT
     // =========================================================
 
     function updateStatus(text, className) {
 
         const status =
-            document.querySelector(
-                ".status-urgent"
+            reportDetailView.querySelector(
+                ".status-pill.status-urgent"
             );
 
 
         if (!status) {
+
+            // Nếu status đã đổi trước đó
+            const statusAi =
+                reportDetailView.querySelector(
+                    ".status-pill.status-ai"
+                );
+
+            if (statusAi) {
+                statusAi.innerText = text;
+            }
+
             return;
         }
 
@@ -807,107 +1300,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     // =========================================================
-    // 15. TOAST NOTIFICATION
-    // =========================================================
-
-    function showToast(message, type) {
-
-        const oldToast =
-            document.querySelector(
-                ".custom-toast"
-            );
-
-        if (oldToast) {
-            oldToast.remove();
-        }
-
-
-        const toast =
-            document.createElement("div");
-
-
-        toast.className =
-            "custom-toast";
-
-
-        toast.innerText = message;
-
-
-        // Style bằng JS để không cần sửa CSS
-        toast.style.position = "fixed";
-        toast.style.right = "24px";
-        toast.style.bottom = "24px";
-        toast.style.zIndex = "9999";
-        toast.style.padding = "14px 20px";
-        toast.style.borderRadius = "10px";
-        toast.style.background = "#0f172a";
-        toast.style.color = "#ffffff";
-        toast.style.fontFamily =
-            "var(--font-body)";
-        toast.style.fontSize = "14px";
-        toast.style.fontWeight = "600";
-        toast.style.boxShadow =
-            "0 10px 25px rgba(0,0,0,0.15)";
-        toast.style.maxWidth = "400px";
-        toast.style.opacity = "0";
-        toast.style.transform =
-            "translateY(20px)";
-        toast.style.transition =
-            "all 0.25s ease";
-
-
-        if (type === "success") {
-
-            toast.style.borderLeft =
-                "4px solid #22c55e";
-
-        } else if (type === "error") {
-
-            toast.style.borderLeft =
-                "4px solid #dc2626";
-
-        } else {
-
-            toast.style.borderLeft =
-                "4px solid #f97316";
-        }
-
-
-        document.body.appendChild(toast);
-
-
-        // Animation xuất hiện
-        setTimeout(function () {
-
-            toast.style.opacity = "1";
-
-            toast.style.transform =
-                "translateY(0)";
-
-        }, 10);
-
-
-        // Tự động biến mất
-        setTimeout(function () {
-
-            toast.style.opacity = "0";
-
-            toast.style.transform =
-                "translateY(20px)";
-
-
-            setTimeout(function () {
-
-                toast.remove();
-
-            }, 300);
-
-        }, 3000);
-    }
-
-
-    // =========================================================
-    // 16. XÓA BORDER ĐỎ KHI NHẬP GHI CHÚ
+    // 24. XÓA BORDER ĐỎ KHI NHẬP GHI CHÚ
     // =========================================================
 
     if (auditTextarea) {
@@ -922,13 +1315,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     auditTextarea.style.borderColor =
                         "";
-
                 }
             }
         );
     }
 
 
+    // =========================================================
+    // 25. KHỞI TẠO
+    // =========================================================
+
+    // Ban đầu hiển thị danh sách
+    showReportList();
+
+    // Cập nhật số lượng
+    updateReportCount();
+
+    // Cập nhật thông báo tự động
     updateAutomaticNotice();
 
 
