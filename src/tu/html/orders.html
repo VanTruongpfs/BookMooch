@@ -122,16 +122,8 @@
                     </table>
                 </div>
                 <div class="pagination-wrapper">
-                    <div class="pagination-info">Hiển thị <strong>1 - 10</strong> của <strong>2.318</strong> đơn hàng</div>
-                    <div class="pagination-controls">
-                        <button class="page-btn" disabled><span class="material-symbols-outlined" style="font-size:16px;">chevron_left</span></button>
-                        <button class="page-btn active">1</button>
-                        <button class="page-btn">2</button>
-                        <button class="page-btn">3</button>
-                        <span style="padding:0 4px; color:var(--text-muted);">...</span>
-                        <button class="page-btn">232</button>
-                        <button class="page-btn"><span class="material-symbols-outlined" style="font-size:16px;">chevron_right</span></button>
-                    </div>
+                    <div class="pagination-info" id="ordersPaginationInfo"></div>
+                    <div class="pagination-controls" id="ordersPaginationControls"></div>
                 </div>
             </div>
 
@@ -143,7 +135,7 @@
                         <p>Đơn hàng bị khiếu nại sẽ được giữ tiền trong ví ký quỹ cho đến khi Admin ra quyết định nghiêng về người mua hoặc người bán.</p>
                     </div>
                 </div>
-                <button class="btn btn-outline btn-sm" onclick="showToast('Đang mở sổ tay quy trình hoà giải')">Xem quy trình đầy đủ</button>
+                <button class="btn btn-outline btn-sm" onclick="openModal('disputePolicyModal')">Xem quy trình đầy đủ</button>
             </div>
         </main>
     </div>
@@ -158,6 +150,7 @@
         </div>
         <div id="orderDetailBody"></div>
         <div class="modal-actions" style="justify-content:flex-end; margin-top:22px;">
+            <div id="orderDetailExtraActions"></div>
             <button class="btn btn-outline" onclick="closeModal('orderDetailModal')">Đóng</button>
         </div>
     </div>
@@ -165,16 +158,98 @@
 
 <!-- DISPUTE RESOLUTION MODAL -->
 <div class="modal-backdrop" id="disputeModal" style="display:none;">
-    <div class="modal-dialog" style="max-width:480px; text-align:left;">
-        <h3 class="modal-title" style="text-align:center;">Hoà giải tranh chấp</h3>
-        <p class="modal-desc" style="text-align:center;" id="disputeModalDesc">Đơn <strong id="disputeOrderCode">#ORD-90XXX</strong> đang có khiếu nại. Vui lòng chọn hướng xử lý sau khi xem xét bằng chứng hai bên.</p>
-        <div class="field" style="margin-bottom:20px;">
-            <label>Ghi chú hoà giải (nội bộ)</label>
-            <textarea id="disputeNote" rows="3" placeholder="Tóm tắt căn cứ ra quyết định..." style="width:100%; padding:11px 12px; border:2px solid var(--border-color); border-radius:var(--radius-sm); font-family:inherit; resize:vertical;"></textarea>
+    <div class="modal-dialog" style="max-width:520px; text-align:left;">
+        <h3 class="modal-title" style="text-align:center;">Xử lý tranh chấp</h3>
+        <p class="modal-desc" style="text-align:center;">Đơn <strong id="disputeOrderCode">#ORD-90XXX</strong></p>
+
+        <div class="dispute-step-label">Bước 1 · Xem lại nội dung khiếu nại</div>
+        <div id="disputeReasonBox" class="dispute-reason-box"></div>
+
+        <div class="dispute-step-label">Bước 2 · Chọn hướng xử lý</div>
+        <div id="disputeChoiceGroup" style="display:flex; flex-direction:column; gap:10px; margin-bottom:18px;">
+            <label class="dispute-choice-card">
+                <input type="radio" name="disputeChoice" value="buyer" onchange="onDisputeChoiceChange()">
+                <div>
+                    <div class="dispute-choice-title"><span class="material-symbols-outlined">person</span> Nghiêng về Người mua</div>
+                    <div class="dispute-choice-desc">Hoàn tiền toàn bộ đơn hàng cho người mua từ ví ký quỹ, huỷ giao dịch với người bán.</div>
+                </div>
+            </label>
+            <label class="dispute-choice-card">
+                <input type="radio" name="disputeChoice" value="seller" onchange="onDisputeChoiceChange()">
+                <div>
+                    <div class="dispute-choice-title"><span class="material-symbols-outlined">storefront</span> Nghiêng về Người bán</div>
+                    <div class="dispute-choice-desc">Giải ngân tiền từ ví ký quỹ cho người bán như một đơn hàng hoàn tất bình thường.</div>
+                </div>
+            </label>
         </div>
-        <div class="modal-actions">
-            <button class="btn btn-outline" onclick="resolveDispute('seller')">Nghiêng về Người bán</button>
-            <button class="btn btn-primary" onclick="resolveDispute('buyer')">Nghiêng về Người mua</button>
+        <div id="disputeChoiceHint" class="dispute-choice-hint" style="display:none;"></div>
+
+        <div class="dispute-step-label">Bước 3 · Ghi chú căn cứ xử lý (bắt buộc)</div>
+        <div class="field" style="margin-bottom:22px;">
+            <textarea id="disputeNote" rows="3" placeholder="Tóm tắt bằng chứng / căn cứ ra quyết định..." style="width:100%; padding:11px 12px; border:2px solid var(--border-color); border-radius:var(--radius-sm); font-family:inherit; resize:vertical;" oninput="onDisputeChoiceChange()"></textarea>
+        </div>
+
+        <div class="modal-actions" style="justify-content:flex-end;">
+            <button class="btn btn-outline" onclick="closeModal('disputeModal')">Huỷ</button>
+            <button class="btn btn-primary" id="disputeConfirmBtn" disabled onclick="confirmResolveDispute()">Xác nhận xử lý</button>
+        </div>
+    </div>
+</div>
+
+<!-- DISPUTE POLICY MODAL (Quy trình hoà giải tranh chấp đầy đủ) -->
+<div class="modal-backdrop" id="disputePolicyModal" style="display:none;">
+    <div class="modal-dialog" style="max-width:560px; text-align:left;">
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:6px;">
+            <h3 class="modal-title" style="margin:0;">Quy trình hoà giải tranh chấp</h3>
+            <button onclick="closeModal('disputePolicyModal')" style="background:none;border:none;font-size:22px;color:#94a3b8;cursor:pointer;">&times;</button>
+        </div>
+        <p class="modal-desc" style="text-align:left; margin-bottom:18px;">Áp dụng cho mọi đơn hàng bị khiếu nại giữa người mua và người bán trên toàn hệ thống.</p>
+        <div class="policy-step-list">
+            <div class="policy-step">
+                <div class="policy-step-num">1</div>
+                <div class="policy-step-text">
+                    <h5>Tiếp nhận khiếu nại</h5>
+                    <p>Người mua hoặc người bán gửi khiếu nại trong vòng 3 ngày kể từ khi đơn được đánh dấu đã giao/hoàn tất.</p>
+                </div>
+            </div>
+            <div class="policy-step">
+                <div class="policy-step-num">2</div>
+                <div class="policy-step-text">
+                    <h5>Giữ tiền trong ví ký quỹ</h5>
+                    <p>Hệ thống tự động tạm giữ tiền đơn hàng, dừng giải ngân cho người bán cho đến khi Admin ra quyết định.</p>
+                </div>
+            </div>
+            <div class="policy-step">
+                <div class="policy-step-num">3</div>
+                <div class="policy-step-text">
+                    <h5>Thu thập bằng chứng</h5>
+                    <p>Admin xem xét mô tả, hình ảnh sản phẩm và lịch sử trao đổi giữa hai bên trước khi ra quyết định.</p>
+                </div>
+            </div>
+            <div class="policy-step">
+                <div class="policy-step-num">4</div>
+                <div class="policy-step-text">
+                    <h5>Ra quyết định</h5>
+                    <p>Admin chọn nghiêng về người mua (hoàn tiền) hoặc người bán (giải ngân), kèm ghi chú căn cứ xử lý bắt buộc.</p>
+                </div>
+            </div>
+            <div class="policy-step">
+                <div class="policy-step-num">5</div>
+                <div class="policy-step-text">
+                    <h5>Thông báo kết quả</h5>
+                    <p>Hệ thống cập nhật trạng thái đơn hàng và gửi thông báo quyết định đến cả người mua và người bán.</p>
+                </div>
+            </div>
+            <div class="policy-step">
+                <div class="policy-step-num">6</div>
+                <div class="policy-step-text">
+                    <h5>Khiếu nại lần hai</h5>
+                    <p>Nếu không đồng ý với quyết định, các bên có thể yêu cầu xem xét lại trong vòng 48 giờ kể từ khi có kết quả.</p>
+                </div>
+            </div>
+        </div>
+        <div class="modal-actions" style="justify-content:flex-end; margin-top:20px;">
+            <button class="btn btn-primary" onclick="closeModal('disputePolicyModal')">Đã hiểu</button>
         </div>
     </div>
 </div>
