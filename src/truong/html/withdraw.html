@@ -20,10 +20,13 @@
           <button class="sidebar-toggle" id="sidebarToggle" title="Mở menu">
             <span class="material-symbols-outlined">menu</span>
           </button>
-          <div class="store-selector">
-            <span class="material-symbols-outlined">storefront</span>
-            <span>Tiệm Truyện Vũ Trụ</span>
-            <span class="material-symbols-outlined" style="font-size: 18px; color: #94a3b8;">expand_more</span>
+          <div class="store-badge" title="Gian hàng chính thức của bạn">
+            <span class="material-symbols-outlined store-icon">storefront</span>
+            <span class="store-name">Tiệm Truyện Vũ Trụ</span>
+            <span class="store-verified" title="Gian hàng đã xác thực">
+              <span class="material-symbols-outlined" style="font-size: 16px;">verified</span>
+            </span>
+            <span class="store-status-dot" title="Đang mở cửa hoạt động"></span>
           </div>
         </div>
 
@@ -71,17 +74,63 @@
         <!-- WITHDRAWAL FORM CARD (CENTERED / FOCUSED) -->
         <div style="max-width: 820px; margin: 0 auto 36px;">
           <div class="withdraw-card">
-            <!-- HERO BALANCE DISPLAY -->
-            <div class="withdraw-hero-balance">
-              <div class="label">Số dư khả dụng hiện tại</div>
-              <div class="amount" id="availableAmountDisplay">48.650.000 <span style="font-size: 1.3rem; font-weight: 600;">₫</span></div>
-              <div style="font-size: 0.82rem; color: #64748b; display: flex; align-items: center; justify-content: center; gap: 6px;">
-                <span class="material-symbols-outlined" style="font-size: 16px; color: #ea580c;">lock</span>
-                Đang giữ ký quỹ (đơn mới): <strong>12.400.000 ₫</strong>
+            <!-- LINKED BANK CARD SECTION (HIỂN THỊ THẺ NGÂN HÀNG LIÊN KẾT) -->
+            <div class="linked-bank-card-section">
+              <div class="linked-card-header">
+                <span class="linked-card-title">
+                  <span class="material-symbols-outlined" style="color: var(--primary-container);">credit_card</span>
+                  Thẻ ngân hàng liên kết nhận tiền
+                </span>
+                <span class="card-status-pill">
+                  <span class="material-symbols-outlined" style="font-size: 13px;">verified</span>
+                  Đã xác thực Napas 24/7
+                </span>
+              </div>
+
+              <!-- THẺ VẬT LÝ VIRTUAL BANK CARD -->
+              <div class="virtual-bank-card" id="primaryVirtualCard">
+                <div class="card-top-row">
+                  <div class="card-bank-brand">
+                    <div class="card-bank-logo">
+                      <span class="material-symbols-outlined">account_balance</span>
+                    </div>
+                    <div>
+                      <span class="card-bank-name" id="cardBankName">VIETCOMBANK</span>
+                      <span class="card-bank-type" id="cardBranch">Chi nhánh Thủ Đức • TP. Hồ Chí Minh</span>
+                    </div>
+                  </div>
+                  <div class="card-network-badge">
+                    <span class="material-symbols-outlined" style="font-size: 14px;">bolt</span>
+                    Napas 247
+                  </div>
+                </div>
+
+                <div class="card-chip-row">
+                  <div class="emv-chip"></div>
+                  <span class="material-symbols-outlined contactless-icon">contactless</span>
+                </div>
+
+                <div class="card-number-display" id="cardNumberDisplay">
+                  •••• •••• •••• 8829
+                </div>
+
+                <div class="card-bottom-row">
+                  <div>
+                    <span class="card-holder-label">CHỦ TÀI KHOẢN THỤ HƯỞNG</span>
+                    <span class="card-holder-name">TRAN DANG KHOA</span>
+                  </div>
+                  <div style="text-align: right;">
+                    <span class="card-holder-label">TRẠNG THÁI LIÊN KẾT</span>
+                    <span style="font-size: 0.78rem; font-weight: 700; color: #34d399; display: flex; align-items: center; gap: 4px;">
+                      <span class="material-symbols-outlined" style="font-size: 15px;">check_circle</span>
+                      Mặc định nhận tiền
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
 
-            <!-- AMOUNT INPUT & QUICK CHIPS -->
+            <!-- AMOUNT INPUT & QUICK CHIPS (KHÔNG HIỂN THỊ SỐ DƯ NGƯỜI DÙNG) -->
             <div style="margin-bottom: 24px;">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                 <label style="font-weight: 700; font-size: 0.95rem; color: var(--text-main);">
@@ -97,17 +146,13 @@
               </div>
               <div class="withdraw-error-hint" id="withdrawErrorHint">
                 <span class="material-symbols-outlined" style="font-size: 16px;">error</span>
-                <span id="withdrawErrorText">Số tiền rút không được vượt quá số dư khả dụng (48.650.000 ₫)!</span>
-              </div>
-              <div class="withdraw-success-hint" id="withdrawSuccessHint" style="display: flex;">
-                <span class="material-symbols-outlined" style="font-size: 16px;">check_circle</span>
-                <span id="withdrawRemainText">Số dư còn lại dự kiến: 43.650.000 ₫</span>
+                <span id="withdrawErrorText">Số tiền rút tối thiểu là 50.000 ₫ và không vượt quá hạn mức 200.000.000 ₫!</span>
               </div>
               <div class="quick-amount-chips">
                 <button type="button" class="quick-chip" onclick="addAmount(2000000)">+2.000.000 ₫</button>
                 <button type="button" class="quick-chip" onclick="addAmount(5000000)">+5.000.000 ₫</button>
                 <button type="button" class="quick-chip" onclick="addAmount(10000000)">+10.000.000 ₫</button>
-                <button type="button" class="quick-chip" style="color: var(--primary); font-weight: 700; border-color: var(--primary);" onclick="setAllAmount(48650000)">Rút toàn bộ</button>
+                <button type="button" class="quick-chip" onclick="addAmount(20000000)">+20.000.000 ₫</button>
               </div>
             </div>
 
