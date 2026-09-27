@@ -91,19 +91,40 @@
           </div>
         </div>
 
-        <div class="revenue-split-grid">
-          <div class="content-card">
-            <div class="content-card-header"><div class="content-card-title"><span class="material-symbols-outlined">category</span> Doanh thu theo danh mục</div></div>
-            <div style="padding: 8px 24px 20px;" id="revenueByCategory"></div>
+        <div class="content-card">
+          <div class="content-card-header"><div class="content-card-title"><span class="material-symbols-outlined">category</span> Doanh thu theo danh mục</div></div>
+          <div style="padding: 8px 24px 20px;" id="revenueByCategory"></div>
+        </div>
+
+        <div class="content-card" style="margin-top:20px;">
+          <div class="content-card-header">
+            <div class="content-card-title"><span class="material-symbols-outlined">storefront</span> Doanh thu theo cửa hàng</div>
           </div>
-          <div class="content-card">
-            <div class="content-card-header"><div class="content-card-title"><span class="material-symbols-outlined">storefront</span> Top người bán theo doanh thu</div></div>
-            <div class="table-responsive">
-              <table class="data-table">
-                <thead><tr><th>Người bán</th><th style="text-align:right;">Doanh thu</th></tr></thead>
-                <tbody id="topSellersBody"></tbody>
-              </table>
-            </div>
+          <div class="store-filter-bar">
+            <span class="store-filter-label">Xem thống kê theo ngày:</span>
+            <select id="storeFilterDay" class="date-part-select"></select>
+            <span class="date-sep">/</span>
+            <select id="storeFilterMonth" class="date-part-select"></select>
+            <span class="date-sep">/</span>
+            <select id="storeFilterYear" class="date-part-select"></select>
+            <button class="btn btn-primary btn-sm" onclick="applyStoreDateFilter()"><span class="material-symbols-outlined" style="font-size:16px;">search</span> Xem thống kê</button>
+            <button class="btn btn-outline btn-sm" onclick="resetStoreDateFilter()">Toàn thời gian</button>
+            <span class="store-filter-hint" id="storeFilterHint"></span>
+          </div>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+              <tr>
+                <th>Cửa hàng</th>
+                <th style="text-align:right;">Số đơn</th>
+                <th style="text-align:right;">Doanh thu</th>
+                <th style="text-align:right;">Hoa hồng sàn</th>
+                <th style="text-align:center;">Xu hướng</th>
+                <th style="text-align:center;">Thao tác</th>
+              </tr>
+              </thead>
+              <tbody id="storeRevenueBody"></tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -174,6 +195,20 @@
     <div class="modal-actions">
       <button class="btn btn-outline" onclick="closeModal('withdrawActionModal')">Quay lại</button>
       <button class="btn btn-primary" id="confirmWithdrawActionBtn" onclick="confirmWithdrawAction()">Xác nhận</button>
+    </div>
+  </div>
+</div>
+
+<!-- STORE DETAIL MODAL -->
+<div class="modal-backdrop" id="storeDetailModal" style="display:none;">
+  <div class="modal-dialog" style="max-width:600px; text-align:left;">
+    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:6px;">
+      <h3 class="modal-title" style="margin:0;">Chi tiết cửa hàng</h3>
+      <button onclick="closeModal('storeDetailModal')" style="background:none;border:none;font-size:22px;color:#94a3b8;cursor:pointer;">&times;</button>
+    </div>
+    <div id="storeDetailBody"></div>
+    <div class="modal-actions" style="justify-content:flex-end; margin-top:22px;">
+      <button class="btn btn-outline" onclick="closeModal('storeDetailModal')">Đóng</button>
     </div>
   </div>
 </div>

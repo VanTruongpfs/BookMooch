@@ -34,13 +34,17 @@ const revenueByCategory = [
     { name: 'Truyện hiếm / Bản sưu tầm', percent: 3, value: '128.595.000 ₫' },
 ];
 
-const topSellers = [
-    { name: 'Phạm Thị Ngọc', revenue: '340.600.000 ₫' },
-    { name: 'Trần Đăng Khoa', revenue: '128.400.000 ₫' },
-    { name: 'Ngô Hải Đăng', revenue: '48.900.000 ₫' },
-    { name: 'Lê Văn Phát', revenue: '56.700.000 ₫' },
-    { name: 'Đỗ Minh Anh', revenue: '22.100.000 ₫' },
+// Dữ liệu chi tiết từng cửa hàng (dùng cho bảng thống kê + modal xem chi tiết)
+const storeStats = [
+    { id: 'ST01', name: 'Tiệm Truyện Vũ Trụ', owner: 'Trần Đăng Khoa', email: 'tiemtruyenvutru@bookmooch.vn', phone: '0901 234 567', address: 'Quận 3, TP.HCM', joined: '12/03/2023', rating: 4.8, orders: 682, revenue: 340600000, commission: 25545000, trend: 12.4, monthlyTrend: [58, 66, 62, 78, 90, 100] },
+    { id: 'ST02', name: 'Comic Corner HN', owner: 'Ngô Hải Đăng', email: 'comiccorner.hn@bookmooch.vn', phone: '0912 345 678', address: 'Quận Cầu Giấy, Hà Nội', joined: '05/07/2022', rating: 4.6, orders: 415, revenue: 128400000, commission: 9630000, trend: -4.1, monthlyTrend: [82, 78, 90, 74, 68, 62] },
+    { id: 'ST03', name: 'Nhà Sách Ngọc Anh', owner: 'Phạm Thị Ngọc', email: 'nhasachngocanh@bookmooch.vn', phone: '0987 654 321', address: 'Quận Hải Châu, Đà Nẵng', joined: '20/01/2024', rating: 4.9, orders: 210, revenue: 56700000, commission: 4252000, trend: 8.7, monthlyTrend: [40, 48, 55, 60, 68, 78] },
+    { id: 'ST04', name: 'Kho Sách Miền Tây', owner: 'Lê Văn Phát', email: 'khosachmientay@bookmooch.vn', phone: '0934 567 890', address: 'TP. Cần Thơ', joined: '02/11/2023', rating: 4.5, orders: 98, revenue: 48900000, commission: 3667000, trend: 2.1, monthlyTrend: [55, 58, 52, 60, 63, 65] },
+    { id: 'ST05', name: 'Sách Cũ Sài Gòn', owner: 'Đỗ Minh Anh', email: 'sachcusaigon@bookmooch.vn', phone: '0977 888 999', address: 'Quận Bình Thạnh, TP.HCM', joined: '15/06/2024', rating: 4.3, orders: 61, revenue: 22100000, commission: 1657000, trend: -1.5, monthlyTrend: [50, 46, 52, 44, 42, 38] },
 ];
+
+// Bộ lọc ngày/tháng/năm đang áp dụng cho bảng doanh thu cửa hàng (null = xem toàn thời gian)
+let storeDateFilterActive = null;
 
 const withdrawRequests = [
     { id: 'WD-88231', seller: 'Tiệm Truyện Vũ Trụ', amount: 12000000, bank: 'Vietcombank •••• 8829', time: '09:42 hôm nay', status: 'pending' },
@@ -75,7 +79,8 @@ const cashflowEntries = [
 document.addEventListener('DOMContentLoaded', () => {
     renderRevenueChart(30);
     renderRevenueByCategory();
-    renderTopSellers();
+    populateStoreDateSelects();
+    resetStoreDateFilter();
     renderWithdrawTable();
     renderCashflowChart();
     renderCashflowTable();
@@ -123,13 +128,147 @@ function renderRevenueByCategory() {
 }
 
 function renderTopSellers() {
-    const body = document.getElementById('topSellersBody');
-    body.innerHTML = [...topSellers].sort((a, b) => parseFormattedNumber(b.revenue) - parseFormattedNumber(a.revenue)).map((s, i) => `
+    // Đã thay bằng bảng "Doanh thu theo cửa hàng" (xem renderStoreRevenue bên dưới).
+}
+
+/* ==========================================================================
+   DOANH THU THEO CỬA HÀNG - lọc theo ngày/tháng/năm + xem chi tiết
+   ========================================================================== */
+function populateStoreDateSelects() {
+    const daySel = document.getElementById('storeFilterDay');
+    const monthSel = document.getElementById('storeFilterMonth');
+    const yearSel = document.getElementById('storeFilterYear');
+
+    daySel.innerHTML = Array.from({ length: 31 }, (_, i) => i + 1)
+        .map((d) => `<option value="${d}">Ngày ${String(d).padStart(2, '0')}</option>`).join('');
+    monthSel.innerHTML = Array.from({ length: 12 }, (_, i) => i + 1)
+        .map((m) => `<option value="${m}">Tháng ${m}</option>`).join('');
+    const currentYear = 2026;
+    yearSel.innerHTML = Array.from({ length: 5 }, (_, i) => currentYear - 4 + i)
+        .map((y) => `<option value="${y}">${y}</option>`).join('');
+
+    // Mặc định chọn sẵn ngày hiện tại của hệ thống.
+    daySel.value = '26';
+    monthSel.value = '9';
+    yearSel.value = String(currentYear);
+}
+
+// PRNG có seed (mulberry32) để mô phỏng số liệu theo ngày một cách nhất quán -
+// cùng 1 ngày luôn ra cùng 1 kết quả, khác ngày sẽ ra số khác.
+function mulberry32(seed) {
+    return function () {
+        seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
+        let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+        t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+}
+
+function getStoreDisplayData(store) {
+    if (!storeDateFilterActive) {
+        return { orders: store.orders, revenue: store.revenue, commission: store.commission, trend: store.trend };
+    }
+    const { day, month, year } = storeDateFilterActive;
+    const seed = day * 3571 + month * 104729 + year * 15485867 + store.id.charCodeAt(2) * 97;
+    const rng = mulberry32(seed);
+    // Ước lượng tỷ trọng doanh thu của 1 ngày trong tổng luỹ kế của cửa hàng.
+    const scale = 0.012 + rng() * 0.026;
+    const orders = Math.max(0, Math.round(store.orders * scale));
+    const revenue = Math.round((store.revenue * scale) / 10000) * 10000;
+    const commission = Math.round(revenue * (store.commission / store.revenue));
+    const trend = Math.round((rng() * 44 - 18) * 10) / 10;
+    return { orders, revenue, commission, trend };
+}
+
+function getInitials(name) {
+    const words = name.trim().split(/\s+/);
+    if (words.length === 1) return words[0].slice(0, 2).toUpperCase();
+    return (words[0][0] + words[words.length - 1][0]).toUpperCase();
+}
+
+function renderStoreRevenue() {
+    const body = document.getElementById('storeRevenueBody');
+    body.innerHTML = [...storeStats]
+        .sort((a, b) => getStoreDisplayData(b).revenue - getStoreDisplayData(a).revenue)
+        .map((s) => {
+            const d = getStoreDisplayData(s);
+            const trendUp = d.trend >= 0;
+            return `
     <tr>
-      <td><strong>#${i + 1}</strong> &nbsp; ${escapeHtml(s.name)}</td>
-      <td style="text-align:right; font-weight:700; color:var(--text-main);">${s.revenue}</td>
-    </tr>
-  `).join('');
+      <td>
+        <div class="identity-cell">
+          <div class="avatar-chip role-seller">${getInitials(s.name)}</div>
+          <div class="identity-text">
+            <div class="identity-name">${escapeHtml(s.name)}</div>
+            <div class="identity-sub">${s.id} · ${escapeHtml(s.owner)}</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:right;">${d.orders.toLocaleString('vi-VN')}</td>
+      <td style="text-align:right; font-weight:700; color:var(--text-main); white-space:nowrap;">${formatNumber(d.revenue)} ₫</td>
+      <td style="text-align:right; color:var(--text-muted); white-space:nowrap;">${formatNumber(d.commission)} ₫</td>
+      <td style="text-align:center;">
+        <span class="badge badge-${trendUp ? 'success' : 'danger'}">
+          <span class="material-symbols-outlined" style="font-size:13px;">${trendUp ? 'trending_up' : 'trending_down'}</span>${trendUp ? '+' : ''}${d.trend}%
+        </span>
+      </td>
+      <td style="text-align:center;">
+        <button class="btn btn-outline btn-sm" onclick="viewStoreDetail('${s.id}')">Xem chi tiết</button>
+      </td>
+    </tr>`;
+        }).join('');
+}
+
+function applyStoreDateFilter() {
+    const day = parseInt(document.getElementById('storeFilterDay').value, 10);
+    const month = parseInt(document.getElementById('storeFilterMonth').value, 10);
+    const year = parseInt(document.getElementById('storeFilterYear').value, 10);
+    storeDateFilterActive = { day, month, year };
+    renderStoreRevenue();
+    const dateStr = `${String(day).padStart(2, '0')}/${String(month).padStart(2, '0')}/${year}`;
+    document.getElementById('storeFilterHint').innerHTML = `<span class="material-symbols-outlined" style="font-size:15px;">event</span> Đang xem: ngày <strong>${dateStr}</strong>`;
+    showToast(`Đã lọc doanh thu theo cửa hàng cho ngày ${dateStr}`, 'success');
+}
+
+function resetStoreDateFilter() {
+    storeDateFilterActive = null;
+    renderStoreRevenue();
+    const hint = document.getElementById('storeFilterHint');
+    if (hint) hint.innerHTML = '<span class="material-symbols-outlined" style="font-size:15px;">event</span> Đang xem: <strong>Toàn thời gian</strong> (luỹ kế tháng 09/2026)';
+}
+
+function viewStoreDetail(id) {
+    const s = storeStats.find((x) => x.id === id);
+    if (!s) return;
+    const d = getStoreDisplayData(s);
+    document.getElementById('storeDetailBody').innerHTML = `
+    <div style="display:flex; align-items:center; gap:14px; margin-bottom:18px;">
+      <div class="avatar-chip role-seller" style="width:52px; height:52px; font-size:1.05rem; flex-shrink:0;">${getInitials(s.name)}</div>
+      <div style="min-width:0;">
+        <div style="font-family:var(--font-heading); font-weight:700; font-size:1.05rem; color:var(--text-main);">${escapeHtml(s.name)}</div>
+        <div class="identity-sub">Chủ cửa hàng: ${escapeHtml(s.owner)} · Tham gia ${s.joined}</div>
+      </div>
+      <span class="badge badge-info" style="margin-left:auto; flex-shrink:0;"><span class="material-symbols-outlined" style="font-size:13px;">star</span> ${s.rating}/5</span>
+    </div>
+    <div class="stat-mini-row" style="margin-bottom:18px;">
+      <div class="stat-mini"><h5>${storeDateFilterActive ? 'Doanh thu ngày đã chọn' : 'Tổng doanh thu'}</h5><div class="val">${formatNumber(d.revenue)} ₫</div></div>
+      <div class="stat-mini"><h5>Số đơn</h5><div class="val">${d.orders.toLocaleString('vi-VN')}</div></div>
+      <div class="stat-mini"><h5>Hoa hồng sàn</h5><div class="val">${formatNumber(d.commission)} ₫</div></div>
+      <div class="stat-mini"><h5>Xu hướng</h5><div class="val" style="color:${d.trend >= 0 ? 'var(--success-text)' : 'var(--danger-text)'};">${d.trend >= 0 ? '+' : ''}${d.trend}%</div></div>
+    </div>
+    <div style="margin-bottom:18px;">
+      <div class="settings-section-title" style="font-size:.88rem; margin-bottom:10px;"><span class="material-symbols-outlined">show_chart</span> Xu hướng doanh thu 6 tháng gần nhất</div>
+      <div class="mini-bar-chart" style="height:100px;">
+        ${s.monthlyTrend.map((v, i) => `<div class="mini-bar-col"><div class="mini-bar-stack" style="height:${v}%;"><div class="mini-bar-in" style="height:100%;"></div></div><div class="mini-bar-label">T${i + 1}</div></div>`).join('')}
+      </div>
+    </div>
+    <div class="stat-mini-row">
+      <div class="stat-mini"><h5>Email liên hệ</h5><div class="val" style="font-size:.82rem; word-break:break-word;">${s.email}</div></div>
+      <div class="stat-mini"><h5>Điện thoại</h5><div class="val" style="font-size:.82rem;">${s.phone}</div></div>
+      <div class="stat-mini" style="grid-column: span 2;"><h5>Địa chỉ</h5><div class="val" style="font-size:.82rem;">${s.address}</div></div>
+    </div>
+  `;
+    openModal('storeDetailModal');
 }
 
 const withdrawStatusMeta = {
