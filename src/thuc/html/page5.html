@@ -5,13 +5,17 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700&amp;display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+    <link href="../../shared/styles/global-design-tokens.css" rel="stylesheet"/>
     <link href="../css/page5.css" rel="stylesheet"/>
     <link href="../../shared/footer/footer.css" rel="stylesheet"/>
     <link href="../../shared/header/header.css" rel="stylesheet"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+    <link href="../../shared/sidebar/sidebar.css" rel="stylesheet"/>
+    <link href="../css/shared-sidebar-layout.css" rel="stylesheet"/>
     <title>MangaTrade — Khiếu Nại Đổi Trả</title>
   </head>
-<body class="app-body">
+<body class="app-body thuc-sidebar-layout">
+  <div data-sidebar-mount></div>
   <header class="site-header">
     <div class="container header-container">
       <!-- Logo Thương hiệu -->
@@ -679,6 +683,7 @@
 </div>
 </div>
 </footer>
+<script type="module" src="../../shared/sidebar/sidebar.js"></script>
 <script src="../../shared/footer/footer.js"></script>
 <script src="../js/page5.js">
 </script>

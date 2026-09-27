@@ -36,59 +36,32 @@ const labels = [
     "Tuyệt vời"
 ];
 
-document.querySelectorAll(".stars").forEach((group) => {
+const ratingGroup = document.querySelector('[data-rating="overall"]');
+const ratingText = document.getElementById("overallText");
 
-    const key = group.dataset.rating;
-    const text = document.getElementById(key + "Text");
+function renderRating(value, preview = false) {
+    ratingGroup.querySelectorAll("button").forEach((button) => {
+        const buttonValue = Number(button.dataset.value);
+        button.classList.toggle("selected", buttonValue <= value);
+        button.setAttribute("aria-pressed", String(!preview && buttonValue === value));
+    });
+}
 
-    group.querySelectorAll("button").forEach((button) => {
-
-        button.addEventListener("click", () => {
-
-            const value = Number(button.dataset.value);
-
-            group.querySelectorAll("button").forEach((item) => {
-                item.classList.toggle(
-                    "selected",
-                    Number(item.dataset.value) <= value
-                );
-            });
-
-            group.dataset.value = value;
-
-            text.textContent =
-                `${value}/5 — ${labels[value]}`;
-        });
-
-
-        button.addEventListener("mouseenter", () => {
-
-            const value = Number(button.dataset.value);
-
-            group.querySelectorAll("button").forEach((item) => {
-                item.classList.toggle(
-                    "selected",
-                    Number(item.dataset.value) <= value
-                );
-            });
-        });
-
+ratingGroup.querySelectorAll("button").forEach((button) => {
+    button.addEventListener("click", () => {
+        const value = Number(button.dataset.value);
+        ratingGroup.dataset.value = value;
+        renderRating(value);
+        ratingText.textContent = `${value}/5 — ${labels[value]}`;
     });
 
-
-    group.addEventListener("mouseleave", () => {
-
-        const value = Number(group.dataset.value || 0);
-
-        group.querySelectorAll("button").forEach((item) => {
-            item.classList.toggle(
-                "selected",
-                Number(item.dataset.value) <= value
-            );
-        });
-
+    button.addEventListener("mouseenter", () => {
+        renderRating(Number(button.dataset.value), true);
     });
+});
 
+ratingGroup.addEventListener("mouseleave", () => {
+    renderRating(Number(ratingGroup.dataset.value || 0));
 });
 
 
@@ -205,20 +178,7 @@ function getData() {
 
     return {
 
-        quality:
-            document
-                .querySelector('[data-rating="quality"]')
-                .dataset.value || "",
-
-        packing:
-            document
-                .querySelector('[data-rating="packing"]')
-                .dataset.value || "",
-
-        seller:
-            document
-                .querySelector('[data-rating="seller"]')
-                .dataset.value || "",
+        rating: ratingGroup.dataset.value || "",
 
         text: reviewText.value,
 
@@ -235,35 +195,18 @@ function getData() {
 // ==============================
 
 function applyData(data) {
+    const oldRatings = [data.quality, data.packing, data.seller]
+        .map(Number)
+        .filter((value) => value > 0);
+    const rating = Number(data.rating || (oldRatings.length
+        ? Math.round(oldRatings.reduce((sum, value) => sum + value, 0) / oldRatings.length)
+        : 0));
 
-    ["quality", "packing", "seller"].forEach((key) => {
-
-        if (data[key]) {
-
-            const group =
-                document.querySelector(
-                    `[data-rating="${key}"]`
-                );
-
-            group.dataset.value = data[key];
-
-
-            group.querySelectorAll("button").forEach((button) => {
-
-                button.classList.toggle(
-                    "selected",
-                    Number(button.dataset.value) <= Number(data[key])
-                );
-
-            });
-
-
-            document.getElementById(key + "Text").textContent =
-                `${data[key]}/5 — ${labels[data[key]]}`;
-
-        }
-
-    });
+    if (rating) {
+        ratingGroup.dataset.value = rating;
+        renderRating(rating);
+        ratingText.textContent = `${rating}/5 — ${labels[rating]}`;
+    }
 
 
     reviewText.value = data.text || "";
@@ -346,14 +289,10 @@ document
 
 
         // Check rating
-        if (
-            !data.quality ||
-            !data.packing ||
-            !data.seller
-        ) {
+        if (!data.rating) {
 
             showToast(
-                "Vui lòng chấm đủ 3 tiêu chí trước khi gửi."
+                "Vui lòng chọn mức đánh giá tổng thể."
             );
 
             return;
