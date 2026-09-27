@@ -377,28 +377,88 @@ button {
   gap: 20px;
 }
 
+.store-badge,
 .store-selector {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: var(--surface-bg);
-  padding: 8px 14px;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border-color);
+  background: #ffffff;
+  padding: 5px 14px 5px 6px;
+  border-radius: var(--radius-full);
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 2px 6px rgba(249, 115, 22, 0.03);
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   color: var(--text-main);
-  cursor: pointer;
-  transition: var(--transition);
+  user-select: none;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: default;
 }
 
+.store-badge:hover,
 .store-selector:hover {
-  background: var(--surface-container);
-  border-color: #cbd5e1;
+  background: #ffffff;
+  border-color: #fdba74;
+  box-shadow: 0 3px 12px rgba(249, 115, 22, 0.1);
+  transform: translateY(-1px);
 }
 
-.store-selector .material-symbols-outlined {
-  color: var(--primary-container);
+/* Icon Avatar tròn thương hiệu */
+.store-badge .store-icon,
+.store-selector > .material-symbols-outlined:first-child {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+  border: 1px solid #fed7aa;
+  color: #ea580c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+  transition: all 0.25s ease;
+}
+
+.store-badge:hover .store-icon,
+.store-selector:hover > .material-symbols-outlined:first-child {
+  background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);
+  color: #ffffff;
+  border-color: #ea580c;
+  transform: scale(1.05);
+}
+
+/* Tên gian hàng */
+.store-badge .store-name,
+.store-selector > span:nth-child(2) {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: var(--text-main);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+/* Huy hiệu chính hãng / Verified tích xanh */
+.store-badge .store-verified,
+.store-selector .store-verified {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #2563eb;
+  margin-left: -1px;
+}
+
+/* Chấm xanh trạng thái hoạt động (Online indicator) */
+.store-badge .store-status-dot,
+.store-selector .store-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #10b981;
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+  margin-left: 2px;
+  flex-shrink: 0;
 }
 
 .global-search {
