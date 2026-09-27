@@ -1023,3 +1023,297 @@ body {
 @media (max-width: 1200px) {
   .dashboard-grid { grid-template-columns: 1fr; }
 }
+/* ========================================================================== 
+   APPEAL LIST VIEW
+========================================================================== */
+
+/* Container danh sách */
+.appeal-list-view {
+  padding: 28px;
+  gap: 20px;
+}
+
+/* Header danh sách */
+.appeal-list-view > div:first-child {
+  margin-bottom: 4px;
+}
+
+.appeal-list-view h2,
+.appeal-list-view h3 {
+  font-family: var(--font-headline);
+  color: var(--secondary);
+}
+
+/* Số lượng yêu cầu */
+#appealCount {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+
+  padding: 5px 10px;
+
+  background: var(--neutral-100);
+  color: var(--neutral-700);
+
+  border-radius: 999px;
+
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+/* Danh sách */
+.appeal-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ========================================================================== 
+   INDIVIDUAL APPEAL ITEM
+========================================================================== */
+
+.appeal-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 24px;
+
+  padding: 18px 20px;
+
+  background: #ffffff;
+  border: 1px solid var(--neutral-200);
+  border-radius: var(--radius-md);
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.appeal-item:hover {
+  border-color: var(--neutral-300);
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.07);
+  transform: translateY(-1px);
+}
+
+/* Nội dung bên trái */
+.appeal-item > div:first-child {
+  min-width: 0;
+}
+
+/* ========================================================================== 
+   APPEAL HEADER
+========================================================================== */
+
+.appeal-item-header {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  margin-bottom: 7px;
+}
+
+/* ID */
+.appeal-item-header strong,
+.appeal-item strong {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--secondary);
+}
+
+/* Thời gian */
+.appeal-item-header span,
+.appeal-item time {
+  font-size: 0.8rem;
+  color: var(--neutral-400);
+}
+
+/* ========================================================================== 
+   PRIORITY / STATUS BADGES
+========================================================================== */
+
+.appeal-priority,
+.appeal-status {
+  display: inline-flex;
+  align-items: center;
+
+  width: fit-content;
+
+  padding: 3px 8px;
+
+  border-radius: 5px;
+
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+/* Ưu tiên cao */
+.appeal-priority.urgent,
+.appeal-priority.high {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+/* Cảnh báo */
+.appeal-priority.warning,
+.appeal-priority.medium {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+/* Chờ xử lý */
+.appeal-status {
+  background: #eff4ff;
+  color: #1e40af;
+}
+
+/* ========================================================================== 
+   TITLE
+========================================================================== */
+
+.appeal-item-title {
+  margin-bottom: 6px;
+
+  font-family: var(--font-headline);
+  font-size: 1rem;
+  font-weight: 700;
+
+  line-height: 1.4;
+  color: var(--secondary);
+}
+
+/* Nếu HTML dùng h3/h4 thay vì class */
+.appeal-item h3,
+.appeal-item h4 {
+  margin-bottom: 6px;
+
+  font-family: var(--font-headline);
+  font-size: 1rem;
+  font-weight: 700;
+
+  line-height: 1.4;
+  color: var(--secondary);
+}
+
+/* ========================================================================== 
+   META INFORMATION
+========================================================================== */
+
+.appeal-item-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+
+  margin-bottom: 10px;
+
+  font-size: 0.85rem;
+  color: var(--neutral-500);
+}
+
+.appeal-item-meta strong {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--secondary-light);
+}
+
+/* ========================================================================== 
+   TAGS
+========================================================================== */
+
+.appeal-tags {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.appeal-tag {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 4px 8px;
+
+  background: var(--neutral-100);
+  border: 1px solid var(--neutral-200);
+  border-radius: 5px;
+
+  color: var(--neutral-700);
+
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+/* ========================================================================== 
+   VIEW BUTTON
+========================================================================== */
+
+.appeal-view-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  min-width: 132px;
+  height: 40px;
+
+  padding: 0 15px;
+
+  background: #ffffff;
+  border: 1px solid var(--neutral-300);
+  border-radius: var(--radius-md);
+
+  color: var(--secondary);
+
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.appeal-view-btn:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #ffffff;
+}
+
+/* ========================================================================== 
+   SEPARATOR / SMALL DETAILS
+========================================================================== */
+
+.appeal-item + .appeal-item {
+  /* giữ khoảng cách giữa các card */
+}
+
+.appeal-item .bullet,
+.appeal-item .meta-bullet {
+  color: var(--neutral-300);
+}
+
+/* ========================================================================== 
+   RESPONSIVE
+========================================================================== */
+
+@media (max-width: 800px) {
+
+  .appeal-list-view {
+    padding: 20px;
+  }
+
+  .appeal-item {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .appeal-view-btn {
+    width: 100%;
+  }
+}
