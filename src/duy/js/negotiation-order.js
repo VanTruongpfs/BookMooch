@@ -102,9 +102,9 @@ function addNewAddress() {
         + '<span class="addr-radio"></span>'
         + '<div class="addr-content">'
         + '<div class="addr-name-row">'
-        + '<span class="addr-name">Nguyễn Văn Duy</span>'
+        + '<span class="addr-name">Huy Dương</span>'
         + '<span class="addr-label">Địa chỉ mới</span>'
-        + '<span class="addr-phone">090xxxxxxx</span>'
+        + '<span class="addr-phone">0909 123 456</span>'
         + '</div>'
         + '<p class="addr-text">Chưa cập nhật địa chỉ chi tiết.</p>'
         + '</div>';
@@ -162,14 +162,14 @@ function continueToShipping() {
     }
 
 
-    console.log("Deal: #PT2049");
+    console.log("Deal: #NG-2298");
     console.log("Giá Deal: 275000");
     console.log("Địa chỉ:", selectedAddress.value);
     console.log("Ghi chú:", note);
 
 
     window.location.href =
-        "shipping-fee.html?deal=PT2049";
+        "shipping-fee.html?deal=NG-2298";
 
 }
 
@@ -177,6 +177,6 @@ function continueToShipping() {
 function backToRoom() {
 
     window.location.href =
-        "dealing-chat.html?id=PT2049";
+        "dealing-chat.html?room=PT2049";
 
 }
