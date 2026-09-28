@@ -83,7 +83,7 @@
     <div class="breadcrumb">
         <a href="../../tin/html/home.html" style="color:inherit; text-decoration:none;">Trang chủ</a>
         <span>/</span>
-        <a href="../../truong/html/index.html" style="color:inherit; text-decoration:none;">Người bán</a>
+        <a href="exchange-orders.html" style="color:inherit; text-decoration:none;">Trao đổi &amp; đàm phán</a>
         <span>/</span>
         <strong>Phòng trao đổi giá</strong>
     </div>
@@ -117,7 +117,7 @@
 
             <div>
                 <p>Phòng đang mở</p>
-                <h3>05</h3>
+                <h3>02</h3>
             </div>
 
         </div>
@@ -131,7 +131,7 @@
 
             <div>
                 <p>Deal chờ xử lý</p>
-                <h3>08</h3>
+                <h3>03</h3>
             </div>
 
         </div>
@@ -145,7 +145,7 @@
 
             <div>
                 <p>Đã chốt hôm nay</p>
-                <h3>03</h3>
+                <h3>02</h3>
             </div>
 
         </div>
@@ -159,7 +159,7 @@
 
             <div>
                 <p>Phòng đã hoàn tất</p>
-                <h3>17</h3>
+                <h3>01</h3>
             </div>
 
         </div>
@@ -304,7 +304,7 @@
                                 </span>
 
                                 <h3>
-                                    One Piece trọn bộ tập 1–10
+                                    One Piece — Trọn bộ tập 1–10
                                 </h3>
 
                             </div>
@@ -321,7 +321,7 @@
 
                             <span>
                                 👤 Người mua:
-                                <strong>Nguyễn Minh</strong>
+                                <strong>Huy Dương</strong>
                             </span>
 
                             <span>
@@ -405,7 +405,7 @@
 
                     <button
                             class="btn-primary"
-                            onclick="acceptDeal('PT2049')"
+                            onclick="acceptDeal('PT2049', 'NG-2298')"
                     >
                         Chốt deal
                     </button>
@@ -696,7 +696,7 @@
 
             <div
                     class="room-card"
-                    data-status="waiting"
+                    data-status="accepted"
                     data-price="290000"
                     data-date="2026-09-14"
             >
@@ -730,8 +730,8 @@
                             </div>
 
 
-                            <span class="status waiting">
-                                Chờ xử lý
+                            <span class="status accepted">
+                                Đã chốt
                             </span>
 
                         </div>
@@ -817,17 +817,10 @@
                     </button>
 
                     <button
-                            class="btn-secondary"
-                            onclick="counterOffer('PT2019')"
+                            class="btn-disabled"
+                            disabled
                     >
-                        Đề xuất giá
-                    </button>
-
-                    <button
-                            class="btn-primary"
-                            onclick="acceptDeal('PT2019')"
-                    >
-                        Chốt deal
+                        Đã chốt deal
                     </button>
 
                 </div>

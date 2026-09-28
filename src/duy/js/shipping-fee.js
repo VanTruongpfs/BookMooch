@@ -1,5 +1,5 @@
 
-    const dealPrice = 1650000;
+    const dealPrice = 275000;
 
     /*
      * Mock dữ liệu phí vận chuyển.

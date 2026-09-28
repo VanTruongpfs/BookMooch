@@ -194,7 +194,7 @@
        ACCEPT DEAL
     ========================== */
 
-    function acceptDeal(roomId) {
+    function acceptDeal(roomId, dealId) {
 
         const confirmDeal =
             confirm(
@@ -212,16 +212,86 @@
         // Chốt deal -> chuyển thẳng sang bước tạo đơn hàng đàm phán.
         window.location.href =
             "negotiation-order.html?deal=" +
-            encodeURIComponent(roomId);
+            encodeURIComponent(dealId || roomId);
 
     }
 
 
+    /* =========================
+       THỨ TỰ BAN ĐẦU
+    ========================== */
+
+    var initialOrder = [];
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const list =
+            document.getElementById("roomList");
+
+        if (!list) {
+            return;
+        }
+
+        initialOrder =
+            Array.prototype.slice.call(
+                list.querySelectorAll(".room-card")
+            );
+
+    });
+
+
+    /* =========================
+       REFRESH
+    ========================== */
+
     function refreshRooms() {
 
-        alert(
-            "Đã làm mới danh sách phòng trao đổi."
-        );
+        const list =
+            document.getElementById("roomList");
+
+        /*
+         * Làm mới: trả các phòng về đúng thứ tự ban đầu
+         * rồi áp lại bộ lọc mặc định.
+         */
+
+        if (list) {
+
+            initialOrder.forEach(function (room) {
+
+                list.appendChild(room);
+
+            });
+
+        }
+
+
+        const search =
+            document.getElementById("searchInput");
+
+        const status =
+            document.getElementById("statusFilter");
+
+        const sort =
+            document.getElementById("sortFilter");
+
+        if (search) {
+            search.value = "";
+        }
+
+        if (status) {
+            status.value = "all";
+        }
+
+        if (sort) {
+            sort.value = "newest";
+        }
+
+
+        filterRooms();
+
+
+        alert("Đã làm mới danh sách phòng trao đổi.");
 
     }
 
