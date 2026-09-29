@@ -58,10 +58,18 @@ function renderGroup(group, currentPath) {
     const section = document.createElement("section");
     section.className = "sidebar-group";
     section.innerHTML = `<h2 class="sidebar-group-title">${group.title}</h2>`;
+    const curPath = (currentPath || window.location.pathname || "").toLowerCase().replace(/\\/g, "/");
+    const curFile = curPath.split("/").pop();
     group.items.forEach(([icon, label, href]) => {
         const link = document.createElement("a");
-        const targetPath = new URL(href, window.location.href).pathname;
-        link.className = `sidebar-link ${currentPath === targetPath ? "active" : ""}`;
+        let isActive = false;
+        try {
+            const targetUrl = new URL(href, window.location.href);
+            const targetPath = targetUrl.pathname.toLowerCase().replace(/\\/g, "/");
+            const targetFile = targetPath.split("/").pop();
+            isActive = Boolean(targetFile && curFile && targetFile === curFile) || curPath.endsWith(targetPath) || curPath === targetPath;
+        } catch { }
+        link.className = `sidebar-link ${isActive ? "active" : ""}`;
         link.href = href;
         link.innerHTML = `<span class="sidebar-link-icon" aria-hidden="true">${icon}</span><span>${label}</span>`;
         section.append(link);
@@ -85,27 +93,15 @@ function logout() {
     window.location.href = "../../vu/auth/login/login.html";
 }
 
-export async function mountSidebar(mount = document.querySelector("[data-sidebar-mount]")) {
+function mountSidebar(mount = document.querySelector("[data-sidebar-mount]")) {
     if (!mount) return;
-    let template = "";
-    try {
-        const response = await fetch("../../shared/sidebar/sidebar.html");
-        if (response.ok) template = await response.text();
-    } catch {
-        try {
-            const response = await fetch("/shared/sidebar/sidebar.html");
-            if (response.ok) template = await response.text();
-        } catch { }
-    }
-    if (!template) {
-        template = `
+    const template = `
         <aside class="app-sidebar" data-sidebar aria-label="Điều hướng chính">
-            <div class="sidebar-brand">ComicWorm <span>Hub</span></div>
+            <div class="sidebar-brand">ComicHub <span>Hub</span></div>
             <div class="sidebar-profile"><span class="sidebar-avatar" data-sidebar-avatar>BM</span><div><strong data-sidebar-name>Thành viên</strong><small data-sidebar-role>BUYER</small></div></div>
             <nav data-sidebar-nav></nav>
             <button class="sidebar-logout" type="button" data-sidebar-logout>Đăng xuất</button>
         </aside>`;
-    }
     mount.innerHTML = template;
     const role = getRole();
     const userName = localStorage.getItem("userName") || "Thành viên";
@@ -125,4 +121,10 @@ export async function mountSidebar(mount = document.querySelector("[data-sidebar
     }
 }
 
-mountSidebar();
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => mountSidebar());
+} else {
+    mountSidebar();
+}
+
+window.mountSidebar = mountSidebar;

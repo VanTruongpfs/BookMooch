@@ -1,4 +1,19 @@
-import { setFieldError, showToast } from "../../vu/auth/shared/auth-shared.js";
+function setFieldError(inputEl, errorEl, message) {
+    if (inputEl) inputEl.setAttribute("aria-invalid", String(Boolean(message)));
+    if (errorEl) errorEl.textContent = message;
+}
+
+function showToast(message, type = "error") {
+    const region = document.querySelector("[data-toast-region]");
+    if (!region) return;
+    region.replaceChildren();
+    const toast = document.createElement("div");
+    toast.className = `toast ${type}`;
+    toast.setAttribute("role", "status");
+    toast.textContent = message;
+    region.append(toast);
+    window.setTimeout(() => toast.remove(), 4000);
+}
 
 const STORAGE_KEY = "bookmooch_support_tickets";
 const form = document.querySelector("#support-form");

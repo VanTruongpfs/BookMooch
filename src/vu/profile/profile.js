@@ -1,5 +1,26 @@
-import { requestPasswordResetForCurrentUser } from "../auth/shared/auth-api.js";
-import { setFieldError, showToast } from "../auth/shared/auth-shared.js";
+function setFieldError(inputEl, errorEl, message) {
+    if (inputEl) inputEl.setAttribute("aria-invalid", String(Boolean(message)));
+    if (errorEl) errorEl.textContent = message;
+}
+
+function showToast(message, type = "error") {
+    const region = document.querySelector("[data-toast-region]");
+    if (!region) return;
+    region.replaceChildren();
+    const toast = document.createElement("div");
+    toast.className = `toast ${type}`;
+    toast.setAttribute("role", "status");
+    toast.textContent = message;
+    region.append(toast);
+    window.setTimeout(() => toast.remove(), 4000);
+}
+
+async function requestPasswordResetForCurrentUser() {
+    const session = JSON.parse(localStorage.getItem("bookmooch_session") || sessionStorage.getItem("bookmooch_session") || "null");
+    const profile = JSON.parse(localStorage.getItem("bookmooch_profile") || "null");
+    const email = session?.email || profile?.email || "member@example.com";
+    return new Promise((resolve) => window.setTimeout(() => resolve({ ok: true, email }), 450));
+}
 
 const PROFILE_KEY = "bookmooch_profile";
 const roles = { BUYER: ["Khách hàng", "U", "Mở kênh Người bán", "#seller-channel"], SELLER: ["Người bán", "S", "Mở kênh Người bán", "#seller-channel"], ADMIN: ["Quản trị viên", "A", "Trang Quản trị Admin", "#admin-dashboard"], MANAGER: ["Quản trị viên", "M", "Trang Quản trị Admin", "#admin-dashboard"] };
