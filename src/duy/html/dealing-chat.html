@@ -112,19 +112,12 @@
     <!-- =========================
          THÔNG TIN 2 BÊN
     ========================= -->
-    <section class="dc-hero" id="hero" aria-label="Thông tin hai bên trao đổi"></section>
-
-    <!-- =========================
-         TIẾN TRÌNH
-    ========================= -->
-    <div class="dc-stepsbar">
-        <ol class="dc-steps" id="steps" aria-label="Tiến trình trao đổi"></ol>
-    </div>
+    <section class="dc-hero" id="hero" aria-label="Thông tin phòng và thành viên"></section>
 
     <!-- =========================
          MÓN MUỐN TRAO ĐỔI
     ========================= -->
-    <section class="dc-item" id="itemCard" aria-label="Món muốn trao đổi"></section>
+    <section class="dc-item" id="itemCard" aria-label="Sản phẩm trong phòng deal"></section>
 
     <!-- =========================
          CHAT + BẢNG ĐIỀU KHIỂN
@@ -258,8 +251,8 @@
             <label class="dc-check" style="margin-top:14px;">
                 <input type="checkbox" id="lockConfirm">
                 <span>
-                    Tôi xác nhận chốt mức giá trên và <strong>khóa phòng chat</strong>.
-                    Sau khi chốt, hai bên không thể thay đổi đề xuất nữa.
+                    Tôi xác nhận chọn request này theo giá niêm yết và thông tin hiển thị.
+                    Sau khi chốt, phòng ngừng nhận request mới; hai bên sẽ xác nhận địa chỉ và phí giao hàng ở bước tiếp theo.
                 </span>
             </label>
 
@@ -268,10 +261,27 @@
         <div class="dc-modal-foot">
             <button type="button" class="dc-btn dc-btn--outline" data-close>Quay lại</button>
             <button type="button" class="dc-btn dc-btn--dark" id="lockSubmit" disabled>
-                <i class="fa-solid fa-lock"></i> Chốt giá &amp; khóa phòng
+                <i class="fa-solid fa-circle-check"></i> Xác nhận request
             </button>
         </div>
 
+    </div>
+</div>
+
+<div class="dc-modal" id="dealEditModal" hidden>
+    <div class="dc-modal-box" role="dialog" aria-modal="true" aria-labelledby="dealEditTitle">
+        <div class="dc-modal-head">
+            <h3 id="dealEditTitle">Chỉnh sửa deal</h3>
+            <button type="button" class="dc-modal-x" data-close aria-label="Đóng"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="dc-modal-body">
+            <div id="dealEditType" class="dc-type-locked"></div>
+            <div id="dealEditFields"></div>
+        </div>
+        <div class="dc-modal-foot">
+            <button type="button" class="dc-btn dc-btn--outline" data-close>Hủy</button>
+            <button type="button" class="dc-btn dc-btn--primary" data-act="save-deal-edit">Lưu thay đổi</button>
+        </div>
     </div>
 </div>
 
