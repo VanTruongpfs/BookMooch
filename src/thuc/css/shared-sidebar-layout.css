@@ -3,7 +3,7 @@ body.thuc-sidebar-layout {
 }
 
 body.thuc-sidebar-layout > .site-header {
-  display: none;
+  display: block;
 }
 
 body.thuc-sidebar-layout .hero-banner {
