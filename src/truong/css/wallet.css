@@ -435,6 +435,18 @@
 }
 
 /* Escrow Withdrawal Modal custom styles */
+.modal-backdrop {
+  overflow-y: auto;
+  padding: 24px 16px;
+  align-items: flex-start;
+}
+
+.modal-dialog {
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  margin: auto;
+}
+
 .modal-escrow-balance-card {
   background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
   border: 1px solid #bbf7d0;

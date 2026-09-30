@@ -241,7 +241,6 @@ function openEscrowWithdrawModal(targetAmount, orderId) {
 
   const remainingCount = Math.max(0, EscrowState.dailyLimit - EscrowState.dailyUsed);
   EscrowState.selectedOrderId = orderId || null;
-  updateSelectedBankDisplay();
 
   // Cập nhật số dư hiển thị trong modal
   const modalAvailDisplay = document.getElementById('modalAvailDisplay');
@@ -440,11 +439,10 @@ function confirmEscrowWithdrawal() {
   closeEscrowWithdrawModal();
 
   // 6. Hiển thị thông báo Toast thành công rực rỡ
-  const bank = getSelectedBank();
   const newRemaining = EscrowState.dailyLimit - EscrowState.dailyUsed;
   if (typeof showToast === 'function') {
     showToast(
-      `Đã gửi yêu cầu rút thành công +${formatMoney(withdrawAmount)} ₫ về tài khoản ${bank.bankName} (${bank.accountNumber})! Số lượt rút còn lại hôm nay: ${newRemaining}/3`,
+      `Đã gửi yêu cầu rút thành công +${formatMoney(withdrawAmount)} ₫ về tài khoản ngân hàng liên kết! Số lượt rút còn lại hôm nay: ${newRemaining}/3`,
       'success'
     );
   }
@@ -598,19 +596,9 @@ function setupModalBackdropListener() {
     });
   }
 
-  const bankModal = document.getElementById('bankSelectionModal');
-  if (bankModal) {
-    bankModal.addEventListener('click', (e) => {
-      if (e.target === bankModal) {
-        closeBankSelectionModal();
-      }
-    });
-  }
-
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       closeEscrowWithdrawModal();
-      closeBankSelectionModal();
     }
   });
 }
