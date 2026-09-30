@@ -490,3 +490,174 @@
   color: #047857;
   background: #f0fdf4;
 }
+
+/* Modal Bank Section */
+.modal-bank-section {
+  background: #f8fafc;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 13px 15px;
+  margin-bottom: 18px;
+}
+
+.modal-bank-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.modal-bank-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.83rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.btn-change-bank {
+  background: none;
+  border: none;
+  color: var(--primary-container);
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 3px 7px;
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+}
+
+.btn-change-bank:hover {
+  background: var(--primary-light);
+  color: var(--primary-hover);
+}
+
+.selected-bank-card {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.bank-logo-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: #005a3c;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  letter-spacing: 0.02em;
+}
+
+.bank-info-col {
+  flex: 1;
+  min-width: 0;
+}
+
+.bank-name-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+
+.bank-name-text {
+  font-size: 0.86rem;
+  color: var(--text-main);
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bank-badge-default {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 1px 6px;
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+  border-radius: var(--radius-full);
+}
+
+.bank-account-num {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1e3a5f;
+  letter-spacing: 0.05em;
+  margin-bottom: 2px;
+}
+
+.bank-holder-name {
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.badge-kyc-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  color: #10b981;
+  font-weight: 600;
+  font-size: 0.72rem;
+}
+
+.badge-kyc-check .material-symbols-outlined {
+  font-size: 13px;
+}
+
+/* Bank Accounts Select List in Modal */
+.bank-accounts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 290px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.bank-account-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: #ffffff;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.bank-account-item:hover {
+  border-color: #cbd5e1;
+  background: #f8fafc;
+}
+
+.bank-account-item.selected {
+  border-color: var(--primary-container);
+  background: #fff7ed;
+}
+
+.bank-item-radio {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--primary-container);
+  cursor: pointer;
+}

@@ -100,6 +100,136 @@ function updateUIBalanceDisplays() {
   }
 }
 
+// Danh sách tài khoản ngân hàng liên kết
+const BankAccounts = [
+  {
+    id: 'bank-1',
+    bankName: 'Vietcombank • CN Tân Bình',
+    bankCode: 'VCB',
+    accountNumber: '1029 3847 56',
+    accountHolder: 'TRẦN ĐĂNG KHOA',
+    isDefault: true,
+    color: '#005a3c'
+  },
+  {
+    id: 'bank-2',
+    bankName: 'MBBank • CN TP.HCM',
+    bankCode: 'MB',
+    accountNumber: '9999 8888 7777',
+    accountHolder: 'TRẦN ĐĂNG KHOA',
+    isDefault: false,
+    color: '#1b4098'
+  },
+  {
+    id: 'bank-3',
+    bankName: 'Techcombank • CN Sài Gòn',
+    bankCode: 'TCB',
+    accountNumber: '1903 6789 5432',
+    accountHolder: 'TRẦN ĐĂNG KHOA',
+    isDefault: false,
+    color: '#d62828'
+  }
+];
+
+let selectedBankId = 'bank-1';
+
+function getSelectedBank() {
+  return BankAccounts.find(b => b.id === selectedBankId) || BankAccounts[0];
+}
+
+function updateSelectedBankDisplay() {
+  const bank = getSelectedBank();
+  const logoEl = document.getElementById('selectedBankLogo');
+  const nameEl = document.getElementById('selectedBankName');
+  const numEl = document.getElementById('selectedBankAccountNum');
+  const holderEl = document.getElementById('selectedBankHolder');
+  const badgeEl = document.getElementById('selectedBankBadge');
+
+  if (logoEl) {
+    logoEl.textContent = bank.bankCode;
+    logoEl.style.backgroundColor = bank.color;
+  }
+  if (nameEl) nameEl.textContent = bank.bankName;
+  if (numEl) numEl.textContent = bank.accountNumber;
+  if (holderEl) holderEl.textContent = bank.accountHolder;
+  if (badgeEl) {
+    badgeEl.style.display = bank.isDefault ? 'inline-block' : 'none';
+  }
+}
+
+function openBankSelectionModal() {
+  renderBankAccountsList();
+  const modal = document.getElementById('bankSelectionModal');
+  if (modal) modal.classList.add('active');
+}
+
+function closeBankSelectionModal() {
+  const modal = document.getElementById('bankSelectionModal');
+  if (modal) modal.classList.remove('active');
+}
+
+function renderBankAccountsList() {
+  const container = document.getElementById('bankAccountsList');
+  if (!container) return;
+
+  container.innerHTML = BankAccounts.map(b => {
+    const isSelected = b.id === selectedBankId;
+    return `
+      <div class="bank-account-item ${isSelected ? 'selected' : ''}" onclick="selectBankAccount('${b.id}')">
+        <input type="radio" name="bankAccountRadio" class="bank-item-radio" ${isSelected ? 'checked' : ''}>
+        <div class="bank-logo-badge" style="background: ${b.color}; width: 38px; height: 38px; font-size: 0.8rem;">
+          ${b.bankCode}
+        </div>
+        <div class="bank-info-col">
+          <div class="bank-name-row">
+            <strong class="bank-name-text" style="font-size: 0.84rem;">${b.bankName}</strong>
+            ${b.isDefault ? '<span class="bank-badge-default">Mặc định</span>' : ''}
+          </div>
+          <div class="bank-account-num" style="font-size: 0.88rem;">${b.accountNumber}</div>
+          <div class="bank-holder-name" style="font-size: 0.72rem;">Chủ TK: <strong>${b.accountHolder}</strong></div>
+        </div>
+        ${isSelected ? '<span class="material-symbols-outlined" style="color: var(--primary-container); font-size: 20px;">check_circle</span>' : ''}
+      </div>
+    `;
+  }).join('');
+}
+
+function selectBankAccount(id) {
+  selectedBankId = id;
+  updateSelectedBankDisplay();
+  renderBankAccountsList();
+  const selectedBank = getSelectedBank();
+  if (typeof showToast === 'function') {
+    showToast(`Đã chọn tài khoản nhận: ${selectedBank.bankName}`, 'info');
+  }
+  closeBankSelectionModal();
+}
+
+function addNewBankPrompt() {
+  const bankName = prompt('Nhập tên ngân hàng & chi nhánh (Ví dụ: ACB • CN Sài Gòn):');
+  if (!bankName) return;
+  const accNum = prompt('Nhập số tài khoản ngân hàng:');
+  if (!accNum) return;
+
+  const newBank = {
+    id: `bank-${Date.now()}`,
+    bankName: bankName.trim(),
+    bankCode: bankName.substring(0, 3).toUpperCase(),
+    accountNumber: accNum.trim(),
+    accountHolder: 'TRẦN ĐĂNG KHOA',
+    isDefault: false,
+    color: '#0284c7'
+  };
+
+  BankAccounts.push(newBank);
+  selectedBankId = newBank.id;
+  updateSelectedBankDisplay();
+  renderBankAccountsList();
+  if (typeof showToast === 'function') {
+    showToast(`Đã liên kết tài khoản: ${newBank.bankName}`, 'success');
+  }
+}
+
 /**
  * Mở modal rút tiền Escrow về Ví chính
  * @param {number} [targetAmount] - Số tiền chỉ định nếu rút từ 1 đơn cụ thể
@@ -111,6 +241,7 @@ function openEscrowWithdrawModal(targetAmount, orderId) {
 
   const remainingCount = Math.max(0, EscrowState.dailyLimit - EscrowState.dailyUsed);
   EscrowState.selectedOrderId = orderId || null;
+  updateSelectedBankDisplay();
 
   // Cập nhật số dư hiển thị trong modal
   const modalAvailDisplay = document.getElementById('modalAvailDisplay');
@@ -309,10 +440,11 @@ function confirmEscrowWithdrawal() {
   closeEscrowWithdrawModal();
 
   // 6. Hiển thị thông báo Toast thành công rực rỡ
+  const bank = getSelectedBank();
   const newRemaining = EscrowState.dailyLimit - EscrowState.dailyUsed;
   if (typeof showToast === 'function') {
     showToast(
-      `Đã gửi yêu cầu rút thành công +${formatMoney(withdrawAmount)} ₫ về tài khoản ngân hàng liên kết! Số lượt rút còn lại hôm nay: ${newRemaining}/3`,
+      `Đã gửi yêu cầu rút thành công +${formatMoney(withdrawAmount)} ₫ về tài khoản ${bank.bankName} (${bank.accountNumber})! Số lượt rút còn lại hôm nay: ${newRemaining}/3`,
       'success'
     );
   }
@@ -466,9 +598,19 @@ function setupModalBackdropListener() {
     });
   }
 
+  const bankModal = document.getElementById('bankSelectionModal');
+  if (bankModal) {
+    bankModal.addEventListener('click', (e) => {
+      if (e.target === bankModal) {
+        closeBankSelectionModal();
+      }
+    });
+  }
+
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       closeEscrowWithdrawModal();
+      closeBankSelectionModal();
     }
   });
 }

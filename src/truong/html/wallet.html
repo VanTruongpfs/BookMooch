@@ -640,9 +640,43 @@
         <button type="button" class="quick-amount-chip" onclick="setQuickWithdrawAmount('max')">Rút tất cả (Tối đa)</button>
       </div>
 
+      <!-- Section Tài khoản ngân hàng nhận tiền -->
+      <div class="modal-bank-section" id="modalBankSection">
+        <div class="modal-bank-header">
+          <label class="modal-bank-label">
+            <span class="material-symbols-outlined" style="font-size: 18px; color: var(--primary-container);">account_balance</span>
+            Tài khoản ngân hàng nhận tiền
+          </label>
+          <button type="button" class="btn-change-bank" onclick="openBankSelectionModal()">
+            <span class="material-symbols-outlined" style="font-size: 16px;">swap_horiz</span>
+            Thay đổi tài khoản
+          </button>
+        </div>
+
+        <!-- Thẻ thông tin tài khoản đang chọn -->
+        <div class="selected-bank-card" id="selectedBankCard">
+          <div class="bank-logo-badge" id="selectedBankLogo">
+            VCB
+          </div>
+          <div class="bank-info-col">
+            <div class="bank-name-row">
+              <strong class="bank-name-text" id="selectedBankName">Vietcombank • CN Tân Bình</strong>
+              <span class="bank-badge-default" id="selectedBankBadge">Mặc định</span>
+            </div>
+            <div class="bank-account-num" id="selectedBankAccountNum">
+              1029 3847 56
+            </div>
+            <div class="bank-holder-name">
+              Chủ TK: <strong id="selectedBankHolder">TRẦN ĐĂNG KHOA</strong>
+              <span class="badge-kyc-check" title="Đã xác thực KYC"><span class="material-symbols-outlined">verified</span> Đã xác thực</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div style="background: #f8fafc; border-radius: var(--radius-md); padding: 12px 14px; font-size: 0.78rem; color: var(--text-muted); line-height: 1.45; margin-bottom: 24px; border: 1px dashed var(--border-color);">
         <strong style="color: var(--text-main);">Quy định nghiệp vụ:</strong><br>
-        • Tiền sẽ lập tức chuyển vào <strong>Ví chính khả dụng</strong>. Từ đó bạn có thể rút về tài khoản ngân hàng liên kết bất cứ lúc nào.<br>
+        • Tiền sau khi giải phóng Ký quỹ sẽ được thực hiện lệnh chuyển tự động về <strong>tài khoản ngân hàng liên kết</strong> và ghi nhận đồng thời vào sao kê ví.<br>
         • Để ngăn chặn gian lận và kiểm soát rủi ro, hệ thống <strong>giới hạn 3 lần rút/ngày</strong> cho thao tác giải phóng Ký quỹ.
       </div>
 
@@ -650,7 +684,42 @@
         <button class="btn btn-outline" onclick="closeEscrowWithdrawModal()">Hủy bỏ</button>
         <button class="btn btn-primary" id="btnConfirmEscrowWithdraw" onclick="confirmEscrowWithdrawal()">
           <span class="material-symbols-outlined" style="font-size: 18px;">check</span>
-          Xác nhận chuyển về Ví chính
+          Xác nhận rút tiền
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL CHỌN / THAY ĐỔI TÀI KHOẢN NGÂN HÀNG -->
+  <div class="modal-backdrop" id="bankSelectionModal" style="z-index: 1050;">
+    <div class="modal-dialog" style="max-width: 480px; text-align: left;">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div class="modal-icon-circle info" style="margin-bottom: 0; width: 40px; height: 40px;">
+            <span class="material-symbols-outlined" style="font-size: 22px;">account_balance</span>
+          </div>
+          <div>
+            <h3 class="modal-title" style="font-size: 1.1rem; margin-bottom: 2px;">Chọn tài khoản nhận tiền</h3>
+            <span style="font-size: 0.76rem; color: var(--text-muted);">Tài khoản thụ hưởng chính chủ đã xác thực KYC</span>
+          </div>
+        </div>
+        <button class="nav-icon-btn" onclick="closeBankSelectionModal()" title="Đóng">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <!-- Danh sách tài khoản ngân hàng -->
+      <div class="bank-accounts-list" id="bankAccountsList">
+        <!-- Render bằng JavaScript -->
+      </div>
+
+      <div class="modal-actions" style="justify-content: space-between; margin-top: 20px;">
+        <button class="btn btn-outline btn-sm" onclick="addNewBankPrompt()" style="display: flex; align-items: center; gap: 4px;">
+          <span class="material-symbols-outlined" style="font-size: 16px;">add</span>
+          Thêm tài khoản mới
+        </button>
+        <button class="btn btn-primary btn-sm" onclick="closeBankSelectionModal()">
+          Xong
         </button>
       </div>
     </div>
