@@ -118,8 +118,9 @@
         <!-- =====================
              LEFT
         ====================== -->
+        <div class="shipping-left-column">
 
-        <section class="card shipping-form">
+            <section class="card shipping-form">
 
             <div class="section-heading">
                 <h2>Thông tin giao nhận</h2>
@@ -280,6 +281,166 @@
             </div>
 
         </section>
+
+        <!-- =====================
+             PAYMENT METHOD SECTION
+        ====================== -->
+        <section class="card payment-method-card" id="paymentMethodCard">
+            <div class="section-heading">
+                <div class="payment-card-header">
+                    <div>
+                        <h2><i class="fa-solid fa-credit-card payment-title-icon"></i> Phương thức thanh toán</h2>
+                        <p>Bảo vệ người mua 100% qua ComicHub Escrow Vault</p>
+                    </div>
+                    <span class="escrow-safe-badge"><i class="fa-solid fa-shield-halved"></i> Escrow Vault 100%</span>
+                </div>
+            </div>
+
+            <div class="payment-selection-list">
+
+                <!-- 1. VNPAY-QR -->
+                <div class="payment-method-item selected" id="methodVnpay">
+                    <label class="payment-label">
+                        <input type="radio" name="payment_method" value="vnpay" id="payRadioVnpay" checked>
+                        <span class="radio"></span>
+
+                        <div class="payment-brand-badge vnpay-brand">
+                            <span class="vnpay-vn">VN</span><span class="vnpay-pay">PAY</span>
+                        </div>
+
+                        <div class="payment-title-group">
+                            <div class="payment-title-line">
+                                <span class="payment-title">Thanh toán VNPAY-QR</span>
+                                <span class="badge-recommend"><i class="fa-solid fa-bolt"></i> Khuyên dùng</span>
+                            </div>
+                            <span class="payment-subtitle">Quét mã QR qua Mobile Banking hoặc ví VNPAY. Xác nhận tức thì.</span>
+                        </div>
+                    </label>
+
+                    <!-- Chi tiết VNPAY -->
+                    <div class="qr-payment-details-box" id="vnpayDetails">
+                        <div class="qr-payment-main">
+                            <!-- Cột trái: QR Code -->
+                            <div class="qr-code-wrapper">
+                                <div class="qr-frame">
+                                    <img id="vnpayQrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=VNPAY-COMICHUB-NG2298-307000" alt="Mã QR thanh toán VNPAY" class="qr-code-img">
+                                </div>
+                                <span class="qr-scan-instruction">
+                                    <i class="fa-solid fa-qrcode"></i>
+                                    Quét qua App Ngân hàng / VNPAY
+                                </span>
+                            </div>
+
+                            <!-- Cột phải: Thông tin thanh toán cô đọng, rõ ràng -->
+                            <div class="bank-transfer-info-wrap">
+                                <!-- Khối số tiền nổi bật -->
+                                <div class="pay-amount-box">
+                                    <span class="pay-amount-label">Số tiền cần thanh toán</span>
+                                    <strong class="pay-amount-val" id="vnpayAmount">307.000đ</strong>
+                                </div>
+
+                                <!-- Các trường thông tin với nút copy -->
+                                <div class="pay-fields-list">
+                                    <div class="pay-field-item">
+                                        <span class="pay-field-label">Nội dung CK:</span>
+                                        <div class="pay-field-action">
+                                            <strong class="transfer-code" id="transferMemoVal">COMICHUB NG2298</strong>
+                                            <button type="button" class="btn-copy" onclick="copyToClipboard('COMICHUB NG2298', this)" title="Sao chép nội dung">
+                                                <i class="fa-regular fa-copy"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="pay-field-item">
+                                        <span class="pay-field-label">Mã đơn Deal:</span>
+                                        <div class="pay-field-action">
+                                            <strong class="transfer-code" id="dealCodeVal">NG-2298</strong>
+                                            <button type="button" class="btn-copy" onclick="copyToClipboard('NG-2298', this)" title="Sao chép mã đơn">
+                                                <i class="fa-regular fa-copy"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="pay-field-item">
+                                        <span class="pay-field-label">Thụ hưởng:</span>
+                                        <span class="pay-field-val">COMICHUB ESCROW</span>
+                                    </div>
+
+                                    <div class="pay-field-item">
+                                        <span class="pay-field-label">Cổng xử lý:</span>
+                                        <span class="pay-field-val">VNPAY Gateway</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Dải ngân hàng hỗ trợ nằm ngang trọn vẹn bên dưới -->
+                        <div class="pay-banks-strip">
+                            <i class="fa-solid fa-mobile-screen-button"></i>
+                            <span>Hỗ trợ 40+ app Ngân hàng (VCB, MB, Techcombank, BIDV, Agribank, VietinBank...) &amp; Ví VNPAY, MoMo</span>
+                        </div>
+
+                        <!-- Lưu ý bảo chứng Escrow -->
+                        <div class="qr-security-note">
+                            <i class="fa-solid fa-shield-halved"></i>
+                            <span>ComicHub giữ tiền ký quỹ trong 48h để bạn an tâm mở hộp kiểm tra truyện trước khi chuyển cho người bán.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. COD -->
+                <div class="payment-method-item" id="methodCod">
+                    <label class="payment-label">
+                        <input type="radio" name="payment_method" value="cod" id="payRadioCod">
+                        <span class="radio"></span>
+
+                        <div class="payment-brand-badge cod-brand">
+                            <i class="fa-solid fa-hand-holding-dollar"></i> COD
+                        </div>
+
+                        <div class="payment-title-group">
+                            <div class="payment-title-line">
+                                <span class="payment-title">Thanh toán khi nhận hàng (COD)</span>
+                                <span class="badge-cod-check"><i class="fa-solid fa-box-open"></i> Đồng kiểm Otaku</span>
+                            </div>
+                            <span class="payment-subtitle">Thanh toán tiền mặt cho shipper sau khi mở hộp kiểm tra truyện.</span>
+                        </div>
+                    </label>
+
+                    <!-- Chi tiết COD -->
+                    <div class="cod-details-box" id="codDetails" style="display: none;">
+                        <div class="cod-banner">
+                            <div class="cod-banner-icon">
+                                <i class="fa-solid fa-shield-cat"></i>
+                            </div>
+                            <div class="cod-banner-content">
+                                <strong>Chính sách Bảo chứng &amp; Đồng kiểm Otaku</strong>
+                                <p>Được mở bọc màng kiếng kiểm tra tình trạng truyện trước khi thanh toán.</p>
+                            </div>
+                        </div>
+
+                        <ul class="cod-guidelines">
+                            <li>
+                                <i class="fa-solid fa-circle-check"></i>
+                                <span><strong>Kiểm tra ngoại quan:</strong> Mở gói bọc màng kiếng, kiểm tra tình trạng bìa, gáy sách và phụ kiện (bookmark/postcard) cùng shipper.</span>
+                            </li>
+                            <li>
+                                <i class="fa-solid fa-money-bill-wave"></i>
+                                <span><strong>Số tiền mặt thanh toán:</strong> <strong class="highlight-amount" id="codAmount">307.000đ</strong> (Đúng bằng tổng đơn, <em>không</em> phụ phí thu hộ).</span>
+                            </li>
+                            <li>
+                                <i class="fa-solid fa-arrow-rotate-left"></i>
+                                <span><strong>Từ chối không mất phí:</strong> Nếu truyện bị cấn móp, rách hoặc không đúng cam kết trong phòng deal #PT2049, bạn có quyền từ chối nhận hàng ngay lập tức.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+        </div>
 
 
         <!-- =====================
@@ -514,13 +675,26 @@
                 </div>
 
 
+                <div class="total-row">
+
+                    <span>
+                        Phương thức thanh toán
+                    </span>
+
+                    <strong id="selectedPaymentText" class="payment-method-summary-tag">
+                        <span class="tag-vnpay"><i class="fa-solid fa-qrcode"></i> VNPAY-QR</span>
+                    </strong>
+
+                </div>
+
+
                 <div class="total-divider"></div>
 
 
                 <div class="total-final">
 
                     <span>
-                        Tổng đơn hàng
+                        Tổng thanh toán
                     </span>
 
                     <strong id="totalPrice">
@@ -530,7 +704,7 @@
                 </div>
 
                 <p class="total-note">
-                    Tổng tiền sẽ được cập nhật vào đơn hàng đàm phán.
+                    Đã bao gồm tiền sách &amp; phí ship. Tiền được bảo vệ bởi ComicHub Escrow.
                 </p>
 
             </div>
@@ -543,31 +717,82 @@
                 <div class="action-info">
 
                     <span>
-                        Phí vận chuyển đã chọn
+                        Tổng cần thanh toán
                     </span>
 
-                    <strong id="selectedFee">
-                        32.000đ
+                    <strong id="actionTotalPrice">
+                        307.000đ
                     </strong>
 
-                    <small>
-                        Giao nhanh · 2–3 ngày
+                    <small id="actionSummaryDesc">
+                        Giao nhanh · VNPAY-QR
                     </small>
 
                 </div>
 
                 <button
                         type="button"
-                        class="btn btn-primary"
+                        class="btn btn-primary btn-confirm-pay"
                         onclick="confirmShipping()"
                 >
-                    Xác nhận phí vận chuyển
+                    <i class="fa-solid fa-lock"></i>
+                    <span>Xác nhận &amp; Thanh toán</span>
                 </button>
 
             </div>
 
         </section>
 
+    </div>
+
+    <!-- =====================
+         MODAL: XÁC NHẬN THANH TOÁN
+    ====================== -->
+    <div class="pay-modal-overlay" id="confirmModal" style="display: none;">
+        <div class="pay-modal-dialog">
+            <div class="pay-modal-header">
+                <div class="pay-modal-icon">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
+                <h3>Xác nhận đơn hàng thành công!</h3>
+                <p>Đơn hàng đàm phán #NG-2298 đã được cập nhật phương thức thanh toán &amp; vận chuyển.</p>
+            </div>
+
+            <div class="pay-modal-body">
+                <div class="pay-summary-box">
+                    <div class="pay-summary-row">
+                        <span>Truyện:</span>
+                        <strong>One Piece — Trọn bộ tập 1–10</strong>
+                    </div>
+                    <div class="pay-summary-row">
+                        <span>Hình thức vận chuyển:</span>
+                        <strong id="modalShippingMethod">Giao nhanh (32.000đ)</strong>
+                    </div>
+                    <div class="pay-summary-row">
+                        <span>Phương thức thanh toán:</span>
+                        <strong id="modalPaymentMethod">VNPAY-QR (Chuyển khoản / QR)</strong>
+                    </div>
+                    <div class="pay-summary-row highlight">
+                        <span>Tổng thanh toán:</span>
+                        <strong id="modalTotalAmount">307.000đ</strong>
+                    </div>
+                </div>
+
+                <div class="pay-modal-note" id="modalPaymentHint">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <span>Số tiền được giữ an toàn tại ví ký quỹ ComicHub Escrow và chỉ chuyển cho người bán khi bạn xác nhận hài lòng.</span>
+                </div>
+            </div>
+
+            <div class="pay-modal-footer">
+                <button type="button" class="btn btn-outline" onclick="closeModal()">
+                    Đóng
+                </button>
+                <button type="button" class="btn btn-primary" onclick="proceedToExchangeOrders()">
+                    Quản lý đơn hàng trao đổi <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
     </div>
 
 </main>
